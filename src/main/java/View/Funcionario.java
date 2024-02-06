@@ -353,41 +353,41 @@ public class Funcionario extends javax.swing.JFrame {
 
     private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed
         // TODO add your handling code here:
-        if(camponome.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de usuário");
-        }else if(camposenha.getPassword().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de senha");
-        }else if(campousuario.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de CPF");
-        }else if(campocpf.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de E-mail");
-        }else if(campotelefone.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de Telefone");
-        }else if(campoendereco.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de Endereço");
-        }else if(campoemail.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de Endereço");
+        if (camponome.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor preencha o campo de usuário");
+        } else if (camposenha.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(null, "Por favor preencha o campo de senha");
+        } else if (campousuario.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor preencha o campo de CPF");
+        } else if (campocpf.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor preencha o campo de E-mail");
+        } else if (campotelefone.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor preencha o campo de Telefone");
+        } else if (campoendereco.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor preencha o campo de Endereço");
+        } else if (campoemail.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Por favor preencha o campo de E-mail");
+        } else {
+            String nome = camponome.getText();
+            String password = new String(camposenha.getPassword());
+            String usuario = campousuario.getText();
+            String email = campoemail.getText();
+            String telefone = campotelefone.getText();
+            String endereco = campoendereco.getText();
+            String cpf = campocpf.getText();
+            atualizarUsuario(nome, password, usuario, cpf, endereco, email, telefone);
+            JOptionPane.showMessageDialog(null, "Funcionário atualizado com sucesso!");
         }
-        String nome = camponome.getText();
-        String password = camposenha.getText();
-        String usuario = campousuario.getText();
-        String cpf = campocpf.getText();
-        String email = campoemail.getText();
-        String telefone = campotelefone.getText();
-        String endereco = campoendereco.getText();
-        
-        cadastrarUsuario(nome,password,usuario,cpf,endereco,email,telefone);
-        JOptionPane.showMessageDialog(null,"Funcionário atualizado com sucesso!");
     }//GEN-LAST:event_botaoatualizarActionPerformed
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
         // TODO add your handling code here:
+  
         if(campocpf.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de CPF, é obrigatório");
+                JOptionPane.showMessageDialog(null,"Por favor preencha o campo de CPF, é obrigatório");
         }else{
             String cpf = campocpf.getText();
-            String usuario = campousuario.getText();
-            deletarUsuario(usuario,cpf);
+            deletarUsuario(cpf);
             JOptionPane.showMessageDialog(null,"Funcionário deletado com sucesso!");
         }
     }//GEN-LAST:event_botaodeletarActionPerformed

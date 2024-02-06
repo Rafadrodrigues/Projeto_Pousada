@@ -87,10 +87,11 @@ public class Sistema {
     }
     }
     
-    public static void atualizarUsuario(String nome, String senha,String usuario, String cpf, String email, String telefone,String endereco){
-        
+    public static void atualizarUsuario(String nome, String senha,String usuario, 
+            String cpf, String endereco, String email,String telefone){
+
         try (Connection conexao = estabelecerConexao()){
-            String query = "UPDATE funcionario SET usuario=?, senha=?, nome=?, endereco=?, email=?, telefone=? WHERE cpf=? AND usuario=?";
+            String query = "UPDATE funcionario SET usuario=?, senha=?, nome=?, endereco=?, email=?, telefone=? WHERE cpf=?";
             PreparedStatement preparedStatement = conexao.prepareStatement(query);
             preparedStatement.setString(1, usuario);
             preparedStatement.setString(2, senha);
@@ -99,21 +100,22 @@ public class Sistema {
             preparedStatement.setString(5, email);
             preparedStatement.setString(6, telefone);
             preparedStatement.setString(7, cpf);
-            preparedStatement.setString(8, usuario);
 
             preparedStatement.executeUpdate();
+            //Essa linha foi adicionada porque minha base de dados não estava atualizando
+            conexao.commit();
+
         } catch (SQLException e) {
             // Handle the exception
             e.printStackTrace();
         }
     }
-    public static void deletarUsuario(String usuario,String cpf){
+    public static void deletarUsuario(String cpf){
         
         try(Connection conexao = estabelecerConexao()){
-            String query = "DELETE FROM funcionario WHERE usuario=? AND cpf=?";
+            String query = "DELETE FROM funcionario WHERE cpf=?";
             PreparedStatement preparedStatement = conexao.prepareStatement(query);
-            preparedStatement.setString(1, usuario);
-            preparedStatement.setString(2, cpf);
+            preparedStatement.setString(1, cpf);
             
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -122,17 +124,20 @@ public class Sistema {
         
     }
     /*Esse método foi criado para verificar o usuário quando for atualizar ou deletar*/
-    public static void verificarUsuario(String cpf){
-        try(Connection conexao = estabelecerConexao()){
-            String query = "SELECT cpf FROM funcionario cpf=?";
+    public static boolean verificarUsuario(String cpf) {
+        try (Connection conexao = estabelecerConexao()) {
+            String query = "SELECT cpf FROM funcionario WHERE cpf=?";
             PreparedStatement preparedStatement = conexao.prepareStatement(query);
             preparedStatement.setString(1, cpf);
-            
-            preparedStatement.executeUpdate();
-        }catch(SQLException ex){
-          ex.printStackTrace();  
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next(); 
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
         }
-    }
+}
+
     public static void visualizarUsuario(){
         
     }
