@@ -343,12 +343,7 @@ public class Funcionario extends javax.swing.JFrame {
         /*Conferir se a sequencia esta correta e quantidade de variavel*/
         cadastrarUsuario(nome,password,usuario,cpf,endereco,email,telefone);
         JOptionPane.showMessageDialog(null,"Funcionário adicionado com sucesso!");
-        
-//        Login loginFrame = new Login();
-//        loginFrame.setVisible(true);
-//        loginFrame.pack();
-//        loginFrame.setLocationRelativeTo(null);
-//        this.dispose();
+       
     }//GEN-LAST:event_botaosalvarActionPerformed
 
     private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed

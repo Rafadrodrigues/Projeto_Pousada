@@ -25,6 +25,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[736, 605]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -49,30 +52,28 @@
           <Component id="jPanel4" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="31" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jDateChooser2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jMonthChooser1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jYearChooser1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                              <Component id="botaoverificar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="botaoatualizar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="botaodeletar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="botaosalvar" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Component id="jDayChooser1" alignment="0" min="-2" pref="329" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="botaoatualizar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="botaoverificar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="botaodeletar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="botaosalvar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -80,25 +81,21 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jDayChooser1" min="-2" pref="330" max="-2" attributes="0"/>
-                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel2" max="32767" attributes="0"/>
+                  <Component id="jPanel5" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jYearChooser1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jDateChooser2" min="-2" max="-2" attributes="0"/>
-                  <Component id="jMonthChooser1" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="botaoverificar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botaosalvar" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="botaodeletar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="botaosalvar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botaoatualizar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botaoverificar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="36" max="32767" attributes="0"/>
+              <EmptySpace pref="8" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="166" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -212,33 +209,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
-    </Component>
-    <Component class="com.toedter.calendar.JDayChooser" name="jDayChooser1">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="66" red="0" type="rgb"/>
-        </Property>
-        <Property name="decorationBackgroundColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="cc" green="cc" red="cc" type="rgb"/>
-        </Property>
-        <Property name="sundayForeground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="33" red="ff" type="rgb"/>
-        </Property>
-        <Property name="weekdayForeground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="66" red="0" type="rgb"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
-    </Component>
-    <Component class="com.toedter.calendar.JMonthChooser" name="jMonthChooser1">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI Semibold" size="12" style="0"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="botaoverificar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -263,6 +233,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Deletar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaodeletarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="botaosalvar">
       <Properties>
@@ -274,12 +247,15 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Salvar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaosalvarActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Dados da Reserva">
+            <TitledBorder title="Dados do Cliente&#xa;">
               <Font PropertyName="font" name="Segoe UI Semibold" size="12" style="0"/>
             </TitledBorder>
           </Border>
@@ -292,28 +268,19 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <Component id="campocpf" min="-2" pref="151" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <Component id="camponomecliente" min="-2" pref="207" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <Component id="campofuncionario" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="opcaotipoquarto" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="85" max="32767" attributes="0"/>
-                          <Component id="opcaonumero" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                          <EmptySpace pref="103" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                              <Component id="campodiaria" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                              <Component id="telefonecliente" min="-2" pref="145" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -324,30 +291,19 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="camponomecliente" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="campocpf" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="campofuncionario" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="opcaotipoquarto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="opcaonumero" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="campodiaria" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="12" max="32767" attributes="0"/>
+                  <Component id="telefonecliente" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -378,16 +334,122 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="campofuncionario">
+        <Component class="javax.swing.JFormattedTextField" name="telefonecliente">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="(##) #####-####" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Semibold" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio"/>
+            <Property name="text" type="java.lang.String" value="Telefone"/>
           </Properties>
         </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="botaoatualizar">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI Semibold" size="14" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="66" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Atualizar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoatualizarActionPerformed"/>
+      </Events>
+    </Component>
+    <Container class="javax.swing.JPanel" name="jPanel5">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="Dados da Reserva">
+              <Font PropertyName="font" name="Segoe UI Semibold" size="12" style="0"/>
+            </TitledBorder>
+          </Border>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="checkin" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="52" max="32767" attributes="0"/>
+                          <Component id="checkout" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="campofuncionario" alignment="0" min="-2" pref="126" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="opcaotipoquarto" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="opcaonumero" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="opcaonumero" min="-2" max="-2" attributes="0"/>
+                      <Component id="opcaotipoquarto" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="checkin" min="-2" max="-2" attributes="0"/>
+                      <Component id="checkout" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="campofuncionario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
         <Component class="javax.swing.JComboBox" name="opcaotipoquarto">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -410,6 +472,14 @@
             <Property name="text" type="java.lang.String" value="Quarto"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JLabel" name="jLabel6">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI Semibold" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Check-in"/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JComboBox" name="opcaonumero">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -429,39 +499,85 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="jLabel14">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Semibold" size="12" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Di&#xe1;rias"/>
+            <Property name="text" type="java.lang.String" value="Tipo do Quarto"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="campodiaria">
+        <Component class="javax.swing.JLabel" name="jLabel16">
           <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="#0" subtype="-1" type="0"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI Semibold" size="12" style="0"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="Check-out"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campodiariaActionPerformed"/>
-          </Events>
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="checkin">
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="checkout">
+        </Component>
+        <Component class="javax.swing.JTextField" name="campofuncionario">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel4">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI Semibold" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio "/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="botaoatualizar">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI Semibold" size="14" style="0"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="33" green="66" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Atualizar"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoatualizarActionPerformed"/>
-      </Events>
-    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="tabela">
+          <Properties>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="4" rowCount="4">
+                <Column editable="true" title="Check-in" type="java.lang.Object"/>
+                <Column editable="true" title="Check-out" type="java.lang.Object"/>
+                <Column editable="true" title="Tipo do Quarto" type="java.lang.Object"/>
+                <Column editable="true" title="Quarto" type="java.lang.Object"/>
+              </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>
