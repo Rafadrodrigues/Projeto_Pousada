@@ -27,7 +27,7 @@ public class Sistema {
         try{
             ResultSet resultSet;
             Connection conexao = estabelecerConexao();
-                String query = "SELECT usuario, senha FROM funcionario WHERE usuario = ? AND senha = ?";
+                String query = "SELECT Usuario, Senha FROM funcionario WHERE Usuario = ? AND Senha = ?";
                 PreparedStatement  pstmt = conexao.prepareStatement(query);
                 pstmt.setString(1, usuario);
                 pstmt.setString(2, senha);
@@ -45,7 +45,7 @@ public class Sistema {
 
             try{
                 Connection conexao = estabelecerConexao();
-                String query = "INSERT INTO funcionario(usuario, senha, nome, cpf, email, telefone, endereco) "
+                String query = "INSERT INTO funcionario(Usuario, Senha, Nome, CPF, Email, Telefone, Endereco) "
                 + "VALUES(?,?,?,?,?,?,?)";
 
                 PreparedStatement pstmt = conexao.prepareStatement(query);
@@ -70,7 +70,7 @@ public class Sistema {
     public static void cadastrarUsuario(String nome, String senha,String usuario, String cpf, String email, String telefone,String endereco){
 
         try (Connection conexao = estabelecerConexao()) {
-            String query = "INSERT INTO funcionario(usuario, senha, nome, cpf, email, telefone, endereco) "
+            String query = "INSERT INTO funcionario(Usuario, Senha, Nome, CPF, Email, Telefone, Endereco) "
                 + "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = conexao.prepareStatement(query);
@@ -93,7 +93,7 @@ public class Sistema {
             String cpf, String endereco, String email,String telefone){
 
         try (Connection conexao = estabelecerConexao()){
-            String query = "UPDATE funcionario SET usuario=?, senha=?, nome=?, endereco=?, email=?, telefone=? WHERE cpf=?";
+            String query = "UPDATE funcionario SET Usuario=?, Senha=?, Nome=?, Endereco=?, Email=?, Telefone=? WHERE CPF=?";
             PreparedStatement pstmt = conexao.prepareStatement(query);
             pstmt.setString(1, usuario);
             pstmt.setString(2, senha);
@@ -115,7 +115,7 @@ public class Sistema {
     public static void deletarUsuario(String cpf){
         
         try(Connection conexao = estabelecerConexao()){
-            String query = "DELETE FROM funcionario WHERE cpf=?";
+            String query = "DELETE FROM funcionario WHERE CPF=?";
             PreparedStatement pstmt = conexao.prepareStatement(query);
             pstmt.setString(1, cpf);
             
@@ -128,7 +128,7 @@ public class Sistema {
     /*Esse método foi criado para verificar o usuário quando for atualizar ou deletar*/
     public static boolean verificarUsuario(String cpf) {
         try (Connection conexao = estabelecerConexao()) {
-            String query = "SELECT cpf FROM funcionario WHERE cpf=?";
+            String query = "SELECT CPF FROM funcionario WHERE CPF=?";
             PreparedStatement preparedStatement = conexao.prepareStatement(query);
             preparedStatement.setString(1, cpf);
 
@@ -145,7 +145,7 @@ public class Sistema {
     */
     public static void cadastrarCliente(String nome,String cpf,String telefone){
         try (Connection conexao = estabelecerConexao()) {
-            String query = "INSERT INTO cliente(nome, cpf, telefone) "
+            String query = "INSERT INTO cliente(Nome, CPF, Telefone) "
                 + "VALUES(?, ?, ?)";
 
             PreparedStatement pstmt = conexao.prepareStatement(query);
@@ -163,37 +163,38 @@ public class Sistema {
     /*
     Métodos responsáveis pelo CRUD do reserva
     */
-   public static void cadastrarReserva(String entrada, String saida, String nome, String cpf,String funcionario, String quarto, String tipoQuarto) {
+   public static void cadastrarReserva(String checkin, String checkout, String nome, String cpf,String funcionario, String numeroQuarto, String tipoQuarto) {
     try (Connection conexao = estabelecerConexao()) {
-        String query = "INSERT INTO reserva(checkin, checkout, nomeCliente, cpf, nomeFuncionario, tipoQuarto, quarto) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO reserva(Checkin, Checkout, NomeCliente, CPF, NomeFuncionario,Quarto,TipoQuarto) VALUES(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstmt = conexao.prepareStatement(query);
-        pstmt.setString(1, entrada);
-        pstmt.setString(2, saida);
+        pstmt.setString(1, checkin);
+        pstmt.setString(2, checkout);
         pstmt.setString(3, nome);
         pstmt.setString(4, cpf);
         pstmt.setString(5, funcionario);
-        pstmt.setString(6, tipoQuarto);
-        pstmt.setString(7, quarto);
+        pstmt.setString(6, numeroQuarto);
+        pstmt.setString(7, tipoQuarto);
+
 
         pstmt.executeUpdate();
     } catch (SQLException e) {
         System.out.println("Error: " + e.getMessage());
     }
-}
-    public static void atualizarReserva(String entrada,String saida,String nome,
-        String cpf,String funcionario,String quarto,String tipoQuarto){
+    }
+    public static void atualizarReserva(String checkin, String checkout,String nome,
+        String cpf,String funcionario,String numeroQuarto,String tipoQuarto){
         try (Connection conexao = estabelecerConexao()){
-            String query = "UPDATE reserva SET checkin=?, checkout=?, nomeCliente=?, cpf=?, "
-            + "funcionario=?, tipoQuarto=?, quarto=? WHERE checkin=? AND checkout=? AND tipoQuarto=? AND quarto=?";
+            String query = "UPDATE reserva SET Checkin=?, Checkout=?, NomeCliente=?, CPF=?, "
+            + "Funcionario=?, TipoQuarto=?, Quarto=? WHERE Checkin=? AND Checkout=? AND TipoQuarto=? AND Quarto=?";
             
             PreparedStatement pstmt = conexao.prepareStatement(query);
-            pstmt.setString(1, entrada);
-            pstmt.setString(2, saida);
+            pstmt.setString(1, checkin);
+            pstmt.setString(2, checkout);
             pstmt.setString(3, nome);
             pstmt.setString(4, cpf);
             pstmt.setString(5, funcionario);
             pstmt.setString(6, tipoQuarto);
-            pstmt.setString(7, quarto);
+            pstmt.setString(7, numeroQuarto);
             
             pstmt.executeUpdate();
             //Essa linha foi adicionada porque minha base de dados não estava atualizando
@@ -204,43 +205,32 @@ public class Sistema {
             e.printStackTrace();
         }
     }
-    public static void deletarReserva(String entrada,String saida,String quarto,String tipoQuarto,String cpf){
+    public static void deletarReserva(String checkin, String checkout,String numeroQuarto,String tipoQuarto,String cpf){
         try(Connection conexao = estabelecerConexao()){
-            String query = "DELETE FROM reserva WHERE checkin=? AND checkout=? AND tipoQuarto=? AND quarto=? AND cpf=?";
+            String query = "DELETE FROM reserva WHERE Checkin=? AND Checkout=? AND TipoQuarto=? AND Quarto=? AND CPF=?";
             PreparedStatement pstmt = conexao.prepareStatement(query);
-                pstmt.setString(1, entrada);
-                pstmt.setString(2, saida);
-                pstmt.setString(3, quarto);
+                pstmt.setString(1, checkin);
+                pstmt.setString(2, checkout);
+                pstmt.setString(3, numeroQuarto);
                 pstmt.setString(4, tipoQuarto);
                 pstmt.setString(5, cpf);
-                ResultSet resultSet = pstmt.executeQuery();
-        
-//                DefaultTableModel tabelaReserva;
-//            // Add rows to the table with data from the ResultSet
-//            while (resultSet.next()) {
-//                Object[] rowData = {
-//                    resultSet.getString("checkin"),
-//                    resultSet.getString("checkout"),
-//                    resultSet.getString("tipoQuarto"),
-//                    resultSet.getString("quarto")
-//                };
-//                tabelaReserva.addRow(rowData);
-//            }  
-            pstmt.executeUpdate();
+                pstmt.executeQuery();
+ 
+                pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    public static boolean visualizarReserva(String entrada,String saida,String quarto,String tipoQuarto){
+    public static boolean visualizarReserva(String checkin, String checkout,String numeroQuarto,String tipoQuarto){
         /*Realizando a autenticação dos usuários no sistemas*/
         try{
             ResultSet resultSet;
             Connection conexao = estabelecerConexao();
-                String query = "SELECT * FROM reserva WHERE checkin=? AND checkout=? AND tipoQuarto=? AND quarto=?";
+                String query = "SELECT * FROM reserva WHERE Checkin=? AND Checkout=? AND TipoQuarto=? AND Quarto=?";
                 PreparedStatement  pstmt = conexao.prepareStatement(query);
-                pstmt.setString(1, entrada);
-                pstmt.setString(2, saida);
-                pstmt.setString(3, quarto);
+                pstmt.setString(1, checkin);
+                pstmt.setString(2, checkout);
+                pstmt.setString(3, numeroQuarto);
                 pstmt.setString(4, tipoQuarto);
                 resultSet = pstmt.executeQuery(); 
                 return true;
