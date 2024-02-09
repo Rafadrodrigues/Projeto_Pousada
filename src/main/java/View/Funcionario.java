@@ -341,7 +341,8 @@ public class Funcionario extends javax.swing.JFrame {
         String endereco = campoendereco.getText();
 
         /*Conferir se a sequencia esta correta e quantidade de variavel*/
-        cadastrarUsuario(nome,password,usuario,cpf,endereco,email,telefone);
+        
+        cadastrarUsuario(usuario, password, nome, cpf, email, telefone, endereco);
         JOptionPane.showMessageDialog(null,"Funcionário adicionado com sucesso!");
        
     }//GEN-LAST:event_botaosalvarActionPerformed

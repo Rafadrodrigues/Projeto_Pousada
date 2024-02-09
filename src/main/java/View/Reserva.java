@@ -65,8 +65,6 @@ public class Reserva extends javax.swing.JFrame {
         checkout = new com.toedter.calendar.JDateChooser();
         campofuncionario = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabela = new javax.swing.JTable();
 
         jPanel3.setBackground(new java.awt.Color(86, 0, 140));
 
@@ -82,7 +80,6 @@ public class Reserva extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(736, 605));
 
         jPanel1.setBackground(new java.awt.Color(86, 0, 140));
 
@@ -267,6 +264,10 @@ public class Reserva extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel16.setText("Check-out");
 
+        checkin.setDateFormatString("dd-MM-YYYY");
+
+        checkout.setDateFormatString("dd-MM-YYYY");
+
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel4.setText("Funcionário ");
 
@@ -329,19 +330,6 @@ public class Reserva extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Check-in", "Check-out", "Tipo do Quarto", "Quarto"
-            }
-        ));
-        jScrollPane1.setViewportView(tabela);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -349,24 +337,20 @@ public class Reserva extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 6, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(botaoverificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoatualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(botaoverificar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botaoatualizar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaodeletar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaosalvar))
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1))
+                        .addComponent(botaodeletar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaosalvar))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
@@ -378,14 +362,13 @@ public class Reserva extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaosalvar)
-                    .addComponent(botaodeletar)
-                    .addComponent(botaoatualizar)
-                    .addComponent(botaoverificar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaodeletar)
+                        .addComponent(botaoatualizar)
+                        .addComponent(botaoverificar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -394,18 +377,25 @@ public class Reserva extends javax.swing.JFrame {
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel tabelaReserva = (DefaultTableModel) tabela.getModel();
+//        DefaultTableModel tabelaReserva = (DefaultTableModel) tabela.getModel();
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         String dataCheckin = dateFormat.format(checkin.getDate());
         String dataCheckout = dateFormat.format(checkout.getDate());
         String numeroQuarto = opcaonumero.toString();
         String tipoQuarto = opcaotipoquarto.toString();
-        
-        Object[] dadosTabela = {dataCheckin,dataCheckout,tipoQuarto,numeroQuarto};
-        tabelaReserva.addRow(dadosTabela);
+//        
+//        tabelaReserva.setRowCount(0);
+//         
+//        Object[] dadosTabela = {dataCheckin,dataCheckout,tipoQuarto,numeroQuarto};
+//        tabelaReserva.addRow(dadosTabela);
 
-        visualizarReserva(dataCheckin,dataCheckout, numeroQuarto, tipoQuarto);
+        boolean resultado = visualizarReserva(dataCheckin,dataCheckout, numeroQuarto, tipoQuarto);
+        if(resultado){
+            JOptionPane.showMessageDialog(null,"Existe disponibilidade nesse dia");
+        }else{
+            JOptionPane.showMessageDialog(null,"Não existe disponibilidade nesse dia");
+        }
         
     }//GEN-LAST:event_botaoverificarActionPerformed
 
@@ -485,7 +475,7 @@ public class Reserva extends javax.swing.JFrame {
         }else{
         /*Conferir se a sequencia esta correta e quantidade de variavel*/
 
-        cadastrarReserva(dataCheckin,dataCheckout,nome,cpf,funcionario,numeroQuarto,tipoQuarto);
+        cadastrarReserva(dataCheckin,dataCheckout,nome,cpf,funcionario,tipoQuarto,numeroQuarto);
         cadastrarCliente(nome,cpf,telefone);
         JOptionPane.showMessageDialog(null,"Reserva adicionada com sucesso!");
     }
@@ -577,10 +567,8 @@ public class Reserva extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> opcaonumero;
     private javax.swing.JComboBox<String> opcaotipoquarto;
-    private javax.swing.JTable tabela;
     private javax.swing.JFormattedTextField telefonecliente;
     // End of variables declaration//GEN-END:variables
 }

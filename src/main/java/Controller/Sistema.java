@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -162,14 +163,9 @@ public class Sistema {
     /*
     Métodos responsáveis pelo CRUD do reserva
     */
-    public static void cadastrarReserva(String entrada,String saida,String nome,
-        String cpf,String funcionario,String quarto,String tipoQuarto){
-        
-        try (Connection conexao = estabelecerConexao()) {
-        String query = "INSERT INTO reserva(checkin, checkout, nomeCliente, "
-            + "cpf, funcionario, tipoQuarto, quarto) "
-            + "VALUES(?, ?, ?, ?, ?, ?, ?)";
-
+   public static void cadastrarReserva(String entrada, String saida, String nome, String cpf,String funcionario, String quarto, String tipoQuarto) {
+    try (Connection conexao = estabelecerConexao()) {
+        String query = "INSERT INTO reserva(checkin, checkout, nomeCliente, cpf, nomeFuncionario, tipoQuarto, quarto) VALUES(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstmt = conexao.prepareStatement(query);
         pstmt.setString(1, entrada);
         pstmt.setString(2, saida);
@@ -180,11 +176,10 @@ public class Sistema {
         pstmt.setString(7, quarto);
 
         pstmt.executeUpdate();
-            
     } catch (SQLException e) {
         System.out.println("Error: " + e.getMessage());
     }
-    }
+}
     public static void atualizarReserva(String entrada,String saida,String nome,
         String cpf,String funcionario,String quarto,String tipoQuarto){
         try (Connection conexao = estabelecerConexao()){
@@ -218,13 +213,25 @@ public class Sistema {
                 pstmt.setString(3, quarto);
                 pstmt.setString(4, tipoQuarto);
                 pstmt.setString(5, cpf);
-                
+                ResultSet resultSet = pstmt.executeQuery();
+        
+//                DefaultTableModel tabelaReserva;
+//            // Add rows to the table with data from the ResultSet
+//            while (resultSet.next()) {
+//                Object[] rowData = {
+//                    resultSet.getString("checkin"),
+//                    resultSet.getString("checkout"),
+//                    resultSet.getString("tipoQuarto"),
+//                    resultSet.getString("quarto")
+//                };
+//                tabelaReserva.addRow(rowData);
+//            }  
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    public static void visualizarReserva(String entrada,String saida,String quarto,String tipoQuarto){
+    public static boolean visualizarReserva(String entrada,String saida,String quarto,String tipoQuarto){
         /*Realizando a autenticação dos usuários no sistemas*/
         try{
             ResultSet resultSet;
@@ -236,9 +243,11 @@ public class Sistema {
                 pstmt.setString(3, quarto);
                 pstmt.setString(4, tipoQuarto);
                 resultSet = pstmt.executeQuery(); 
-
+                return true;
+                
         } catch(Exception e){
             System.out.println("Error " + e.getMessage());
         }
+        return false;
     }
 }
