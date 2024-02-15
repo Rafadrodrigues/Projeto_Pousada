@@ -33,7 +33,6 @@ public class Login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        campousuario = new javax.swing.JTextField();
         camposenha = new javax.swing.JPasswordField();
         enviar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -41,6 +40,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        campousuario = new javax.swing.JFormattedTextField();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -90,12 +90,6 @@ public class Login extends javax.swing.JFrame {
                 .addGap(64, 64, 64))
         );
 
-        campousuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campousuarioActionPerformed(evt);
-            }
-        });
-
         enviar.setBackground(new java.awt.Color(36, 0, 70));
         enviar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         enviar.setForeground(new java.awt.Color(255, 255, 255));
@@ -128,6 +122,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        try {
+            campousuario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("Func####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -139,18 +139,19 @@ public class Login extends javax.swing.JFrame {
                         .addGap(102, 102, 102)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(campousuario, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(camposenha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(enviar)))
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(enviar)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(campousuario, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(camposenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(67, 67, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,10 +213,6 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_enviarActionPerformed
 
-    private void campousuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campousuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campousuarioActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         Signup signup = new Signup();
@@ -262,7 +259,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField camposenha;
-    private javax.swing.JTextField campousuario;
+    private javax.swing.JFormattedTextField campousuario;
     private javax.swing.JButton enviar;
     private javax.swing.JButton jButton3;
     private javax.swing.JFrame jFrame1;

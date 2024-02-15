@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -39,54 +40,102 @@ public class Sistema {
 
         return false;
     }
-    
-    public static void signup(String usuario, String senha,String nome, String cpf, String endereco, String email, 
-            String telefone){
-
-            try{
-                Connection conexao = estabelecerConexao();
-                String query = "INSERT INTO funcionario(Usuario, Senha, Nome, CPF, Email, Telefone, Endereco) "
-                + "VALUES(?,?,?,?,?,?,?)";
-
-                PreparedStatement pstmt = conexao.prepareStatement(query);
-                pstmt.setString(1, usuario);
-                pstmt.setString(2, senha);
-                pstmt.setString(3, nome);
-                pstmt.setString(4, cpf);
-                pstmt.setString(5, email);
-                pstmt.setString(6, telefone);
-                pstmt.setString(7, endereco);
-                
-                pstmt.executeUpdate();
-            
-        } catch(Exception e){
-            System.out.println("Error " + e.getMessage());
+    public static int obtendoID(String usuario) {
+    try {
+        Connection conexao = estabelecerConexao();
+        String query = "SELECT IdFuncionario FROM funcionario WHERE Usuario = ?";
+        
+        PreparedStatement pstmt = conexao.prepareStatement(query);
+        pstmt.setString(1, usuario);
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        int generatedKey = 0;
+        if (rs.next()) {
+            generatedKey = rs.getInt("IdFuncionario");
         }
+        
+        rs.close();
+        pstmt.close();
+        conexao.close();
+        
+        return generatedKey;
+    } catch (SQLException e) {
+        System.out.println("Error " + e.getMessage());
+        return 0;
     }
+}
+
+    public static void signup(String usuario, String senha, String nome, String email, 
+                    String telefone, String rua, int numeroCasa, String bairro, String cidade) {
+            try {
+                Connection conexao = estabelecerConexao();
+                String query1 = "INSERT INTO funcionario(Usuario, Senha, Nome, Email, Telefone) "
+                              + "VALUES (?, ?, ?, ?, ?)";
+                
+                String query2 = "INSERT INTO endereco(Rua, Numero, Bairro, Cidade,FK_IdFuncionario) "
+                              + "VALUES (?, ?, ?, ?, ?)";
+
+                PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+                pstmt1.setString(1, usuario);
+                pstmt1.setString(2, senha);
+                pstmt1.setString(3, nome);
+                pstmt1.setString(4, email);
+                pstmt1.setString(5, telefone);
+
+                pstmt1.executeUpdate();
+                
+                int idFunc = obtendoID(usuario);
+                
+                PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+                pstmt2.setString(1, rua);
+                pstmt2.setInt(2, numeroCasa);
+                pstmt2.setString(3, bairro);
+                pstmt2.setString(4, cidade);
+                pstmt2.setInt(5, idFunc);
+                pstmt2.executeUpdate();
+
+            } catch(Exception e) {
+                System.out.println("Error " + e.getMessage());
+            }
+    }
+
     /*
     Métodos responsáveis pelo CRUD do funcionario
     */
 
-    public static void cadastrarUsuario(String nome, String senha,String usuario, String cpf, String email, String telefone,String endereco){
+    public static void cadastrarUsuario(String usuario, String senha, String nome, String email, 
+                    String telefone, String rua, int numeroCasa, String bairro, String cidade){
+            try {
+                Connection conexao = estabelecerConexao();
+                String query1 = "INSERT INTO funcionario(Usuario, Senha, Nome, Email, Telefone) "
+                              + "VALUES (?, ?, ?, ?, ?)";
+                
+                String query2 = "INSERT INTO endereco(Rua, Numero, Bairro, Cidade,FK_IdFuncionario) "
+                              + "VALUES (?, ?, ?, ?)";
 
-        try (Connection conexao = estabelecerConexao()) {
-            String query = "INSERT INTO funcionario(Usuario, Senha, Nome, CPF, Email, Telefone, Endereco) "
-                + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+                pstmt1.setString(1, usuario);
+                pstmt1.setString(2, senha);
+                pstmt1.setString(3, nome);
+                pstmt1.setString(4, email);
+                pstmt1.setString(5, telefone);
 
-            PreparedStatement pstmt = conexao.prepareStatement(query);
-            pstmt.setString(1, usuario);
-            pstmt.setString(2, senha);
-            pstmt.setString(3, nome);
-            pstmt.setString(4, cpf);
-            pstmt.setString(5, email);
-            pstmt.setString(6, telefone);
-            pstmt.setString(7, endereco);
+                pstmt1.executeUpdate();
+                
+                int idFunc = obtendoID(usuario);
+                
+                PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+                pstmt2.setString(1, rua);
+                pstmt2.setInt(2, numeroCasa);
+                pstmt2.setString(3, bairro);
+                pstmt2.setString(4, cidade);
+                pstmt2.setInt(5, idFunc);
+                pstmt2.executeUpdate();
 
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
+            } catch(Exception e) {
+                System.out.println("Error " + e.getMessage());
+            }
     }
     
     public static void atualizarUsuario(String nome, String senha,String usuario, 
@@ -163,17 +212,16 @@ public class Sistema {
     /*
     Métodos responsáveis pelo CRUD do reserva
     */
-   public static void cadastrarReserva(String checkin, String checkout, String nome, String cpf,String funcionario, String numeroQuarto, String tipoQuarto) {
+   public static void cadastrarReserva(String checkin, String checkout, String nome, String cpf, String numeroQuarto, String tipoQuarto) {
     try (Connection conexao = estabelecerConexao()) {
-        String query = "INSERT INTO reserva(Checkin, Checkout, NomeCliente, CPF, NomeFuncionario,Quarto,TipoQuarto) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO reserva(Checkin, Checkout, NomeCliente, CPF, Quarto, TipoQuarto) VALUES(?, ?, ?, ?, ?, ?)";
         PreparedStatement pstmt = conexao.prepareStatement(query);
         pstmt.setString(1, checkin);
         pstmt.setString(2, checkout);
         pstmt.setString(3, nome);
         pstmt.setString(4, cpf);
-        pstmt.setString(5, funcionario);
-        pstmt.setString(6, numeroQuarto);
-        pstmt.setString(7, tipoQuarto);
+        pstmt.setString(5, numeroQuarto);
+        pstmt.setString(6, tipoQuarto);
 
 
         pstmt.executeUpdate();
@@ -182,19 +230,22 @@ public class Sistema {
     }
     }
     public static void atualizarReserva(String checkin, String checkout,String nome,
-        String cpf,String funcionario,String numeroQuarto,String tipoQuarto){
+        String cpf,String numeroQuarto,String tipoQuarto){
         try (Connection conexao = estabelecerConexao()){
-            String query = "UPDATE reserva SET Checkin=?, Checkout=?, NomeCliente=?, CPF=?, "
-            + "Funcionario=?, TipoQuarto=?, Quarto=? WHERE Checkin=? AND Checkout=? AND TipoQuarto=? AND Quarto=?";
+            String query = "UPDATE reserva SET Checkin=?, Checkout=?, NomeCliente=?, CPF=?, TipoQuarto=?, Quarto=? WHERE Checkin=? AND Checkout=? AND TipoQuarto=? AND Quarto=?";
             
             PreparedStatement pstmt = conexao.prepareStatement(query);
             pstmt.setString(1, checkin);
             pstmt.setString(2, checkout);
             pstmt.setString(3, nome);
             pstmt.setString(4, cpf);
-            pstmt.setString(5, funcionario);
-            pstmt.setString(6, tipoQuarto);
-            pstmt.setString(7, numeroQuarto);
+            pstmt.setString(5, tipoQuarto);
+            pstmt.setString(6, numeroQuarto);
+            pstmt.setString(7, checkin); 
+            pstmt.setString(8, checkout);
+            pstmt.setString(9, tipoQuarto);
+            pstmt.setString(10, numeroQuarto);
+
             
             pstmt.executeUpdate();
             //Essa linha foi adicionada porque minha base de dados não estava atualizando
