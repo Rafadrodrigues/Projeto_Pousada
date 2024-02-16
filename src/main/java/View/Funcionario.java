@@ -107,6 +107,12 @@ public class Funcionario extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Pessoais", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 12))); // NOI18N
 
+        camponome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                camponomeActionPerformed(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel2.setText("Nome");
 
@@ -121,6 +127,11 @@ public class Funcionario extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        campocpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campocpfActionPerformed(evt);
+            }
+        });
 
         try {
             campousuario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("Func####")));
@@ -232,10 +243,10 @@ public class Funcionario extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(campotelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(camponumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
                             .addComponent(campocidade, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))))
+                            .addComponent(jLabel8)
+                            .addComponent(camponumero, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -305,7 +316,7 @@ public class Funcionario extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Telefone"
+                "Nome", "Usuário", "Telefone"
             }
         ) {
             Class[] types = new Class [] {
@@ -334,7 +345,7 @@ public class Funcionario extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(442, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addGap(424, 424, 424))
         );
@@ -364,9 +375,9 @@ public class Funcionario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(35, 35, 35)
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addGap(0, 40, Short.MAX_VALUE))
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -406,6 +417,7 @@ public class Funcionario extends javax.swing.JFrame {
         String nome = camponome.getText();
         String usuario = campousuario.getText();
         String senha = camposenha.getText();
+        String cpf = campocpf.getText();
         String email = campoemail.getText();
         String telefone = campotelefone.getText();
         String rua = camporua.getText();
@@ -414,13 +426,14 @@ public class Funcionario extends javax.swing.JFrame {
         String bairro = campobairro.getText();
         String cidade = campocidade.getText();
             
-        if (nome.equals("") || (usuario.equals("")||(senha.equals("")||(email.equals("")
-            ||(telefone.equals("")||rua.equals("")||("".equals(numero)||(bairro.equals("")||(cidade.equals(""))))))))) {
-            JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos");
+        if(nome.equals("") || (senha.equals("") || 
+                (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
+                ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
+            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
 
         /*Conferir se a sequencia esta correta e quantidade de variavel*/
-        cadastrarUsuario(usuario, senha, nome, email, telefone, rua,numero,bairro,cidade);
+        cadastrarUsuario(usuario, senha, nome,cpf, email, telefone, rua,numero,bairro,cidade);
         JOptionPane.showMessageDialog(null,"Funcionário adicionado com sucesso!");
        
     }//GEN-LAST:event_botaosalvarActionPerformed
@@ -431,6 +444,7 @@ public class Funcionario extends javax.swing.JFrame {
         String usuario = campousuario.getText();
         String senha = camposenha.getText();
         String email = campoemail.getText();
+        String cpf = campocpf.getText();
         String telefone = campotelefone.getText();
         String rua = camporua.getText();
         //Convertendo o valor de String para int
@@ -438,12 +452,12 @@ public class Funcionario extends javax.swing.JFrame {
         String bairro = campobairro.getText();
         String cidade = campocidade.getText();
         
-        if (nome.equals("") || (usuario.equals("")||(senha.equals("")||(email.equals("")
-            ||(telefone.equals("")||rua.equals("")||("".equals(numero)||(bairro.equals("")||(cidade.equals(""))))))))) {
-            JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos");
+        if(nome.equals("") || (senha.equals("") || 
+                (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
+                ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
+            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
-        
-//            atualizarUsuario(nome, password, usuario, cpf, endereco, email, telefone);
+            atualizarUsuario(usuario, senha, nome, cpf, email, telefone, rua, numero, bairro, cidade);
             JOptionPane.showMessageDialog(null, "Funcionário atualizado com sucesso!");
         
     }//GEN-LAST:event_botaoatualizarActionPerformed
@@ -454,6 +468,7 @@ public class Funcionario extends javax.swing.JFrame {
         String usuario = campousuario.getText();
         String senha = camposenha.getText();
         String email = campoemail.getText();
+        String cpf = campocpf.getText();
         String telefone = campotelefone.getText();
         String rua = camporua.getText();
         //Convertendo o valor de String para int
@@ -461,12 +476,18 @@ public class Funcionario extends javax.swing.JFrame {
         String bairro = campobairro.getText();
         String cidade = campocidade.getText();
         
-        if (nome.equals("") || (usuario.equals("")||(senha.equals("")||(email.equals("")
-            ||(telefone.equals("")||rua.equals("")||("".equals(numero)||(bairro.equals("")||(cidade.equals(""))))))))) {
-            JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos");
+        if(nome.equals("") || (senha.equals("") || 
+                (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
+                ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
+            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
-            deletarUsuario(usuario);
-            JOptionPane.showMessageDialog(null,"Funcionário deletado com sucesso!");
+        //Condicional para certificar que deseja deletar funcionario
+        int opcao = JOptionPane.showConfirmDialog(Funcionario.this, "Tem certeza que deseja deletar esse funcionário?", "Confirmação",JOptionPane.YES_NO_OPTION);
+                // Se o usuário clicar em "Sim" usuário é deletado
+                if (opcao == JOptionPane.YES_OPTION) {
+                    deletarUsuario(usuario,cpf);
+                    JOptionPane.showMessageDialog(null,"Funcionário deletado com sucesso!");
+                }
         
     }//GEN-LAST:event_botaodeletarActionPerformed
 
@@ -487,6 +508,14 @@ public class Funcionario extends javax.swing.JFrame {
         campotelefone.setText(model.getValueAt(i,3).toString());
         
     }//GEN-LAST:event_tabelafuncMouseClicked
+
+    private void campocpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campocpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campocpfActionPerformed
+
+    private void camponomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camponomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_camponomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -528,7 +557,6 @@ public class Funcionario extends javax.swing.JFrame {
     private javax.swing.JButton botaodeletar;
     private javax.swing.JButton botaosalvar;
     private javax.swing.JButton botaovoltar;
-    private javax.swing.JButton botaovoltar1;
     private javax.swing.JTextField campobairro;
     private javax.swing.JTextField campocidade;
     private javax.swing.JFormattedTextField campocpf;
@@ -540,7 +568,6 @@ public class Funcionario extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField campotelefone;
     private javax.swing.JFormattedTextField campousuario;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -555,7 +582,6 @@ public class Funcionario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabelafunc;

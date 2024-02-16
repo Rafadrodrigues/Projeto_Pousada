@@ -35,6 +35,7 @@ public class Signup extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        campocpf = new javax.swing.JFormattedTextField();
         jButton5 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         senhacadastro1 = new javax.swing.JPasswordField();
@@ -60,6 +61,8 @@ public class Signup extends javax.swing.JFrame {
         emailcadastro1 = new javax.swing.JTextField();
         nomecadastro2 = new javax.swing.JTextField();
         ruacadastro1 = new javax.swing.JTextField();
+        cpfcadastro1 = new javax.swing.JFormattedTextField();
+        jLabel29 = new javax.swing.JLabel();
 
         jButton4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 102, 102));
@@ -163,6 +166,17 @@ public class Signup extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(64, 64, 64))
         );
+
+        try {
+            campocpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        campocpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campocpfActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -280,6 +294,20 @@ public class Signup extends javax.swing.JFrame {
             }
         });
 
+        try {
+            cpfcadastro1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        cpfcadastro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpfcadastro1ActionPerformed(evt);
+            }
+        });
+
+        jLabel29.setFont(new java.awt.Font("Zilla Slab SemiBold", 0, 14)); // NOI18N
+        jLabel29.setText("CPF");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -303,15 +331,19 @@ public class Signup extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(campousuario, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(nomecadastro2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(campousuario, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(nomecadastro2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
+                                            .addComponent(telefonecadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(69, 69, 69)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(senhacadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel16)))
+                                            .addComponent(jLabel16)
+                                            .addComponent(jLabel29)
+                                            .addComponent(cpfcadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(bairrocadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -319,7 +351,6 @@ public class Signup extends javax.swing.JFrame {
                                             .addComponent(jLabel27)
                                             .addComponent(enviarcadastro1)
                                             .addComponent(ruacadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(telefonecadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel18)
                                             .addComponent(emailcadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel15))
@@ -340,14 +371,18 @@ public class Signup extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(jLabel29))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nomecadastro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nomecadastro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cpfcadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
                     .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campousuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(senhacadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -359,10 +394,10 @@ public class Signup extends javax.swing.JFrame {
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(telefonecadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(jLabel25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ncadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -381,7 +416,7 @@ public class Signup extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
                     .addComponent(jLabel20))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
         );
 
@@ -428,7 +463,7 @@ public class Signup extends javax.swing.JFrame {
 
     private void enviarcadastro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarcadastro1ActionPerformed
         // TODO add your handling code here:
-        String nome = ruacadastro1.getText();
+        String nome = nomecadastro2.getText();
         String usuario = campousuario.getText();
         String senha = senhacadastro1.getText();
         String email = emailcadastro1.getText();
@@ -436,16 +471,17 @@ public class Signup extends javax.swing.JFrame {
         String rua = ruacadastro1.getText();
         //Convertendo o valor de String para int
         int numero = Integer.parseInt(ncadastro1.getText());
-        String bairro = ruacadastro1.getText();
-        String cidade = ruacadastro1.getText();
+        String cpf = cpfcadastro1.getText();
+        String bairro = bairrocadastro1.getText();
+        String cidade = cidadecadastro1.getText();
         
         if(nome.equals("") || (senha.equals("") || 
                 (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
-                ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)))){
+                ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
 
-        signup(usuario,senha,nome,email,telefone,rua,numero,bairro,cidade);
+        signup(usuario,senha,nome,cpf,email,telefone,rua,numero,bairro,cidade);
         JOptionPane.showMessageDialog(null,"Cadastro realizado com sucesso!");
         
         Login loginFrame = new Login();
@@ -462,6 +498,14 @@ public class Signup extends javax.swing.JFrame {
     private void ruacadastro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ruacadastro1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ruacadastro1ActionPerformed
+
+    private void campocpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campocpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campocpfActionPerformed
+
+    private void cpfcadastro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpfcadastro1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cpfcadastro1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -501,9 +545,11 @@ public class Signup extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField bairrocadastro1;
+    private javax.swing.JFormattedTextField campocpf;
     private javax.swing.JFormattedTextField campousuario;
     private javax.swing.JFormattedTextField cidadecadastro1;
     private javax.swing.JTextField cpfcadastro;
+    private javax.swing.JFormattedTextField cpfcadastro1;
     private javax.swing.JPasswordField emailcadastro;
     private javax.swing.JTextField emailcadastro1;
     private javax.swing.JPasswordField enderecocadastro;
@@ -529,6 +575,7 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

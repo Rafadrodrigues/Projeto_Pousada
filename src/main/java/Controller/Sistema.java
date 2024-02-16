@@ -63,15 +63,15 @@ public class Sistema {
     } catch (SQLException e) {
         System.out.println("Error " + e.getMessage());
         return 0;
+        }
     }
-}
 
-    public static void signup(String usuario, String senha, String nome, String email, 
+    public static void signup(String usuario, String senha, String nome,String cpf,String email, 
                     String telefone, String rua, int numeroCasa, String bairro, String cidade) {
             try {
                 Connection conexao = estabelecerConexao();
-                String query1 = "INSERT INTO funcionario(Usuario, Senha, Nome, Email, Telefone) "
-                              + "VALUES (?, ?, ?, ?, ?)";
+                String query1 = "INSERT INTO funcionario(Usuario, Senha, Nome, CPF, Email, Telefone) "
+                              + "VALUES (?, ?, ?, ?, ?, ?)";
                 
                 String query2 = "INSERT INTO endereco(Rua, Numero, Bairro, Cidade,FK_IdFuncionario) "
                               + "VALUES (?, ?, ?, ?, ?)";
@@ -80,8 +80,9 @@ public class Sistema {
                 pstmt1.setString(1, usuario);
                 pstmt1.setString(2, senha);
                 pstmt1.setString(3, nome);
-                pstmt1.setString(4, email);
-                pstmt1.setString(5, telefone);
+                pstmt1.setString(4, cpf);
+                pstmt1.setString(5, email);
+                pstmt1.setString(6, telefone);
 
                 pstmt1.executeUpdate();
                 
@@ -104,22 +105,23 @@ public class Sistema {
     Métodos responsáveis pelo CRUD do funcionario
     */
 
-    public static void cadastrarUsuario(String usuario, String senha, String nome, String email, 
+    public static void cadastrarUsuario(String usuario, String senha, String nome,String cpf,String email, 
                     String telefone, String rua, int numeroCasa, String bairro, String cidade){
             try {
                 Connection conexao = estabelecerConexao();
-                String query1 = "INSERT INTO funcionario(Usuario, Senha, Nome, Email, Telefone) "
-                              + "VALUES (?, ?, ?, ?, ?)";
+                String query1 = "INSERT INTO funcionario(Usuario, Senha, Nome, CPF, Email, Telefone) "
+                              + "VALUES (?, ?, ?, ?, ?, ?)";
                 
                 String query2 = "INSERT INTO endereco(Rua, Numero, Bairro, Cidade,FK_IdFuncionario) "
-                              + "VALUES (?, ?, ?, ?)";
+                              + "VALUES (?, ?, ?, ?, ?)";
 
                 PreparedStatement pstmt1 = conexao.prepareStatement(query1);
                 pstmt1.setString(1, usuario);
                 pstmt1.setString(2, senha);
                 pstmt1.setString(3, nome);
-                pstmt1.setString(4, email);
-                pstmt1.setString(5, telefone);
+                pstmt1.setString(4, cpf);
+                pstmt1.setString(5, email);
+                pstmt1.setString(6, telefone);
 
                 pstmt1.executeUpdate();
                 
@@ -138,41 +140,60 @@ public class Sistema {
             }
     }
     
-    public static void atualizarUsuario(String nome, String senha,String usuario, 
-            String cpf, String endereco, String email,String telefone){
+    public static void atualizarUsuario(String usuario, String senha, String nome,String cpf, String email, 
+                String telefone, String rua, int numeroCasa, String bairro, String cidade){
 
-        try (Connection conexao = estabelecerConexao()){
-            String query = "UPDATE funcionario SET Usuario=?, Senha=?, Nome=?, Endereco=?, Email=?, Telefone=? WHERE CPF=?";
-            PreparedStatement pstmt = conexao.prepareStatement(query);
-            pstmt.setString(1, usuario);
-            pstmt.setString(2, senha);
-            pstmt.setString(3, nome);
-            pstmt.setString(4, endereco);
-            pstmt.setString(5, email);
-            pstmt.setString(6, telefone);
-            pstmt.setString(7, cpf);
+        try {
+            Connection conexao = estabelecerConexao();
+            String query1 = "UPDATE funcionario SET Senha=?, Nome=?, Email=?, Telefone=? WHERE Usuario=? AND CPF=?";
+            String query2 = "UPDATE endereco SET Rua=?, Numero=?, Bairro=?, Cidade=? WHERE Fk_IdFuncionario=?";
 
-            pstmt.executeUpdate();
-            //Essa linha foi adicionada porque minha base de dados não estava atualizando
-            conexao.commit();
+            PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+            pstmt1.setString(1, senha);
+            pstmt1.setString(2, nome);
+            pstmt1.setString(3, email);
+            pstmt1.setString(4, telefone);
+            pstmt1.setString(5, usuario);
+            pstmt1.setString(6, cpf);
 
-        } catch (SQLException e) {
-            // Handle the exception
-            e.printStackTrace();
+
+            pstmt1.executeUpdate();
+
+            int idFunc = obtendoID(usuario);
+
+            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+            pstmt2.setString(1, rua);
+            pstmt2.setInt(2, numeroCasa);
+            pstmt2.setString(3, bairro);
+            pstmt2.setString(4, cidade);
+            pstmt2.setInt(5, idFunc);
+            pstmt2.executeUpdate();
+
+        } catch(Exception e) {
+            System.out.println("Error " + e.getMessage());
         }
     }
-    public static void deletarUsuario(String cpf){
+
+    public static void deletarUsuario(String usuario,String cpf){
         
         try(Connection conexao = estabelecerConexao()){
-            String query = "DELETE FROM funcionario WHERE CPF=?";
-            PreparedStatement pstmt = conexao.prepareStatement(query);
-            pstmt.setString(1, cpf);
+            String query1 = "DELETE FROM funcionario WHERE Usuario=? AND CPF=?";
+            String query2 = "DELETE FROM endereco WHERE Fk_IdFuncionario=?";
+            int idFunc = obtendoID(usuario);
             
-            pstmt.executeUpdate();
+            PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+            pstmt1.setString(1, usuario);
+            pstmt1.setString(2, cpf);
+            pstmt1.executeUpdate();
+            
+            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+            pstmt2.setInt(1, idFunc);
+            
+            pstmt2.executeUpdate();
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
     }
     /*Esse método foi criado para verificar o usuário quando for atualizar ou deletar*/
     public static boolean verificarUsuario(String cpf) {
@@ -214,7 +235,7 @@ public class Sistema {
     */
    public static void cadastrarReserva(String checkin, String checkout, String nome, String cpf, String numeroQuarto, String tipoQuarto) {
     try (Connection conexao = estabelecerConexao()) {
-        String query = "INSERT INTO reserva(Checkin, Checkout, NomeCliente, CPF, Quarto, TipoQuarto) VALUES(?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO reserva(Checkin, Checkout, NomeCliente, CPF, Quarto, TipoQuarto,FK_ClienteReserva,FK_FuncionarioReserva) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement pstmt = conexao.prepareStatement(query);
         pstmt.setString(1, checkin);
         pstmt.setString(2, checkout);
@@ -223,7 +244,7 @@ public class Sistema {
         pstmt.setString(5, numeroQuarto);
         pstmt.setString(6, tipoQuarto);
 
-
+        //Preciso criar um método que colete o ID dos usuários
         pstmt.executeUpdate();
     } catch (SQLException e) {
         System.out.println("Error: " + e.getMessage());
