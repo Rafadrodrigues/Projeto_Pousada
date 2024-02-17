@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static Controller.Sistema.visualizarReserva;
 import static Controller.Sistema.deletarReserva;
-import static Controller.Sistema.cadastrarCliente;
 import static Controller.Sistema.cadastrarReserva;
 import static Controller.Sistema.atualizarReserva;
 import com.toedter.calendar.JDateChooser;
@@ -65,8 +64,8 @@ public class Reserva extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         checkin = new com.toedter.calendar.JDateChooser();
         checkout = new com.toedter.calendar.JDateChooser();
-        campofuncionario = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        campofuncionario = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaReserva = new javax.swing.JTable();
 
@@ -271,6 +270,12 @@ public class Reserva extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel4.setText("Funcionário ");
 
+        try {
+            campofuncionario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("Func####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -286,20 +291,20 @@ public class Reserva extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16))
-                        .addGap(111, 111, 111))
+                        .addGap(144, 144, 144))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(opcaotipoquarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(78, 78, 78)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(opcaonumero, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addGap(66, 66, 66)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(campofuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(33, 33, 33))
+                            .addComponent(campofuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,8 +317,8 @@ public class Reserva extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(opcaotipoquarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campofuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(opcaonumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(opcaonumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campofuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
@@ -401,7 +406,6 @@ public class Reserva extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -412,22 +416,22 @@ public class Reserva extends javax.swing.JFrame {
         // TODO add your handling code here:
 //        DefaultTableModel tabelaReserva = (DefaultTableModel) tabela.getModel();
         
-        String dataCheckin = ((JTextField)checkin.getDateEditor().getUiComponent()).getText();
-        String dataCheckout = ((JTextField)checkout.getDateEditor().getUiComponent()).getText();
-        String numeroQuarto = opcaonumero.toString();
-        String tipoQuarto = opcaotipoquarto.toString();
+//        String dataCheckin = ((JTextField)checkin.getDateEditor().getUiComponent()).getText();
+//        String dataCheckout = ((JTextField)checkout.getDateEditor().getUiComponent()).getText();
+//        String numeroQuarto = opcaonumero.toString();
+//        String tipoQuarto = opcaotipoquarto.toString();
 //        
 //        tabelaReserva.setRowCount(0);
 //         
 //        Object[] dadosTabela = {dataCheckin,dataCheckout,tipoQuarto,numeroQuarto};
 //        tabelaReserva.addRow(dadosTabela);
 
-        boolean resultado = visualizarReserva(dataCheckin,dataCheckout, numeroQuarto, tipoQuarto);
-        if(resultado){
-            JOptionPane.showMessageDialog(null,"Existe disponibilidade nesse dia");
-        }else{
-            JOptionPane.showMessageDialog(null,"Não existe disponibilidade nesse dia");
-        }
+//        boolean resultado = visualizarReserva(dataCheckin,dataCheckout, numeroQuarto, tipoQuarto);
+//        if(resultado){
+//            JOptionPane.showMessageDialog(null,"Existe disponibilidade nesse dia");
+//        }else{
+//            JOptionPane.showMessageDialog(null,"Não existe disponibilidade nesse dia");
+//        }
         
     }//GEN-LAST:event_botaoverificarActionPerformed
 
@@ -446,31 +450,16 @@ public class Reserva extends javax.swing.JFrame {
         String dataCheckout = ((JTextField)checkout.getDateEditor().getUiComponent()).getText();
         String numeroQuarto = opcaonumero.toString();
         String tipoQuarto = opcaotipoquarto.toString();
-        String funcionario = campofuncionario.getText();
+//        String funcionario = campofuncionario.getText();
         String cpf = campocpf.getText();
         String nome = camponomecliente.getText();
+        String telefone = telefonecliente.getText();
         
-        if(nome.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de nome do cliente");
-        }else if(funcionario.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de funcionário");
-        }else if(tipoQuarto.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo do tipo do quarto");
-        }else if(cpf.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de CPF");
-        }else if(numeroQuarto.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de número do quarto");
-        }else if(dataCheckin.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de diária");
-        }else if(dataCheckout.equals("")) {
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de diária");
-        }else{
-        /*Conferir se a sequencia esta correta e quantidade de variavel*/
-
-        atualizarReserva(dataCheckin,dataCheckout,nome,cpf,funcionario,numeroQuarto,tipoQuarto);  
+        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
+            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
+        }
+        atualizarReserva(dataCheckin,dataCheckout,nome,cpf,telefone,numeroQuarto,tipoQuarto);
         JOptionPane.showMessageDialog(null,"Reserva atualizada com sucesso!");
-    }
-        
     }//GEN-LAST:event_botaoatualizarActionPerformed
 
     private void opcaonumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcaonumeroActionPerformed
@@ -488,25 +477,11 @@ public class Reserva extends javax.swing.JFrame {
         String nome = camponomecliente.getText();
         String telefone = telefonecliente.getText();
         
-        if(nome.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de nome do cliente");
-        }else if(tipoQuarto.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo do tipo do quarto");
-        }else if(cpf.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de CPF");
-        }else if(numeroQuarto.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de número do quarto");
-        }else if(dataCheckin.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de diária");
-        }else if(dataCheckout.equals("")) {
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de diária");
-        }else{
-        /*Conferir se a sequencia esta correta e quantidade de variavel*/
-        
-        cadastrarReserva(dataCheckin,dataCheckout,nome,cpf,numeroQuarto,tipoQuarto);
-        cadastrarCliente(nome,cpf,telefone);
+        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
+            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
+        }
+        cadastrarReserva(dataCheckin, dataCheckout, nome, cpf, telefone, numeroQuarto, tipoQuarto);
         JOptionPane.showMessageDialog(null,"Reserva adicionada com sucesso!");
-    }
     }//GEN-LAST:event_botaosalvarActionPerformed
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
@@ -516,32 +491,25 @@ public class Reserva extends javax.swing.JFrame {
         String numeroQuarto = opcaonumero.toString();
         String tipoQuarto = opcaotipoquarto.toString();
         String cpf = campocpf.getText();
+        String nome = camponomecliente.getText();
         
-        if(cpf.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de CPF");
-        }else if(dataCheckin.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de Check-in");
-        }else if(dataCheckout.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo  de Check-out");
-        }else if(numeroQuarto.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de Quarto");
-        }else if(tipoQuarto.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo do Tipo do quarto");
-        }else{
+        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
+            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
+        }
             deletarReserva(dataCheckin,dataCheckout,numeroQuarto,tipoQuarto,cpf);
             JOptionPane.showMessageDialog(null,"Reserva deletada com sucesso!");
-        }
+        
     }//GEN-LAST:event_botaodeletarActionPerformed
 
     private void tabelaReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaReservaMouseClicked
         // TODO add your handling code here:
         
-        int i = tabelaReserva.getSelectedRow();
-        TableModel model = tabelaReserva.getModel();
-        checkin.setText(model.getValueAt(i,1).toString());
-        checkout.setText(model.getValueAt(i,2).toString());
-        opcaotipoquarto.setText(model.getValueAt(i,3).toString());
-        opcaonumero.setText(model.getValueAt(i,4).toString());
+//        int i = tabelaReserva.getSelectedRow();
+//        TableModel model = tabelaReserva.getModel();
+//        checkin.setText(model.getValueAt(i,1).toString());
+//        checkout.setText(model.getValueAt(i,2).toString());
+//        opcaotipoquarto.setText(model.getValueAt(i,3).toString());
+//        opcaonumero.setText(model.getValueAt(i,4).toString());
     }//GEN-LAST:event_tabelaReservaMouseClicked
 
     /**
@@ -586,7 +554,7 @@ public class Reserva extends javax.swing.JFrame {
     private javax.swing.JButton botaoverificar;
     private javax.swing.JButton botaovoltar;
     private javax.swing.JFormattedTextField campocpf;
-    private javax.swing.JTextField campofuncionario;
+    private javax.swing.JFormattedTextField campofuncionario;
     private javax.swing.JTextField camponomecliente;
     private com.toedter.calendar.JDateChooser checkin;
     private com.toedter.calendar.JDateChooser checkout;

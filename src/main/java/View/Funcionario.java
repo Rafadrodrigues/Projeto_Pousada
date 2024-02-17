@@ -8,7 +8,6 @@ import static Controller.Sistema.signup;
 import static Controller.Sistema.cadastrarUsuario;
 import static Controller.Sistema.atualizarUsuario;
 import static Controller.Sistema.deletarUsuario;
-import static Controller.Sistema.verificarUsuario;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 
@@ -66,6 +65,7 @@ public class Funcionario extends javax.swing.JFrame {
         tabelafunc = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        botaoverificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -316,7 +316,7 @@ public class Funcionario extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Nome", "Usuário", "Telefone"
+                "Nome", "Usuário", "CPF"
             }
         ) {
             Class[] types = new Class [] {
@@ -357,26 +357,38 @@ public class Funcionario extends javax.swing.JFrame {
                 .addGap(18, 18, 18))
         );
 
+        botaoverificar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        botaoverificar.setForeground(new java.awt.Color(0, 102, 51));
+        botaoverificar.setText("Verificar");
+        botaoverificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoverificarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoatualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaodeletar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaosalvar))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(botaoverificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoatualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaodeletar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaosalvar)))
                 .addGap(0, 40, Short.MAX_VALUE))
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -395,7 +407,8 @@ public class Funcionario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoatualizar)
                     .addComponent(botaodeletar)
-                    .addComponent(botaosalvar))
+                    .addComponent(botaosalvar)
+                    .addComponent(botaoverificar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -517,6 +530,10 @@ public class Funcionario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_camponomeActionPerformed
 
+    private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoverificarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -556,6 +573,7 @@ public class Funcionario extends javax.swing.JFrame {
     private javax.swing.JButton botaoatualizar;
     private javax.swing.JButton botaodeletar;
     private javax.swing.JButton botaosalvar;
+    private javax.swing.JButton botaoverificar;
     private javax.swing.JButton botaovoltar;
     private javax.swing.JTextField campobairro;
     private javax.swing.JTextField campocidade;
