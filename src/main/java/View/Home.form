@@ -35,22 +35,20 @@
           <Component id="jPanel3" alignment="1" max="32767" attributes="0"/>
           <Component id="jPanel2" alignment="1" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="172" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="botaocliente" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                      <Component id="botaofuncionario" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                      <Component id="botaoreserva" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="95" pref="95" max="-2" attributes="0"/>
-                      <Component id="jLabel6" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="248" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+              <Component id="botaocliente" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+              <Component id="botaocliente1" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+              <Component id="botaofuncionario" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
+              <Component id="botaoreserva" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="267" max="-2" attributes="0"/>
+              <Component id="jLabel6" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="248" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,6 +65,7 @@
                   <Component id="botaoreserva" alignment="3" max="32767" attributes="0"/>
                   <Component id="botaofuncionario" alignment="3" max="32767" attributes="0"/>
                   <Component id="botaocliente" alignment="3" max="32767" attributes="0"/>
+                  <Component id="botaocliente1" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
               <Component id="jPanel3" max="32767" attributes="0"/>
@@ -309,10 +308,24 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="66" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Clientes"/>
+        <Property name="text" type="java.lang.String" value="Financeiro"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoclienteActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="botaocliente1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI Semibold" size="14" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="66" red="0" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Clientes"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaocliente1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -68,7 +68,7 @@ public class Sistema {
             }
     }
     //Obtendo o ID na tabela de Cliente
-    public static int obtendoIdCliente(String cpf) {
+   public static Integer obtendoIdCliente(String cpf) {
         try {
             Connection conexao = estabelecerConexao();
             String query = "SELECT IdCliente FROM cliente WHERE CPF = ?";
@@ -78,11 +78,9 @@ public class Sistema {
 
             ResultSet rs = pstmt.executeQuery();
 
-            int generatedKey = 0;
+            Integer generatedKey = null; // Use Integer para permitir o valor nulo
             if (rs.next()) {
                 generatedKey = rs.getInt("IdCliente");
-            }else{
-                return 0;
             }
 
             rs.close();
@@ -91,10 +89,12 @@ public class Sistema {
 
             return generatedKey;
         } catch (SQLException e) {
-            System.out.println("Error " + e.getMessage());
-            return 0;
-            }
+            // Trate a exceção de SQL adequadamente, lançando ou registrando o erro
+            e.printStackTrace();
+            return null; // Retorne null em caso de exceção
+        }
     }
+
 
     public static void signup(String usuario, String senha, String nome,String cpf,String email, 
                     String telefone, String rua, int numeroCasa, String bairro, String cidade) {
@@ -240,94 +240,89 @@ public class Sistema {
             return false;
         }
     }
-
-    /*
-    Métodos responsáveis pelo CRUD do cliente
-    */
-//    public static void cadastrarCliente(String nome,String cpf,String telefone){
-//        try (Connection conexao = estabelecerConexao()) {
-//            String query = "INSERT INTO cliente(Nome, CPF, Telefone) "
-//                + "VALUES(?, ?, ?)";
-//
-//            PreparedStatement pstmt = conexao.prepareStatement(query);
-//            pstmt.setString(1, nome);
-//            pstmt.setString(2, cpf);
-//            pstmt.setString(3, telefone);
-//
-//            pstmt.executeUpdate();
-//
-//        } catch (SQLException e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
-//    }
-
     /*
     Métodos responsáveis pelo CRUD do reserva
     */
-   public static void cadastrarReserva(String checkin, String checkout, String nome, String cpf,String telefone, String numeroQuarto, String tipoQuarto) {
-       try {
-                Connection conexao = estabelecerConexao();
-                //Preciso alterar algo na a tabela, problema nas chaves estrangeiras
-                String query1 = "INSERT INTO reserva(Checkin, Checkout, Quarto, TipoQuarto,FK_IdCliente,FK_IdFuncionario) VALUES(?, ?, ?, ?, ?, ?)";
-                String query2 = "INSERT INTO cliente(Nome, CPF, Telefone) VALUES (?, ?, ?)";
-
-                int idFunc = obtendoID(cpf);
-                int idCliente = obtendoIdCliente(cpf); 
-                
-                PreparedStatement pstmt1 = conexao.prepareStatement(query1);
-                pstmt1.setString(1, checkin);
-                pstmt1.setString(2, checkout);
-                pstmt1.setString(3, numeroQuarto);
-                pstmt1.setString(4, tipoQuarto);
-                pstmt1.setInt(5, idCliente);
-                pstmt1.setInt(6, idFunc);
-                
-                pstmt1.executeUpdate();
-                
-                PreparedStatement pstmt2 = conexao.prepareStatement(query2);
-                pstmt2.setString(1, nome);
-                pstmt2.setString(2, cpf);
-                pstmt2.setString(3, telefone);
-                
-                pstmt2.executeUpdate();
-
-            } catch(Exception e) {
-                System.out.println("Error " + e.getMessage());
-            }
-       
-    }
-    public static void atualizarReserva(String checkin, String checkout,String nome,
-        String cpf,String telefone,String numeroQuarto,String tipoQuarto){
-         try {
+   public static void cadastrarReserva(String checkin, String checkout, String nome, String cpf, String telefone, String numeroQuarto, String tipoQuarto) {
+        try {
             Connection conexao = estabelecerConexao();
-            String query1 = "UPDATE reserva SET Checkin=?, Checkout=?, TipoQuarto=?, Quarto=? WHERE Checkin=? AND Checkout=? AND TipoQuarto=? AND Quarto=?";
-            String query2 = "UPDATE cliente SET Nome=?, CPF=?, Telefone=?";
-            int idCliente = obtendoIdCliente(cpf); 
 
-            PreparedStatement pstmt1 = conexao.prepareStatement(query1);
-            pstmt1.setString(1, checkin);
-            pstmt1.setString(2, checkout);
-            pstmt1.setString(3, tipoQuarto);
-            pstmt1.setString(4, numeroQuarto);
-            pstmt1.setString(5, checkin); 
-            pstmt1.setString(6, checkout);
-            pstmt1.setString(7, tipoQuarto);
-            pstmt1.setString(8, numeroQuarto);
+            // Inserindo o cliente na tabela se ainda não existir
+            Integer idCliente = obtendoIdCliente(cpf);
+            if (idCliente == null) {
+                String queryCliente = "INSERT INTO cliente(Nome, CPF, Telefone) VALUES (?, ?, ?)";
+                PreparedStatement pstmtCliente = conexao.prepareStatement(queryCliente, Statement.RETURN_GENERATED_KEYS);
+                pstmtCliente.setString(1, nome);
+                pstmtCliente.setString(2, cpf);
+                pstmtCliente.setString(3, telefone);
+                pstmtCliente.executeUpdate();
 
-            pstmt1.executeUpdate();
+                // Obtendo o ID do cliente recém-inserido
+                ResultSet generatedKeys = pstmtCliente.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    idCliente = generatedKeys.getInt(1);
+                } else {
+                    // Trate o caso em que o ID do cliente não pôde ser obtido
+                    throw new SQLException("Não foi possível obter o ID do cliente recém-inserido.");
+                }
+            }
 
-            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
-            pstmt2.setString(1, nome);
-            pstmt2.setString(2, cpf);
-            pstmt2.setString(3, telefone);
-            pstmt2.setInt(4, idCliente);
-            
-            pstmt2.executeUpdate();
+            // Inserindo a reserva na tabela
+            String queryReserva = "INSERT INTO reserva(Checkin, Checkout, Quarto, TipoQuarto, FK_IdCliente) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstmtReserva = conexao.prepareStatement(queryReserva);
+            pstmtReserva.setString(1, checkin);
+            pstmtReserva.setString(2, checkout);
+            pstmtReserva.setString(3, numeroQuarto);
+            pstmtReserva.setString(4, tipoQuarto);
+            pstmtReserva.setInt(5, idCliente);
 
-        } catch(Exception e) {
+            pstmtReserva.executeUpdate();
+
+            // Fechar os recursos
+            pstmtReserva.close();
+            conexao.close();
+
+        } catch (SQLException e) {
             System.out.println("Error " + e.getMessage());
         }
-    }
+}
+
+        public static void atualizarReserva(String checkin, String checkout, String nome,
+                                          String cpf, String telefone, String numeroQuarto, String tipoQuarto) {
+          try {
+              Connection conexao = estabelecerConexao();
+
+              // Atualiza a reserva na tabela
+              String query1 = "UPDATE reserva SET Checkin=?, Checkout=?, Quarto=?, TipoQuarto=? WHERE Checkin=? AND Checkout=? AND Quarto=? AND TipoQuarto=?";
+              PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+              pstmt1.setString(1, checkin);
+              pstmt1.setString(2, checkout);
+              pstmt1.setString(3, numeroQuarto);
+              pstmt1.setString(4, tipoQuarto);
+              pstmt1.setString(5, checkin);
+              pstmt1.setString(6, checkout);
+              pstmt1.setString(7, numeroQuarto);
+              pstmt1.setString(8, tipoQuarto);
+              pstmt1.executeUpdate();
+
+              // Atualiza o cliente na tabela (exceto CPF)
+              String query2 = "UPDATE cliente SET Nome=?, Telefone=? WHERE CPF=?";
+              PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+              pstmt2.setString(1, nome);
+              pstmt2.setString(2, telefone);
+              pstmt2.setString(3, cpf);
+              pstmt2.executeUpdate();
+
+              // Fechar os recursos
+              pstmt1.close();
+              pstmt2.close();
+              conexao.close();
+
+
+          } catch (SQLException e) {
+              System.out.println("Error: " + e.getMessage());
+          }
+      }
     public static void deletarReserva(String checkin, String checkout,String numeroQuarto,String tipoQuarto,String cpf){
         try(Connection conexao = estabelecerConexao()){
             String query1 = "DELETE FROM reserva WHERE FK_IdCliente=? AND TipoQuarto=? AND Quarto=?";
