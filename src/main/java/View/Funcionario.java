@@ -312,22 +312,18 @@ public class Funcionario extends javax.swing.JFrame {
 
         tabelafunc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Rafael", "Func1234", "11111111"},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Nome", "Usuário", "CPF"
+                "Nome", "Usuário", "Senha", "Telefone", "E-mail", "Rua", "Bairro", "Nº", "Cidade"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tabelafunc.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -452,6 +448,19 @@ public class Funcionario extends javax.swing.JFrame {
         cadastrarUsuario(usuario, senha, nome,cpf, email, telefone, rua,numero,bairro,cidade);
         JOptionPane.showMessageDialog(null,"Funcionário adicionado com sucesso!");
        
+        //Essa daqui é para teste
+        DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
+        model.addRow(new Object[]{
+            nome,
+            usuario,
+            senha,
+            telefone,
+            email,
+            rua,
+            bairro,
+            numero,
+            cidade
+        });
     }//GEN-LAST:event_botaosalvarActionPerformed
 
     private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed
@@ -473,9 +482,25 @@ public class Funcionario extends javax.swing.JFrame {
                 ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
-            atualizarUsuario(usuario, senha, nome, cpf, email, telefone, rua, numero, bairro, cidade);
-            JOptionPane.showMessageDialog(null, "Funcionário atualizado com sucesso!");
+        atualizarUsuario(usuario, senha, nome, cpf, email, telefone, rua, numero, bairro, cidade);
+        JOptionPane.showMessageDialog(null, "Funcionário atualizado com sucesso!");
         
+        int linhaSelecionada = tabelafunc.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
+        
+        if(linhaSelecionada >= 0){
+            model.setValueAt(nome, linhaSelecionada, 1);
+            model.setValueAt(usuario, linhaSelecionada, 2);
+            model.setValueAt(senha, linhaSelecionada, 3);
+            model.setValueAt(telefone, linhaSelecionada, 4);
+            model.setValueAt(email, linhaSelecionada, 5);
+            model.setValueAt(rua, linhaSelecionada, 6);
+            model.setValueAt(bairro, linhaSelecionada, 7);
+            model.setValueAt(numero, linhaSelecionada, 8);
+            model.setValueAt(cidade, linhaSelecionada, 9);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error");
+        }
     }//GEN-LAST:event_botaoatualizarActionPerformed
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
@@ -499,11 +524,11 @@ public class Funcionario extends javax.swing.JFrame {
         }
         //Condicional para certificar que deseja deletar funcionario
         int opcao = JOptionPane.showConfirmDialog(Funcionario.this, "Tem certeza que deseja deletar esse funcionário?", "Confirmação",JOptionPane.YES_NO_OPTION);
-                // Se o usuário clicar em "Sim" usuário é deletado
-                if (opcao == JOptionPane.YES_OPTION) {
-                    deletarUsuario(usuario,cpf);
-                    JOptionPane.showMessageDialog(null,"Funcionário deletado com sucesso!");
-                }
+            // Se o usuário clicar em "Sim" usuário é deletado
+            if (opcao == JOptionPane.YES_OPTION) {
+                deletarUsuario(usuario,cpf);
+                JOptionPane.showMessageDialog(null,"Funcionário deletado com sucesso!");
+            }
         
     }//GEN-LAST:event_botaodeletarActionPerformed
 
@@ -518,11 +543,17 @@ public class Funcionario extends javax.swing.JFrame {
     private void tabelafuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelafuncMouseClicked
         // TODO add your handling code here:
         int linhaSelecionada = tabelafunc.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
+        TableModel model = tabelafunc.getModel();
 
         camponome.setText(model.getValueAt(linhaSelecionada, 1).toString());
         campousuario.setText(model.getValueAt(linhaSelecionada, 2).toString());
-        campocpf.setText(model.getValueAt(linhaSelecionada, 3).toString());
+        camposenha.setText(model.getValueAt(linhaSelecionada, 3).toString());
+        campotelefone.setText(model.getValueAt(linhaSelecionada, 4).toString());
+        campoemail.setText(model.getValueAt(linhaSelecionada, 5).toString());
+        camporua.setText(model.getValueAt(linhaSelecionada, 6).toString());
+        campobairro.setText(model.getValueAt(linhaSelecionada,7).toString());
+        camponumero.setText(model.getValueAt(linhaSelecionada, 8).toString());
+        campocidade.setText(model.getValueAt(linhaSelecionada, 9).toString());
         
     }//GEN-LAST:event_tabelafuncMouseClicked
 
@@ -536,6 +567,7 @@ public class Funcionario extends javax.swing.JFrame {
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_botaoverificarActionPerformed
 
     /**

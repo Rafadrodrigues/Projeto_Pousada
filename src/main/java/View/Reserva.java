@@ -319,22 +319,18 @@ public class Reserva extends javax.swing.JFrame {
 
         tabelaReserva.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "2", "3", null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Check-In", "Check-Out", "Tipo do Quarto", "Nº"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tabelaReserva.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -400,24 +396,7 @@ public class Reserva extends javax.swing.JFrame {
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
-//        DefaultTableModel tabelaReserva = (DefaultTableModel) tabela.getModel();
-        
-//        String dataCheckin = ((JTextField)checkin.getDateEditor().getUiComponent()).getText();
-//        String dataCheckout = ((JTextField)checkout.getDateEditor().getUiComponent()).getText();
-//        String numeroQuarto = opcaonumero.toString();
-//        String tipoQuarto = opcaotipoquarto.toString();
-//        
-//        tabelaReserva.setRowCount(0);
-//         
-//        Object[] dadosTabela = {dataCheckin,dataCheckout,tipoQuarto,numeroQuarto};
-//        tabelaReserva.addRow(dadosTabela);
 
-//        boolean resultado = visualizarReserva(dataCheckin,dataCheckout, numeroQuarto, tipoQuarto);
-//        if(resultado){
-//            JOptionPane.showMessageDialog(null,"Existe disponibilidade nesse dia");
-//        }else{
-//            JOptionPane.showMessageDialog(null,"Não existe disponibilidade nesse dia");
-//        }
         
     }//GEN-LAST:event_botaoverificarActionPerformed
 
@@ -467,6 +446,16 @@ public class Reserva extends javax.swing.JFrame {
         }
         cadastrarReserva(dataCheckin, dataCheckout, nome, cpf, telefone, numeroQuarto, tipoQuarto);
         JOptionPane.showMessageDialog(null,"Reserva adicionada com sucesso!");
+        DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
+        model.addRow(new Object[]{
+                dataCheckin,
+                dataCheckout,
+                numeroQuarto,
+                tipoQuarto,
+                cpf,
+                nome,
+                telefone,
+        });
     }//GEN-LAST:event_botaosalvarActionPerformed
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed

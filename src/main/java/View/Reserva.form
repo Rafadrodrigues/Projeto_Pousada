@@ -527,29 +527,11 @@
         <Component class="javax.swing.JTable" name="tabelaReserva">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="5">
-                <Column editable="true" title="Check-In" type="java.lang.String">
-                  <Data value="1"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Check-Out" type="java.lang.String">
-                  <Data value="2"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="Tipo do Quarto" type="java.lang.String">
-                  <Data value="3"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                  <Data value="null"/>
-                </Column>
-                <Column editable="true" title="N&#xba;" type="java.lang.String"/>
+              <Table columnCount="4" rowCount="0">
+                <Column editable="false" title="Check-In" type="java.lang.Object"/>
+                <Column editable="false" title="Check-Out" type="java.lang.Object"/>
+                <Column editable="false" title="Tipo do Quarto" type="java.lang.Object"/>
+                <Column editable="false" title="N&#xba;" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

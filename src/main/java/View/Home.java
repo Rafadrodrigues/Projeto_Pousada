@@ -208,9 +208,9 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(botaocliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(63, 63, 63)
                 .addComponent(botaocliente1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(68, 68, 68)
+                .addGap(95, 95, 95)
                 .addComponent(botaofuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(96, 96, 96)
+                .addGap(69, 69, 69)
                 .addComponent(botaoreserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(86, 86, 86))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -272,6 +272,11 @@ public class Home extends javax.swing.JFrame {
 
     private void botaocliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaocliente1ActionPerformed
         // TODO add your handling code here:
+        Cliente cliente = new Cliente();
+        cliente.setVisible(true);
+        cliente.setLocationRelativeTo(null);
+        cliente.pack();
+        this.dispose();
     }//GEN-LAST:event_botaocliente1ActionPerformed
 
     /**
