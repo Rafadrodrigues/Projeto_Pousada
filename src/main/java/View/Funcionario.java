@@ -8,7 +8,9 @@ import static Controller.Sistema.signup;
 import static Controller.Sistema.cadastrarUsuario;
 import static Controller.Sistema.atualizarUsuario;
 import static Controller.Sistema.deletarUsuario;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -310,6 +312,7 @@ public class Funcionario extends javax.swing.JFrame {
 
         tabelafunc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {"Rafael", "Func1234", "11111111"},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -514,11 +517,12 @@ public class Funcionario extends javax.swing.JFrame {
 
     private void tabelafuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelafuncMouseClicked
         // TODO add your handling code here:
-        int i = tabelafunc.getSelectedRow();
-        TableModel model = tabelafunc.getModel();
-        camponome.setText(model.getValueAt(i,1).toString());
-        campocpf.setText(model.getValueAt(i,2).toString());
-        campotelefone.setText(model.getValueAt(i,3).toString());
+        int linhaSelecionada = tabelafunc.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
+
+        camponome.setText(model.getValueAt(linhaSelecionada, 1).toString());
+        campousuario.setText(model.getValueAt(linhaSelecionada, 2).toString());
+        campocpf.setText(model.getValueAt(linhaSelecionada, 3).toString());
         
     }//GEN-LAST:event_tabelafuncMouseClicked
 

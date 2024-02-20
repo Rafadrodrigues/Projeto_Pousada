@@ -6,11 +6,12 @@ package Controller;
 
 import static Model.DataBase.estabelecerConexao;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -243,110 +244,113 @@ public class Sistema {
     /*
     Métodos responsáveis pelo CRUD do reserva
     */
-   public static void cadastrarReserva(String checkin, String checkout, String nome, String cpf, String telefone, String numeroQuarto, String tipoQuarto) {
-        try {
-            Connection conexao = estabelecerConexao();
 
-            // Inserindo o cliente na tabela se ainda não existir
-            Integer idCliente = obtendoIdCliente(cpf);
-            if (idCliente == null) {
-                String queryCliente = "INSERT INTO cliente(Nome, CPF, Telefone) VALUES (?, ?, ?)";
-                PreparedStatement pstmtCliente = conexao.prepareStatement(queryCliente, Statement.RETURN_GENERATED_KEYS);
-                pstmtCliente.setString(1, nome);
-                pstmtCliente.setString(2, cpf);
-                pstmtCliente.setString(3, telefone);
-                pstmtCliente.executeUpdate();
+        public static void cadastrarReserva(Date checkin, Date checkout, String nome, String cpf, String telefone, String numeroQuarto, String tipoQuarto) {
+            try {
+                Connection conexao = estabelecerConexao();
 
-                // Obtendo o ID do cliente recém-inserido
-                ResultSet generatedKeys = pstmtCliente.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    idCliente = generatedKeys.getInt(1);
-                } else {
-                    // Trate o caso em que o ID do cliente não pôde ser obtido
-                    throw new SQLException("Não foi possível obter o ID do cliente recém-inserido.");
+                // Inserindo o cliente na tabela se ainda não existir
+                Integer idCliente = obtendoIdCliente(cpf);
+                if (idCliente == null) {
+                    String queryCliente = "INSERT INTO cliente(Nome, CPF, Telefone) VALUES (?, ?, ?)";
+                    PreparedStatement pstmtCliente = conexao.prepareStatement(queryCliente, Statement.RETURN_GENERATED_KEYS);
+                    pstmtCliente.setString(1, nome);
+                    pstmtCliente.setString(2, cpf);
+                    pstmtCliente.setString(3, telefone);
+                    pstmtCliente.executeUpdate();
+
+                    // Obtendo o ID do cliente recém-inserido
+                    ResultSet generatedKeys = pstmtCliente.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        idCliente = generatedKeys.getInt(1);
+                    } else {
+                        // Trate o caso em que o ID do cliente não pôde ser obtido
+                        throw new SQLException("Não foi possível obter o ID do cliente recém-inserido.");
+                    }
                 }
+
+                // Inserindo a reserva na tabela
+                String queryReserva = "INSERT INTO reserva(Checkin, Checkout, Quarto, TipoQuarto, FK_IdCliente) VALUES (?, ?, ?, ?, ?)";
+
+                PreparedStatement pstmtReserva = conexao.prepareStatement(queryReserva);
+                pstmtReserva.setDate(1, new java.sql.Date(checkin.getTime()));
+                pstmtReserva.setDate(2, new java.sql.Date(checkout.getTime()));
+                pstmtReserva.setString(3, numeroQuarto);
+                pstmtReserva.setString(4, tipoQuarto);
+                pstmtReserva.setInt(5, idCliente);
+                //         java.sql.Date mySQLDate = new java.sql.Date(javaDate.getTime());
+                pstmtReserva.executeUpdate();
+
+                // Fechar os recursos
+                pstmtReserva.close();
+                conexao.close();
+
+            } catch (SQLException e) {
+                System.out.println("Error " + e.getMessage());
             }
-
-            // Inserindo a reserva na tabela
-            String queryReserva = "INSERT INTO reserva(Checkin, Checkout, Quarto, TipoQuarto, FK_IdCliente) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pstmtReserva = conexao.prepareStatement(queryReserva);
-            pstmtReserva.setString(1, checkin);
-            pstmtReserva.setString(2, checkout);
-            pstmtReserva.setString(3, numeroQuarto);
-            pstmtReserva.setString(4, tipoQuarto);
-            pstmtReserva.setInt(5, idCliente);
-
-            pstmtReserva.executeUpdate();
-
-            // Fechar os recursos
-            pstmtReserva.close();
-            conexao.close();
-
-        } catch (SQLException e) {
-            System.out.println("Error " + e.getMessage());
         }
-}
 
-        public static void atualizarReserva(String checkin, String checkout, String nome,
-                                          String cpf, String telefone, String numeroQuarto, String tipoQuarto) {
+
+        public static void atualizarReserva(Date checkin, Date checkout, String nome,
+                String cpf, String telefone, String numeroQuarto, String tipoQuarto) {
           try {
               Connection conexao = estabelecerConexao();
-
+              Integer idCliente = obtendoIdCliente(cpf);
+              
               // Atualiza a reserva na tabela
-              String query1 = "UPDATE reserva SET Checkin=?, Checkout=?, Quarto=?, TipoQuarto=? WHERE Checkin=? AND Checkout=? AND Quarto=? AND TipoQuarto=?";
-              PreparedStatement pstmt1 = conexao.prepareStatement(query1);
-              pstmt1.setString(1, checkin);
-              pstmt1.setString(2, checkout);
-              pstmt1.setString(3, numeroQuarto);
-              pstmt1.setString(4, tipoQuarto);
-              pstmt1.setString(5, checkin);
-              pstmt1.setString(6, checkout);
-              pstmt1.setString(7, numeroQuarto);
-              pstmt1.setString(8, tipoQuarto);
-              pstmt1.executeUpdate();
+            String query1 = "UPDATE reserva SET Checkin=?, Checkout=?, Quarto=?, TipoQuarto=? WHERE FK_IdCliente = ?";
+            PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+            pstmt1.setDate(1, new java.sql.Date(checkin.getTime()));
+            pstmt1.setDate(2, new java.sql.Date(checkout.getTime()));
+            pstmt1.setString(3, numeroQuarto);
+            pstmt1.setString(4, tipoQuarto);
+            pstmt1.setInt(5, idCliente);
+            pstmt1.executeUpdate();
 
-              // Atualiza o cliente na tabela (exceto CPF)
-              String query2 = "UPDATE cliente SET Nome=?, Telefone=? WHERE CPF=?";
-              PreparedStatement pstmt2 = conexao.prepareStatement(query2);
-              pstmt2.setString(1, nome);
-              pstmt2.setString(2, telefone);
-              pstmt2.setString(3, cpf);
-              pstmt2.executeUpdate();
+            // Atualiza o cliente na tabela (exceto CPF)
+            String query2 = "UPDATE cliente SET Nome=?, Telefone=? WHERE CPF=?";
+            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+            pstmt2.setString(1, nome);
+            pstmt2.setString(2, telefone);
+            pstmt2.setString(3, cpf);
+            pstmt2.executeUpdate();
 
-              // Fechar os recursos
-              pstmt1.close();
-              pstmt2.close();
-              conexao.close();
+            // Fechar os recursos
+            pstmt1.close();
+            pstmt2.close();
+            conexao.close();
 
 
           } catch (SQLException e) {
               System.out.println("Error: " + e.getMessage());
           }
       }
-    public static void deletarReserva(String checkin, String checkout,String numeroQuarto,String tipoQuarto,String cpf){
+        
+    public static void deletarReserva(Date checkin, Date checkout,String numeroQuarto,String tipoQuarto,String cpf){
         try(Connection conexao = estabelecerConexao()){
             String query1 = "DELETE FROM reserva WHERE FK_IdCliente=? AND TipoQuarto=? AND Quarto=?";
-            String query2 = "DELETE FROM cliente WHERE IdCliente=?";
+//            String query2 = "DELETE FROM cliente WHERE IdCliente=?";
             
             int idCliente = obtendoIdCliente(cpf);
             
             PreparedStatement pstmt1 = conexao.prepareStatement(query1);
             
-                pstmt1.setInt(1, idCliente);
-                pstmt1.setString(2, tipoQuarto);
-                pstmt1.setString(3, numeroQuarto);
-                pstmt1.executeUpdate();
-                
-                PreparedStatement pstmt2 = conexao.prepareStatement(query2);
-                pstmt2.setInt(1, idCliente);
-                pstmt2.executeUpdate();
-                
+            pstmt1.setInt(1, idCliente);
+            pstmt1.setString(2, tipoQuarto);
+            pstmt1.setString(3, numeroQuarto);
+            pstmt1.executeUpdate();
+
+//            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+//            pstmt2.setInt(1, idCliente);
+//            pstmt2.executeUpdate();
+//                
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+
     public static ResultSet visualizarReserva(String checkin, String checkout,String numeroQuarto,String tipoQuarto){
-        /*Realizando a autenticação dos usuários no sistemas*/
+
         try{
             ResultSet resultSet;
             Connection conexao = estabelecerConexao();
@@ -363,6 +367,5 @@ public class Sistema {
             System.out.println("Error " + e.getMessage());
         }
         return null;
-
     }
 }

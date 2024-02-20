@@ -4,24 +4,18 @@
  */
 package Model;
 
+import java.util.Date;
+
 /**
  *
  * @author rafar
  */
 public class Reserva {
     private int idReserva;
-    private String nomeCliente;
-    private String cpfCliente;
-    private String nomeFuncionario;
-    private int qtdDiaria;
-
-    public Reserva(int idReserva, String nomeCliente, String cpfCliente, String nomeFuncionario, int qtdDiaria) {
-        this.idReserva = idReserva;
-        this.nomeCliente = nomeCliente;
-        this.cpfCliente = cpfCliente;
-        this.nomeFuncionario = nomeFuncionario;
-        this.qtdDiaria = qtdDiaria;
-    }
+    Date checkIn;
+    Date checkOut;
+    String tipoQuarto;
+    String quarto;
 
     public int getIdReserva() {
         return idReserva;
@@ -31,42 +25,49 @@ public class Reserva {
         this.idReserva = idReserva;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public Reserva(int idReserva, Date checkIn, Date checkOut, String tipoQuarto, String quarto) {
+        this.idReserva = idReserva;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.tipoQuarto = tipoQuarto;
+        this.quarto = quarto;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    public Date getCheckIn() {
+        return checkIn;
     }
 
-    public String getCpfCliente() {
-        return cpfCliente;
+    public void setCheckIn(Date checkIn) {
+        this.checkIn = checkIn;
     }
 
-    public void setCpfCliente(String cpfCliente) {
-        this.cpfCliente = cpfCliente;
+    public Date getCheckOut() {
+        return checkOut;
     }
 
-    public String getNomeFuncionario() {
-        return nomeFuncionario;
+    public void setCheckOut(Date checkOut) {
+        this.checkOut = checkOut;
     }
 
-    public void setNomeFuncionario(String nomeFuncionario) {
-        this.nomeFuncionario = nomeFuncionario;
+    public String getTipoQuarto() {
+        return tipoQuarto;
     }
 
-    public int getQtdDiaria() {
-        return qtdDiaria;
+    public void setTipoQuarto(String tipoQuarto) {
+        this.tipoQuarto = tipoQuarto;
     }
 
-    public void setQtdDiaria(int qtdDiaria) {
-        this.qtdDiaria = qtdDiaria;
+    public String getQuarto() {
+        return quarto;
+    }
+
+    public void setQuarto(String quarto) {
+        this.quarto = quarto;
     }
 
     @Override
     public String toString() {
-        return "Reserva{" + "idReserva=" + idReserva + ", nomeCliente=" + nomeCliente + ", cpfCliente=" + cpfCliente + ", nomeFuncionario=" + nomeFuncionario + ", qtdDiaria=" + qtdDiaria + '}';
+        return "Reserva{" + "idReserva=" + idReserva + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", tipoQuarto=" + tipoQuarto + ", quarto=" + quarto + '}';
     }
-    
-    
+
 }

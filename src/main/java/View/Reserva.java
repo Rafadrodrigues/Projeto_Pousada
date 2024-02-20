@@ -6,13 +6,15 @@ package View;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import static Controller.Sistema.visualizarReserva;
+//import static Controller.Sistema.visualizarReserva;
 import static Controller.Sistema.deletarReserva;
 import static Controller.Sistema.cadastrarReserva;
 import static Controller.Sistema.atualizarReserva;
 import com.toedter.calendar.JDateChooser;
 import java.sql.Date;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
@@ -62,8 +64,8 @@ public class Reserva extends javax.swing.JFrame {
         opcaonumero = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        checkin = new com.toedter.calendar.JDateChooser();
         checkout = new com.toedter.calendar.JDateChooser();
+        checkin = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaReserva = new javax.swing.JTable();
 
@@ -261,9 +263,9 @@ public class Reserva extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel16.setText("Check-out");
 
-        checkin.setDateFormatString("dd-MM-YYYY");
+        checkout.setDateFormatString("yyyy-MM-dd");
 
-        checkout.setDateFormatString("dd-MM-YYYY");
+        checkin.setDateFormatString("yyyy-MM-dd");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -274,22 +276,22 @@ public class Reserva extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel16))
-                        .addGap(144, 144, 144))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(opcaotipoquarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(78, 78, 78)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(opcaonumero, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(66, 66, 66)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
+                            .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(138, 138, 138))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,15 +310,16 @@ public class Reserva extends javax.swing.JFrame {
                         .addGap(3, 3, 3)
                         .addComponent(jLabel16))
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 19, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         tabelaReserva.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {"1", "2", "3", null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -428,12 +431,12 @@ public class Reserva extends javax.swing.JFrame {
     }//GEN-LAST:event_botaovoltarActionPerformed
 
     private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed
-        // TODO add your handling code here:
-        String dataCheckin = ((JTextField)checkin.getDateEditor().getUiComponent()).getText();
-        String dataCheckout = ((JTextField)checkout.getDateEditor().getUiComponent()).getText();
-        String numeroQuarto = opcaonumero.toString();
-        String tipoQuarto = opcaotipoquarto.toString();
-//        String funcionario = campofuncionario.getText();
+         // TODO add your handling code here:
+
+        java.util.Date dataCheckin = checkin.getDate();;
+        java.util.Date dataCheckout = checkout.getDate();
+        String numeroQuarto = opcaonumero.getSelectedItem().toString();
+        String tipoQuarto = opcaotipoquarto.getSelectedItem().toString();
         String cpf = campocpf.getText();
         String nome = camponomecliente.getText();
         String telefone = telefonecliente.getText();
@@ -451,9 +454,8 @@ public class Reserva extends javax.swing.JFrame {
 
     private void botaosalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaosalvarActionPerformed
         // TODO add your handling code here:
-        
-        String dataCheckin = ((JTextField)checkin.getDateEditor().getUiComponent()).getText();
-        String dataCheckout = ((JTextField)checkout.getDateEditor().getUiComponent()).getText();
+        java.util.Date dataCheckin = checkin.getDate();
+        java.util.Date dataCheckout = checkout.getDate();
         String numeroQuarto = opcaonumero.getSelectedItem().toString();
         String tipoQuarto = opcaotipoquarto.getSelectedItem().toString();
         String cpf = campocpf.getText();
@@ -469,8 +471,8 @@ public class Reserva extends javax.swing.JFrame {
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
         // TODO add your handling code here:
-        String dataCheckin = ((JTextField)checkin.getDateEditor().getUiComponent()).getText();
-        String dataCheckout = ((JTextField)checkout.getDateEditor().getUiComponent()).getText();
+        java.util.Date dataCheckin = checkin.getDate();
+        java.util.Date dataCheckout = checkout.getDate();
         String numeroQuarto = opcaonumero.toString();
         String tipoQuarto = opcaotipoquarto.toString();
         String cpf = campocpf.getText();
@@ -486,13 +488,16 @@ public class Reserva extends javax.swing.JFrame {
 
     private void tabelaReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaReservaMouseClicked
         // TODO add your handling code here:
-        
-//        int i = tabelaReserva.getSelectedRow();
+//        int j = tabelaReserva.getSelectedRow();
+//        Statement st;
 //        TableModel model = tabelaReserva.getModel();
-//        checkin.setText(model.getValueAt(i,1).toString());
-//        checkout.setText(model.getValueAt(i,2).toString());
-//        opcaotipoquarto.setText(model.getValueAt(i,3).toString());
-//        opcaonumero.setText(model.getValueAt(i,4).toString());
+//       
+//        for(int i=0;i<model.getRowCount();i++){
+//            String checkin = model.getValueAt(i, 1).toString();
+//            String checkou = model.getValueAt(i, 2).toString();
+//            String tipoQuarto1 = model.getValueAt(i, 3).toString();
+//            String quarto = model.getValueAt(i, 4).toString();
+//        }
     }//GEN-LAST:event_tabelaReservaMouseClicked
 
     /**
