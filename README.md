@@ -1,7 +1,7 @@
 <h1 align="center">🖥️ Pousada Milho Verde 🖥️</h1>
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/104935995/256580887-74d92fcd-1787-4b5e-8dac-f4d9c06f0df4.png" width="600px"/>
+<img src="https://github.com/Rafadrodrigues/Projeto_Pousada/assets/104935995/f1a2518d-9c67-43e5-876f-7d667b43c4eb" width="700px"/>
 </div>
 
 --------
@@ -21,13 +21,9 @@
 --------
 
 -------
-### 📈 Diagrama de classes 📈
+### 🏦 Modelo Relacional 🏦
 <div align="center">
-<img src="https://github.com/Rafadrodrigues/PousadaMilhoVerde/assets/104935995/d656895a-ad1c-4cd0-a69f-2a42f8a12977" width="600px"/>
-</div>
-
-<div align="center">
-<img src="https://github.com/Rafadrodrigues/PousadaMilhoVerde/assets/104935995/74f01e2d-d0b7-4b8d-8c60-9304e0b5c26b" width="600px"/>
+<img src="https://github.com/Rafadrodrigues/Projeto_Pousada/assets/104935995/4164f771-76fa-44d0-9fcb-3b83babcd120" width="600px"/>
 </div>
 
 
