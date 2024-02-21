@@ -58,19 +58,4 @@ public class Funcionario extends Pessoa{
     public String toString() {
         return "Funcionario{" + "idFuncionario=" + idFuncionario + ", usuario=" + usuario + ", senha=" + senha + '}';
     }
-    
-//    public enum Cargo {
-//    FUNCIONARIO("FUNCIONARIO"),
-//    ADMINISTRADOR("ADMINISTRADOR");
-//
-//    private final String valor;
-//
-//    Cargo(String valor) {
-//        this.valor = valor;
-//    }
-//
-//    public String getValor() {
-//        return valor;
-//    }
-//    }
 }

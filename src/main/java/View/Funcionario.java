@@ -4,11 +4,14 @@
  */
 package View;
 
-import static Controller.Sistema.signup;
 import static Controller.Sistema.cadastrarUsuario;
 import static Controller.Sistema.atualizarUsuario;
 import static Controller.Sistema.deletarUsuario;
-import java.sql.Statement;
+import static Controller.Sistema.visualizarFuncionario;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -315,11 +318,11 @@ public class Funcionario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Usuário", "Senha", "Telefone", "E-mail", "Rua", "Bairro", "Nº", "Cidade"
+                "Nome", "Usuário", "Senha", "Telefone", "E-mail", "CPF"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -378,7 +381,7 @@ public class Funcionario extends javax.swing.JFrame {
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(botaoverificar)
@@ -387,8 +390,9 @@ public class Funcionario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaodeletar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaosalvar)))
-                .addGap(0, 40, Short.MAX_VALUE))
+                        .addComponent(botaosalvar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(6, 6, 6))
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -437,7 +441,11 @@ public class Funcionario extends javax.swing.JFrame {
         int numero = Integer.parseInt(camponumero.getText());
         String bairro = campobairro.getText();
         String cidade = campocidade.getText();
-            
+        
+//        if(senha.length() > 8){
+//            JOptionPane.showMessageDialog(null,"Senha não pode ser maior que 8 dígitos.");
+//        }
+
         if(nome.equals("") || (senha.equals("") || 
                 (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
                 ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
@@ -456,10 +464,7 @@ public class Funcionario extends javax.swing.JFrame {
             senha,
             telefone,
             email,
-            rua,
-            bairro,
-            numero,
-            cidade
+            cpf
         });
     }//GEN-LAST:event_botaosalvarActionPerformed
 
@@ -488,16 +493,15 @@ public class Funcionario extends javax.swing.JFrame {
         int linhaSelecionada = tabelafunc.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
         
+        //Preciso conferir esse comando aqui 
         if(linhaSelecionada >= 0){
-            model.setValueAt(nome, linhaSelecionada, 1);
-            model.setValueAt(usuario, linhaSelecionada, 2);
-            model.setValueAt(senha, linhaSelecionada, 3);
-            model.setValueAt(telefone, linhaSelecionada, 4);
-            model.setValueAt(email, linhaSelecionada, 5);
-            model.setValueAt(rua, linhaSelecionada, 6);
-            model.setValueAt(bairro, linhaSelecionada, 7);
-            model.setValueAt(numero, linhaSelecionada, 8);
-            model.setValueAt(cidade, linhaSelecionada, 9);
+            model.setValueAt(nome, linhaSelecionada, 0);
+            model.setValueAt(usuario, linhaSelecionada, 1);
+            model.setValueAt(senha, linhaSelecionada, 2);
+            model.setValueAt(telefone, linhaSelecionada, 3);
+            model.setValueAt(email, linhaSelecionada, 4);
+            model.setValueAt(cpf, linhaSelecionada, 5);
+
         }else{
             JOptionPane.showMessageDialog(null, "Error");
         }
@@ -544,17 +548,13 @@ public class Funcionario extends javax.swing.JFrame {
         // TODO add your handling code here:
         int linhaSelecionada = tabelafunc.getSelectedRow();
         TableModel model = tabelafunc.getModel();
-
-        camponome.setText(model.getValueAt(linhaSelecionada, 1).toString());
-        campousuario.setText(model.getValueAt(linhaSelecionada, 2).toString());
-        camposenha.setText(model.getValueAt(linhaSelecionada, 3).toString());
-        campotelefone.setText(model.getValueAt(linhaSelecionada, 4).toString());
-        campoemail.setText(model.getValueAt(linhaSelecionada, 5).toString());
-        camporua.setText(model.getValueAt(linhaSelecionada, 6).toString());
-        campobairro.setText(model.getValueAt(linhaSelecionada,7).toString());
-        camponumero.setText(model.getValueAt(linhaSelecionada, 8).toString());
-        campocidade.setText(model.getValueAt(linhaSelecionada, 9).toString());
         
+        camponome.setText(model.getValueAt(linhaSelecionada, 0).toString());
+        campousuario.setText(model.getValueAt(linhaSelecionada, 1).toString());
+        camposenha.setText(model.getValueAt(linhaSelecionada, 2).toString());
+        campotelefone.setText(model.getValueAt(linhaSelecionada, 3).toString());
+        campoemail.setText(model.getValueAt(linhaSelecionada, 4).toString());
+        campocpf.setText(model.getValueAt(linhaSelecionada, 5).toString());
     }//GEN-LAST:event_tabelafuncMouseClicked
 
     private void campocpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campocpfActionPerformed
@@ -567,7 +567,24 @@ public class Funcionario extends javax.swing.JFrame {
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
-        
+        ResultSet rs = visualizarFuncionario();
+        DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
+        model.setRowCount(0);
+        try {
+            while(rs.next()){
+                model.addRow(new String[]{
+                    //A contagem começa a partir do 2 para que o ID não seja mostrado na tabela
+                    rs.getString(3), 
+                    rs.getString(6), 
+                    rs.getString(2),
+                    rs.getString(5),
+                    rs.getString(4), 
+                    rs.getString(7),
+                });
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoverificarActionPerformed
 
     /**

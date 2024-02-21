@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package View;
-
+import static Controller.Sistema.visualizarCliente;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author rafar
@@ -32,10 +37,8 @@ public class Cliente extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaReserva = new javax.swing.JTable();
-        botaoatualizar = new javax.swing.JButton();
+        tabelaCliente = new javax.swing.JTable();
         botaoverificar = new javax.swing.JButton();
-        botaodeletar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(730, 679));
@@ -100,12 +103,9 @@ public class Cliente extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        tabelaReserva.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Nome", "Telefone", "CPF"
@@ -119,21 +119,12 @@ public class Cliente extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tabelaReserva.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaReservaMouseClicked(evt);
+                tabelaClienteMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tabelaReserva);
-
-        botaoatualizar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        botaoatualizar.setForeground(new java.awt.Color(0, 102, 51));
-        botaoatualizar.setText("Atualizar");
-        botaoatualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoatualizarActionPerformed(evt);
-            }
-        });
+        jScrollPane1.setViewportView(tabelaCliente);
 
         botaoverificar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         botaoverificar.setForeground(new java.awt.Color(0, 102, 51));
@@ -144,33 +135,19 @@ public class Cliente extends javax.swing.JFrame {
             }
         });
 
-        botaodeletar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        botaodeletar.setForeground(new java.awt.Color(0, 102, 51));
-        botaodeletar.setText("Deletar");
-        botaodeletar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaodeletarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(211, 211, 211)
-                        .addComponent(botaoverificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaoatualizar)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaodeletar)))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 643, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botaoverificar)
+                .addGap(276, 276, 276))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
         );
@@ -181,10 +158,7 @@ public class Cliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoverificar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoatualizar)
-                    .addComponent(botaodeletar))
+                .addComponent(botaoverificar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -204,30 +178,23 @@ public class Cliente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaovoltarActionPerformed
 
-    private void tabelaReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaReservaMouseClicked
+    private void tabelaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaClienteMouseClicked
         // TODO add your handling code here:
 
-        //        int i = tabelaReserva.getSelectedRow();
-        //        TableModel model = tabelaReserva.getModel();
-        //        checkin.setText(model.getValueAt(i,1).toString());
-        //        checkout.setText(model.getValueAt(i,2).toString());
-        //        opcaotipoquarto.setText(model.getValueAt(i,3).toString());
-        //        opcaonumero.setText(model.getValueAt(i,4).toString());
-    }//GEN-LAST:event_tabelaReservaMouseClicked
-
-    private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed
-        // TODO add your handling code here:
-
-       
-    }//GEN-LAST:event_botaoatualizarActionPerformed
+    }//GEN-LAST:event_tabelaClienteMouseClicked
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
-       
+        ResultSet rs = visualizarCliente();
+        DefaultTableModel model = (DefaultTableModel) tabelaCliente.getModel();
+        model.setRowCount(0);
+        try {
+            while(rs.next()){
+                model.addRow(new String[]{rs.getString(2), rs.getString(3), rs.getString(4)});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_botaoverificarActionPerformed
-
-    private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
-       
-    }//GEN-LAST:event_botaodeletarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,8 +232,6 @@ public class Cliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoatualizar;
-    private javax.swing.JButton botaodeletar;
     private javax.swing.JButton botaoverificar;
     private javax.swing.JButton botaovoltar;
     private javax.swing.JLabel jLabel1;
@@ -274,6 +239,6 @@ public class Cliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabelaReserva;
+    private javax.swing.JTable tabelaCliente;
     // End of variables declaration//GEN-END:variables
 }

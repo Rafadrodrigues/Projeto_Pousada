@@ -329,7 +329,7 @@ public class Sistema {
     public static void deletarReserva(Date checkin, Date checkout,String numeroQuarto,String tipoQuarto,String cpf){
         try(Connection conexao = estabelecerConexao()){
             String query1 = "DELETE FROM reserva WHERE FK_IdCliente=? AND TipoQuarto=? AND Quarto=?";
-//            String query2 = "DELETE FROM cliente WHERE IdCliente=?";
+            String query2 = "DELETE FROM cliente WHERE IdCliente=?";
             
             int idCliente = obtendoIdCliente(cpf);
             
@@ -340,29 +340,62 @@ public class Sistema {
             pstmt1.setString(3, numeroQuarto);
             pstmt1.executeUpdate();
 
-//            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
-//            pstmt2.setInt(1, idCliente);
-//            pstmt2.executeUpdate();
-//                
+            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+            pstmt2.setInt(1, idCliente);
+            pstmt2.executeUpdate();
+                
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
-    public static ResultSet visualizarReserva(String checkin, String checkout,String numeroQuarto,String tipoQuarto){
-
+    //Por enquanto vou deixar assim, porém pretendo colocar ao invés de SELECT, VIEWS
+    /**
+     * Método utilizado na tela de reserva, e visualiza todos as reservas presentes na
+     * base de dados. 
+     */
+    public static ResultSet visualizarReserva(){
         try{
             ResultSet resultSet;
             Connection conexao = estabelecerConexao();
-                String query = "SELECT * FROM reserva WHERE Checkin=? AND Checkout=? AND TipoQuarto=? AND Quarto=?";
+                String query = "SELECT Checkin, Checkout, TipoQuarto, Quarto FROM reserva;";
                 PreparedStatement  pstmt = conexao.prepareStatement(query);
-                pstmt.setString(1, checkin);
-                pstmt.setString(2, checkout);
-                pstmt.setString(3, numeroQuarto);
-                pstmt.setString(4, tipoQuarto);
                 resultSet = pstmt.executeQuery(); 
                 return resultSet;
                 
+        } catch(Exception e){
+            System.out.println("Error " + e.getMessage());
+        }
+        return null;
+    }
+    /**
+     * Método utilizado na tela do cliente, e visualiza todos os clientes presentes na
+     * base de dados. 
+     */
+     public static ResultSet visualizarCliente(){
+        try{
+            ResultSet resultSet;
+            Connection conexao = estabelecerConexao();
+                String query = "SELECT * FROM cliente;";
+                PreparedStatement  pstmt = conexao.prepareStatement(query);
+                resultSet = pstmt.executeQuery(); 
+                return resultSet;
+        } catch(Exception e){
+            System.out.println("Error " + e.getMessage());
+        }
+        return null;
+    }
+     /**
+     * Método utilizado na tela do funcionario, e visualiza todos os funcionários presentes na
+     * base de dados. 
+     */
+     public static ResultSet visualizarFuncionario(){
+        try{
+            ResultSet resultSet;
+            Connection conexao = estabelecerConexao();
+                String query = "SELECT * FROM funcionario;";
+                PreparedStatement  pstmt = conexao.prepareStatement(query);
+                resultSet = pstmt.executeQuery(); 
+                return resultSet;
         } catch(Exception e){
             System.out.println("Error " + e.getMessage());
         }

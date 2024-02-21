@@ -12,10 +12,10 @@ import java.util.Date;
  */
 public class Reserva {
     private int idReserva;
-    Date checkIn;
-    Date checkOut;
-    String tipoQuarto;
-    String quarto;
+    private Date checkIn;
+    private Date checkOut;
+    private String tipoQuarto;
+    private String quarto;
 
     public int getIdReserva() {
         return idReserva;
