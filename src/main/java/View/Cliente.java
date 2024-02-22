@@ -41,7 +41,6 @@ public class Cliente extends javax.swing.JFrame {
         botaoverificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(730, 679));
 
         jPanel1.setBackground(new java.awt.Color(86, 0, 140));
 

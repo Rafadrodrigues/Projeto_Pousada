@@ -96,7 +96,6 @@ public class Sistema {
         }
     }
 
-
     public static void signup(String usuario, String senha, String nome,String cpf,String email, 
                     String telefone, String rua, int numeroCasa, String bairro, String cidade) {
             try {
@@ -400,4 +399,43 @@ public class Sistema {
         }
         return null;
     }
+     /**
+     * Método utilizado na tela do financeiro, e visualiza todos os dados do financeiro presentes na
+     * base de dados. 
+     */
+     public static ResultSet visualizarFinanceiro(){
+        try{
+            ResultSet resultSet;
+            Connection conexao = estabelecerConexao();
+                String query = "SELECT * FROM financeiro;";
+                PreparedStatement  pstmt = conexao.prepareStatement(query);
+                resultSet = pstmt.executeQuery(); 
+                return resultSet;
+        } catch(Exception e){
+            System.out.println("Error " + e.getMessage());
+        }
+        return null;
+    }
+     public static void atualizarFinanceiro(String cpf, String parcelas, String pagamento,int valortotal) {
+          try {
+              Connection conexao = estabelecerConexao();
+              Integer idCliente = obtendoIdCliente(cpf);
+              
+              // Atualiza a reserva na tabela
+            String query1 = "UPDATE financeiro SET forma_pagamento=?, parcelas=?, valor_total=? WHERE fk_id_reserva = ?";
+            PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+            pstmt1.setString(1, pagamento);
+            pstmt1.setString(2, parcelas);
+            pstmt1.setInt(3, valortotal);
+            pstmt1.setInt(4, idCliente);
+            pstmt1.executeUpdate();
+
+            // Fechar os recursos
+            pstmt1.close();
+            conexao.close();
+
+          } catch (SQLException e) {
+              System.out.println("Error: " + e.getMessage());
+          }
+      }
 }

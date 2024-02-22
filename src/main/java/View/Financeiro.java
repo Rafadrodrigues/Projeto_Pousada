@@ -4,9 +4,12 @@
  */
 package View;
 
+import static Controller.Sistema.visualizarCliente;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static Controller.Sistema.visualizarReserva;
+import static Controller.Sistema.visualizarFinanceiro;
+import static Controller.Sistema.atualizarFinanceiro;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -46,7 +49,7 @@ public class Financeiro extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaReserva = new javax.swing.JTable();
+        tabelaFinanceiro = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         opcaotipoquarto = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
@@ -58,16 +61,15 @@ public class Financeiro extends javax.swing.JFrame {
         checkin = new com.toedter.calendar.JDateChooser();
         campocpf = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
-        botaodeletar = new javax.swing.JButton();
         botaoverificar1 = new javax.swing.JButton();
         botaoatualizar1 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        opcaotipoquarto1 = new javax.swing.JComboBox<>();
+        formapagamento = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        opcaonumero1 = new javax.swing.JComboBox<>();
+        parcela = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        valorTotal = new javax.swing.JFormattedTextField();
 
         botaoverificar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         botaoverificar.setForeground(new java.awt.Color(0, 102, 51));
@@ -148,28 +150,28 @@ public class Financeiro extends javax.swing.JFrame {
                 .addGap(18, 18, 18))
         );
 
-        tabelaReserva.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaFinanceiro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Check-In", "Check-Out", "Tipo do Quarto", "Nº", "Forma Pagamento", "Parcelas", "Total"
+                "Check-In", "Check-Out", "Tipo do Quarto", "Nº", "CPF", "Forma Pagamento", "Parcelas", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tabelaReserva.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelaFinanceiro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaReservaMouseClicked(evt);
+                tabelaFinanceiroMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tabelaReserva);
+        jScrollPane1.setViewportView(tabelaFinanceiro);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados da Reserva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 12))); // NOI18N
 
@@ -268,15 +270,6 @@ public class Financeiro extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        botaodeletar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        botaodeletar.setForeground(new java.awt.Color(0, 102, 51));
-        botaodeletar.setText("Deletar");
-        botaodeletar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaodeletarActionPerformed(evt);
-            }
-        });
-
         botaoverificar1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         botaoverificar1.setForeground(new java.awt.Color(0, 102, 51));
         botaoverificar1.setText("Verificar");
@@ -297,7 +290,7 @@ public class Financeiro extends javax.swing.JFrame {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados da Cobrança", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 12))); // NOI18N
 
-        opcaotipoquarto1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Crédito", "Débito", "PIX" }));
+        formapagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Crédito", "Débito", "PIX" }));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel7.setText("Parcelas");
@@ -305,17 +298,17 @@ public class Financeiro extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel8.setText("Valor Total");
 
-        opcaonumero1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
-        opcaonumero1.addActionListener(new java.awt.event.ActionListener() {
+        parcela.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+        parcela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcaonumero1ActionPerformed(evt);
+                parcelaActionPerformed(evt);
             }
         });
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel15.setText("Forma de Pagamento");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
+        valorTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -325,15 +318,15 @@ public class Financeiro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(opcaotipoquarto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel15))
                         .addGap(90, 90, 90)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(opcaonumero1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -345,12 +338,12 @@ public class Financeiro extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opcaotipoquarto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(opcaonumero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
@@ -365,9 +358,7 @@ public class Financeiro extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(botaoverificar1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoatualizar1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaodeletar))
+                        .addComponent(botaoatualizar1))
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 612, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,8 +379,7 @@ public class Financeiro extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoverificar1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoatualizar1)
-                    .addComponent(botaodeletar))
+                    .addComponent(botaoatualizar1))
                 .addGap(70, 70, 70))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -412,11 +402,12 @@ public class Financeiro extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaovoltarActionPerformed
 
-    private void tabelaReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaReservaMouseClicked
+    private void tabelaFinanceiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFinanceiroMouseClicked
+
         try {
             // TODO add your handling code here:
-            int linhaSelecionada = tabelaReserva.getSelectedRow();
-            TableModel model = tabelaReserva.getModel();
+            int linhaSelecionada = tabelaFinanceiro.getSelectedRow();
+            TableModel model = tabelaFinanceiro.getModel();
 
             String dateString = (String) model.getValueAt(linhaSelecionada, 0);
             String dateString2 = (String) model.getValueAt(linhaSelecionada, 1);
@@ -429,31 +420,19 @@ public class Financeiro extends javax.swing.JFrame {
 
             opcaotipoquarto.setSelectedItem(model.getValueAt(linhaSelecionada, 2).toString());
             opcaonumero.setSelectedItem(model.getValueAt(linhaSelecionada, 3).toString());
+            campocpf.setText(model.getValueAt(linhaSelecionada, 4).toString());
+            formapagamento.setSelectedItem(model.getValueAt(linhaSelecionada, 5).toString());
+            parcela.setSelectedItem(model.getValueAt(linhaSelecionada, 6).toString());
+            valorTotal.setText(model.getValueAt(linhaSelecionada, 7).toString());
+            
         } catch (ParseException ex) {
             Logger.getLogger(Reserva.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_tabelaReservaMouseClicked
+    }//GEN-LAST:event_tabelaFinanceiroMouseClicked
 
     private void opcaonumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcaonumeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_opcaonumeroActionPerformed
-
-    private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
-//        // TODO add your handling code here:
-//        java.util.Date dataCheckin = checkin.getDate();
-//        java.util.Date dataCheckout = checkout.getDate();
-//        String numeroQuarto = opcaonumero.toString();
-//        String tipoQuarto = opcaotipoquarto.toString();
-//        String cpf = campocpf.getText();
-//        String nome = camponomecliente.getText();
-//
-//        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
-//            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
-//        }
-//        deletarReserva(dataCheckin,dataCheckout,numeroQuarto,tipoQuarto,cpf);
-//        JOptionPane.showMessageDialog(null,"Reserva deletada com sucesso!");
-
-    }//GEN-LAST:event_botaodeletarActionPerformed
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
@@ -506,16 +485,40 @@ public class Financeiro extends javax.swing.JFrame {
     private void botaoverificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificar1ActionPerformed
         // TODO add your handling code here:
         ResultSet rs = visualizarReserva();
-        DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
+        ResultSet rs1 = visualizarCliente();
+        ResultSet rs2 = visualizarFinanceiro();
+        
+        DefaultTableModel model = (DefaultTableModel) tabelaFinanceiro.getModel();
         model.setRowCount(0);
         try {
-            while(rs.next()){
-                model.addRow(new String[]{
-                    rs.getString(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4)});
-        }
+
+                while (rs.next()) {
+                    // Fetch data from rs
+                    String checkin = rs.getString(1);
+                    String checkout = rs.getString(2);
+                    String tipoQuarto = rs.getString(3);
+                    String numeroQuarto = rs.getString(4);
+                    // Fetch data from rs1
+                    rs1.next(); // Move to next row in rs1
+                    String cpfCliente = rs1.getString(3);
+                    // Fetch data from rs2
+                    rs2.next(); // Move to next row in rs2
+                    String formaPagamento = rs2.getString(2);
+                    String parcelas = rs2.getString(3);
+                    String valorTotal = rs2.getString(5);
+
+                    // Add fetched data to the table model
+                    model.addRow(new String[]{
+                        checkin,
+                        checkout,
+                        tipoQuarto,
+                        numeroQuarto,
+                        cpfCliente,
+                        formaPagamento,
+                        parcelas,
+                        valorTotal
+                    });
+                }
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -523,37 +526,33 @@ public class Financeiro extends javax.swing.JFrame {
 
     private void botaoatualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizar1ActionPerformed
         // TODO add your handling code here:
-//
-//        java.util.Date dataCheckin = checkin.getDate();;
-//        java.util.Date dataCheckout = checkout.getDate();
-//        String numeroQuarto = opcaonumero.getSelectedItem().toString();
-//        String tipoQuarto = opcaotipoquarto.getSelectedItem().toString();
-//        String cpf = campocpf.getText();
-//        String nome = camponomecliente.getText();
-//        String telefone = telefonecliente.getText();
-//
-//        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
-//            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
-//        }
-//        atualizarReserva(dataCheckin,dataCheckout,nome,cpf,telefone,numeroQuarto,tipoQuarto);
-//        JOptionPane.showMessageDialog(null,"Reserva atualizada com sucesso!");
-//
-//        int linhaSelecionada = tabelaReserva.getSelectedRow();
-//        DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
-//
-//        if(linhaSelecionada >= 0){
-//            model.setValueAt(dataCheckin, linhaSelecionada, 0);
-//            model.setValueAt(dataCheckout, linhaSelecionada, 1);
-//            model.setValueAt(tipoQuarto, linhaSelecionada, 2);
-//            model.setValueAt(numeroQuarto, linhaSelecionada, 3);
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Error");
-//        }
+
+        String parcelas = parcela.getSelectedItem().toString();
+        String pagamento = formapagamento.getSelectedItem().toString();
+        int valortotal = Integer.parseInt(valorTotal.getText());
+        String cpf = campocpf.getText();
+
+        if((parcelas.equals(""))||pagamento.equals("")||"".equals(valortotal)){
+            JOptionPane.showMessageDialog(null,"Por favor preencha os campos de cobranças.");
+        }
+        atualizarFinanceiro(cpf,parcelas,pagamento,valortotal);
+        JOptionPane.showMessageDialog(null,"Finanças atualizada com sucesso!");
+
+        int linhaSelecionada = tabelaFinanceiro.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tabelaFinanceiro.getModel();
+
+        if(linhaSelecionada >= 0){
+            model.setValueAt(pagamento, linhaSelecionada, 5);
+            model.setValueAt(parcelas, linhaSelecionada, 6);
+            model.setValueAt(valortotal, linhaSelecionada, 7);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error");
+        }
     }//GEN-LAST:event_botaoatualizar1ActionPerformed
 
-    private void opcaonumero1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcaonumero1ActionPerformed
+    private void parcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parcelaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_opcaonumero1ActionPerformed
+    }//GEN-LAST:event_parcelaActionPerformed
 
     private void campocpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campocpfActionPerformed
         // TODO add your handling code here:
@@ -597,14 +596,13 @@ public class Financeiro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoatualizar;
     private javax.swing.JButton botaoatualizar1;
-    private javax.swing.JButton botaodeletar;
     private javax.swing.JButton botaoverificar;
     private javax.swing.JButton botaoverificar1;
     private javax.swing.JButton botaovoltar;
     private javax.swing.JFormattedTextField campocpf;
     private com.toedter.calendar.JDateChooser checkin;
     private com.toedter.calendar.JDateChooser checkout;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JComboBox<String> formapagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
@@ -621,9 +619,9 @@ public class Financeiro extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> opcaonumero;
-    private javax.swing.JComboBox<String> opcaonumero1;
     private javax.swing.JComboBox<String> opcaotipoquarto;
-    private javax.swing.JComboBox<String> opcaotipoquarto1;
-    private javax.swing.JTable tabelaReserva;
+    private javax.swing.JComboBox<String> parcela;
+    private javax.swing.JTable tabelaFinanceiro;
+    private javax.swing.JFormattedTextField valorTotal;
     // End of variables declaration//GEN-END:variables
 }
