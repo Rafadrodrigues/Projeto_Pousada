@@ -509,28 +509,16 @@ public class Funcionario extends javax.swing.JFrame {
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
         // TODO add your handling code here:
-        String nome = camponome.getText();
-        String usuario = campousuario.getText();
-        String senha = camposenha.getText();
-        String email = campoemail.getText();
         String cpf = campocpf.getText();
-        String telefone = campotelefone.getText();
-        String rua = camporua.getText();
-        //Convertendo o valor de String para int
-        int numero = Integer.parseInt(camponumero.getText());
-        String bairro = campobairro.getText();
-        String cidade = campocidade.getText();
-        
-        if(nome.equals("") || (senha.equals("") || 
-                (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
-                ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
-            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
+
+        if(cpf.equals("")){
+            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de CPF.");
         }
         //Condicional para certificar que deseja deletar funcionario
         int opcao = JOptionPane.showConfirmDialog(Funcionario.this, "Tem certeza que deseja deletar esse funcionário?", "Confirmação",JOptionPane.YES_NO_OPTION);
             // Se o usuário clicar em "Sim" usuário é deletado
             if (opcao == JOptionPane.YES_OPTION) {
-                deletarUsuario(usuario,cpf);
+                deletarUsuario(cpf);
                 JOptionPane.showMessageDialog(null,"Funcionário deletado com sucesso!");
             }
         

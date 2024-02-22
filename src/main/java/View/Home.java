@@ -268,6 +268,11 @@ public class Home extends javax.swing.JFrame {
 
     private void botaoclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoclienteActionPerformed
         // TODO add your handling code here:
+        Financeiro financeiro = new Financeiro();
+        financeiro.setVisible(true);
+        financeiro.setLocationRelativeTo(null);
+        financeiro.pack();
+        this.dispose();
     }//GEN-LAST:event_botaoclienteActionPerformed
 
     private void botaocliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaocliente1ActionPerformed

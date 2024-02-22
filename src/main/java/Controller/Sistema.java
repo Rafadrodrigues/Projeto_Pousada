@@ -204,22 +204,21 @@ public class Sistema {
         }
     }
 
-    public static void deletarUsuario(String usuario,String cpf){
+    public static void deletarUsuario(String cpf){
         
         try(Connection conexao = estabelecerConexao()){
-            String query1 = "DELETE FROM funcionario WHERE Usuario=? AND CPF=?";
-            String query2 = "DELETE FROM endereco WHERE Fk_IdFuncionario=?";
+            String query1 = "DELETE FROM funcionario WHERE CPF=?";
+//            String query2 = "DELETE FROM endereco WHERE Fk_IdFuncionario=?";
             int idFunc = obtendoID(cpf);
             
             PreparedStatement pstmt1 = conexao.prepareStatement(query1);
-            pstmt1.setString(1, usuario);
-            pstmt1.setString(2, cpf);
+            pstmt1.setString(1, cpf);
             pstmt1.executeUpdate();
             
-            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
-            pstmt2.setInt(1, idFunc);
-            
-            pstmt2.executeUpdate();
+//            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+//            pstmt2.setInt(1, idFunc);
+//            
+//            pstmt2.executeUpdate();
             
         } catch (SQLException ex) {
             ex.printStackTrace();
