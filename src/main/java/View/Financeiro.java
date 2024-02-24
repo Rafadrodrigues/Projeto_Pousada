@@ -4,13 +4,21 @@
  */
 package View;
 
+import static Controller.Sistema.atualizarFinanceiro;
 import static Controller.Sistema.visualizarCliente;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static Controller.Sistema.visualizarReserva;
 import static Controller.Sistema.visualizarFinanceiro;
-import static Controller.Sistema.atualizarFinanceiro;
-import java.sql.ResultSet;
+//import static Controller.Sistema.atualizarFinanceiro;
+import java.sql.ResultSet;;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.TableModel;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -436,50 +444,10 @@ public class Financeiro extends javax.swing.JFrame {
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
-//        ResultSet rs = visualizarReserva();
-//        DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
-//        model.setRowCount(0);
-//        try {
-//            while(rs.next()){
-//                model.addRow(new String[]{
-//                    rs.getString(1),
-//                    rs.getString(2),
-//                    rs.getString(3),
-//                    rs.getString(4)});
-//        }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }//GEN-LAST:event_botaoverificarActionPerformed
 
     private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed
         // TODO add your handling code here:
-//
-//        java.util.Date dataCheckin = checkin.getDate();;
-//        java.util.Date dataCheckout = checkout.getDate();
-//        String numeroQuarto = opcaonumero.getSelectedItem().toString();
-//        String tipoQuarto = opcaotipoquarto.getSelectedItem().toString();
-//        String cpf = campocpf.getText();
-//        String nome = camponomecliente.getText();
-//        String telefone = telefonecliente.getText();
-//
-//        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
-//            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
-//        }
-//        atualizarReserva(dataCheckin,dataCheckout,nome,cpf,telefone,numeroQuarto,tipoQuarto);
-//        JOptionPane.showMessageDialog(null,"Reserva atualizada com sucesso!");
-//
-//        int linhaSelecionada = tabelaReserva.getSelectedRow();
-//        DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
-//
-//        if(linhaSelecionada >= 0){
-//            model.setValueAt(dataCheckin, linhaSelecionada, 0);
-//            model.setValueAt(dataCheckout, linhaSelecionada, 1);
-//            model.setValueAt(tipoQuarto, linhaSelecionada, 2);
-//            model.setValueAt(numeroQuarto, linhaSelecionada, 3);
-//        }else{
-//            JOptionPane.showMessageDialog(null, "Error");
-//        }
     }//GEN-LAST:event_botaoatualizarActionPerformed
 
     private void botaoverificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificar1ActionPerformed
@@ -487,50 +455,54 @@ public class Financeiro extends javax.swing.JFrame {
         ResultSet rs = visualizarReserva();
         ResultSet rs1 = visualizarCliente();
         ResultSet rs2 = visualizarFinanceiro();
-        
+
         DefaultTableModel model = (DefaultTableModel) tabelaFinanceiro.getModel();
         model.setRowCount(0);
+
         try {
+            while (rs.next() && rs1.next() && rs2.next()) {
+                // Fetch data from rs
+                String checkin = rs.getString(1);
+                String checkout = rs.getString(2);
+                String tipoQuarto = rs.getString(3);
+                String numeroQuarto = rs.getString(4);
 
-                while (rs.next()) {
-                    // Fetch data from rs
-                    String checkin = rs.getString(1);
-                    String checkout = rs.getString(2);
-                    String tipoQuarto = rs.getString(3);
-                    String numeroQuarto = rs.getString(4);
-                    // Fetch data from rs1
-                    rs1.next(); // Move to next row in rs1
-                    String cpfCliente = rs1.getString(3);
-                    // Fetch data from rs2
-                    rs2.next(); // Move to next row in rs2
-                    String formaPagamento = rs2.getString(2);
-                    String parcelas = rs2.getString(3);
-                    String valorTotal = rs2.getString(5);
+                // Fetch data from rs1
+                String cpfCliente = rs1.getString(3);
 
-                    // Add fetched data to the table model
-                    model.addRow(new String[]{
-                        checkin,
-                        checkout,
-                        tipoQuarto,
-                        numeroQuarto,
-                        cpfCliente,
-                        formaPagamento,
-                        parcelas,
-                        valorTotal
-                    });
-                }
+                // Fetch data from rs2
+                String formaPagamento = rs2.getString(2);
+                String parcelas = rs2.getString(3);
+                String valorTotal = rs2.getString(5);
+
+                // Add fetched data to the table model
+                model.addRow(new String[]{
+                    checkin,
+                    checkout,
+                    tipoQuarto,
+                    numeroQuarto,
+                    cpfCliente,
+                    formaPagamento,
+                    parcelas,
+                    valorTotal
+                });
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Financeiro.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_botaoverificar1ActionPerformed
 
     private void botaoatualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizar1ActionPerformed
         // TODO add your handling code here:
-
+        java.util.Date dataCheckin = checkin.getDate();;
+        java.util.Date dataCheckout = checkout.getDate();
+        String numeroQuarto = opcaonumero.getSelectedItem().toString();
+        String tipoQuarto = opcaotipoquarto.getSelectedItem().toString();
+        String cpf = campocpf.getText();
         String parcelas = parcela.getSelectedItem().toString();
         String pagamento = formapagamento.getSelectedItem().toString();
         int valortotal = Integer.parseInt(valorTotal.getText());
-        String cpf = campocpf.getText();
 
         if((parcelas.equals(""))||pagamento.equals("")||"".equals(valortotal)){
             JOptionPane.showMessageDialog(null,"Por favor preencha os campos de cobranças.");
@@ -542,6 +514,12 @@ public class Financeiro extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tabelaFinanceiro.getModel();
 
         if(linhaSelecionada >= 0){
+            
+            model.setValueAt(dataCheckin, linhaSelecionada, 0);
+            model.setValueAt(dataCheckout, linhaSelecionada, 1);
+            model.setValueAt(tipoQuarto, linhaSelecionada, 2);
+            model.setValueAt(numeroQuarto, linhaSelecionada, 3);
+            model.setValueAt(cpf, linhaSelecionada, 4);
             model.setValueAt(pagamento, linhaSelecionada, 5);
             model.setValueAt(parcelas, linhaSelecionada, 6);
             model.setValueAt(valortotal, linhaSelecionada, 7);

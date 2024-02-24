@@ -51,11 +51,9 @@ public class Sistema {
 
             ResultSet rs = pstmt.executeQuery();
 
-            int generatedKey = 0;
+            Integer generatedKey = null;
             if (rs.next()) {
                 generatedKey = rs.getInt("IdFuncionario");
-            }else{
-                return 0;
             }
 
             rs.close();
@@ -172,35 +170,38 @@ public class Sistema {
     
     public static void atualizarUsuario(String usuario, String senha, String nome,String cpf, String email, 
                 String telefone, String rua, int numeroCasa, String bairro, String cidade){
+            try {
+                Connection conexao = estabelecerConexao();
+                try {
+                    String query1 = "UPDATE funcionario SET Senha=?, Nome=?, Email=?, Telefone=? WHERE Usuario=? AND CPF=?";
+                    PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+                    pstmt1.setString(1, senha);
+                    pstmt1.setString(2, nome);
+                    pstmt1.setString(3, email);
+                    pstmt1.setString(4, telefone);
+                    pstmt1.setString(5, usuario);
+                    pstmt1.setString(6, cpf);
+                    pstmt1.executeUpdate();
 
-        try {
-            Connection conexao = estabelecerConexao();
-            String query1 = "UPDATE funcionario SET Senha=?, Nome=?, Email=?, Telefone=? WHERE Usuario=? AND CPF=?";
-            String query2 = "UPDATE endereco SET Rua=?, Numero=?, Bairro=?, Cidade=? WHERE Fk_IdFuncionario=?";
+                    int idFunc = obtendoID(cpf);
 
-            PreparedStatement pstmt1 = conexao.prepareStatement(query1);
-            pstmt1.setString(1, senha);
-            pstmt1.setString(2, nome);
-            pstmt1.setString(3, email);
-            pstmt1.setString(4, telefone);
-            pstmt1.setString(5, usuario);
-            pstmt1.setString(6, cpf);
+                    String query2 = "UPDATE endereco SET Rua=?, Numero=?, Bairro=?, Cidade=? WHERE Fk_IdFuncionario=?";
+                    PreparedStatement pstmt2 = conexao.prepareStatement(query2);
+                    pstmt2.setString(1, rua);
+                    pstmt2.setInt(2, numeroCasa);
+                    pstmt2.setString(3, bairro);
+                    pstmt2.setString(4, cidade);
+                    pstmt2.setInt(5, idFunc);
+                    pstmt2.executeUpdate();
+                } finally {
+                    if (conexao != null) {
+                        conexao.close();
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Error " + e.getMessage());
+            }
 
-            pstmt1.executeUpdate();
-
-            int idFunc = obtendoID(cpf);
-
-            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
-            pstmt2.setString(1, rua);
-            pstmt2.setInt(2, numeroCasa);
-            pstmt2.setString(3, bairro);
-            pstmt2.setString(4, cidade);
-            pstmt2.setInt(5, idFunc);
-            pstmt2.executeUpdate();
-
-        } catch(Exception e) {
-            System.out.println("Error " + e.getMessage());
-        }
     }
 
     public static void deletarUsuario(String cpf){
@@ -244,6 +245,7 @@ public class Sistema {
     */
 
         public static void cadastrarReserva(Date checkin, Date checkout, String nome, String cpf, String telefone, String numeroQuarto, String tipoQuarto) {
+            
             try {
                 Connection conexao = estabelecerConexao();
 
@@ -406,7 +408,7 @@ public class Sistema {
      public static ResultSet visualizarFinanceiro(){
         try{
             ResultSet resultSet;
-            Connection conexao = estabelecerConexao();
+            Connection conexao = estabelecerConexao(); 
                 String query = "SELECT * FROM financeiro;";
                 PreparedStatement  pstmt = conexao.prepareStatement(query);
                 resultSet = pstmt.executeQuery(); 
@@ -416,18 +418,32 @@ public class Sistema {
         }
         return null;
     }
+          public static ResultSet visualizarEndereco(){
+        try{
+            ResultSet resultSet;
+            Connection conexao = estabelecerConexao();
+                String query = "SELECT * FROM endereco;";
+                PreparedStatement  pstmt = conexao.prepareStatement(query);
+                resultSet = pstmt.executeQuery(); 
+                return resultSet;
+        } catch(Exception e){
+            System.out.println("Error " + e.getMessage());
+        }
+        return null;
+    }
+         //Para esse código vai ser preciso criar mais consultas SQL
      public static void atualizarFinanceiro(String cpf, String parcelas, String pagamento,int valortotal) {
           try {
-              Connection conexao = estabelecerConexao();
-              Integer idCliente = obtendoIdCliente(cpf);
+            Connection conexao = estabelecerConexao();
+//            Integer idCliente = obtendoIdCliente(cpf);
               
-              // Atualiza a reserva na tabela
-            String query1 = "UPDATE financeiro SET forma_pagamento=?, parcelas=?, valor_total=? WHERE fk_id_reserva = ?";
+             // Atualiza a reserva na tabela
+            String query1 = "UPDATE financeiro SET forma_pagamento=?, parcelas=?, valor_total=?";
             PreparedStatement pstmt1 = conexao.prepareStatement(query1);
             pstmt1.setString(1, pagamento);
             pstmt1.setString(2, parcelas);
             pstmt1.setInt(3, valortotal);
-            pstmt1.setInt(4, idCliente);
+
             pstmt1.executeUpdate();
 
             // Fechar os recursos

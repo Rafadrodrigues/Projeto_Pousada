@@ -7,6 +7,7 @@ package View;
 import static Controller.Sistema.cadastrarUsuario;
 import static Controller.Sistema.atualizarUsuario;
 import static Controller.Sistema.deletarUsuario;
+import static Controller.Sistema.visualizarEndereco;
 import static Controller.Sistema.visualizarFuncionario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -96,7 +97,7 @@ public class Funcionario extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(438, 438, 438)
+                .addGap(616, 616, 616)
                 .addComponent(botaovoltar)
                 .addGap(18, 18, 18))
         );
@@ -318,11 +319,11 @@ public class Funcionario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Usuário", "Senha", "Telefone", "E-mail", "CPF"
+                "Nome", "Usuário", "Senha", "Telefone", "E-mail", "CPF", "Rua", "Número", "Bairro", "Cidade"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -347,7 +348,7 @@ public class Funcionario extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(442, Short.MAX_VALUE)
+                .addContainerGap(769, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addGap(424, 424, 424))
         );
@@ -399,14 +400,16 @@ public class Funcionario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoatualizar)
                     .addComponent(botaodeletar)
@@ -441,10 +444,6 @@ public class Funcionario extends javax.swing.JFrame {
         int numero = Integer.parseInt(camponumero.getText());
         String bairro = campobairro.getText();
         String cidade = campocidade.getText();
-        
-//        if(senha.length() > 8){
-//            JOptionPane.showMessageDialog(null,"Senha não pode ser maior que 8 dígitos.");
-//        }
 
         if(nome.equals("") || (senha.equals("") || 
                 (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
@@ -464,7 +463,11 @@ public class Funcionario extends javax.swing.JFrame {
             senha,
             telefone,
             email,
-            cpf
+            cpf,
+            rua,
+            numero,
+            bairro,
+            cidade
         });
     }//GEN-LAST:event_botaosalvarActionPerformed
 
@@ -493,7 +496,6 @@ public class Funcionario extends javax.swing.JFrame {
         int linhaSelecionada = tabelafunc.getSelectedRow();
         DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
         
-        //Preciso conferir esse comando aqui 
         if(linhaSelecionada >= 0){
             model.setValueAt(nome, linhaSelecionada, 0);
             model.setValueAt(usuario, linhaSelecionada, 1);
@@ -501,10 +503,14 @@ public class Funcionario extends javax.swing.JFrame {
             model.setValueAt(telefone, linhaSelecionada, 3);
             model.setValueAt(email, linhaSelecionada, 4);
             model.setValueAt(cpf, linhaSelecionada, 5);
-
+            model.setValueAt(rua, linhaSelecionada, 6);
+            model.setValueAt(numero, linhaSelecionada, 7);
+            model.setValueAt(bairro, linhaSelecionada, 8);
+            model.setValueAt(cidade, linhaSelecionada, 9);
         }else{
             JOptionPane.showMessageDialog(null, "Error");
         }
+
     }//GEN-LAST:event_botaoatualizarActionPerformed
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
@@ -543,6 +549,10 @@ public class Funcionario extends javax.swing.JFrame {
         campotelefone.setText(model.getValueAt(linhaSelecionada, 3).toString());
         campoemail.setText(model.getValueAt(linhaSelecionada, 4).toString());
         campocpf.setText(model.getValueAt(linhaSelecionada, 5).toString());
+        camporua.setText(model.getValueAt(linhaSelecionada, 6).toString());
+        camponumero.setText(model.getValueAt(linhaSelecionada, 7).toString());
+        campobairro.setText(model.getValueAt(linhaSelecionada, 8).toString());
+        campocidade.setText(model.getValueAt(linhaSelecionada, 9).toString());
     }//GEN-LAST:event_tabelafuncMouseClicked
 
     private void campocpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campocpfActionPerformed
@@ -556,10 +566,12 @@ public class Funcionario extends javax.swing.JFrame {
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
         ResultSet rs = visualizarFuncionario();
+        ResultSet rs1 = visualizarEndereco();
         DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
         model.setRowCount(0);
+
         try {
-            while(rs.next()){
+            while(rs.next()&& rs1.next()){
                 model.addRow(new String[]{
                     //A contagem começa a partir do 2 para que o ID não seja mostrado na tabela
                     rs.getString(3), 
@@ -568,6 +580,10 @@ public class Funcionario extends javax.swing.JFrame {
                     rs.getString(5),
                     rs.getString(4), 
                     rs.getString(7),
+                    rs1.getString(2), 
+                    rs1.getString(3), 
+                    rs1.getString(4),
+                    rs1.getString(5),
                 });
             }
         } catch (SQLException ex) {

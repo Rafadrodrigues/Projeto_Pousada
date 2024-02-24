@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import static Controller.Sistema.deletarReserva;
 import static Controller.Sistema.cadastrarReserva;
 import static Controller.Sistema.atualizarReserva;
+import static Controller.Sistema.visualizarCliente;
 import static Controller.Sistema.visualizarReserva;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -105,7 +106,7 @@ public class Reserva extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(492, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(472, 472, 472)
                 .addComponent(botaovoltar)
@@ -134,7 +135,7 @@ public class Reserva extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(417, 417, 417)
                 .addComponent(jLabel9)
-                .addContainerGap(440, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,11 +317,11 @@ public class Reserva extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Check-In", "Check-Out", "Tipo do Quarto", "Nº"
+                "Check-In", "Check-Out", "Tipo do Quarto", "Número", "Nome", "CPF", "Telefone"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -354,14 +355,11 @@ public class Reserva extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 575, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,16 +388,23 @@ public class Reserva extends javax.swing.JFrame {
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
-        ResultSet rs = visualizarReserva();
-        DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
-        model.setRowCount(0);
+            ResultSet rs = visualizarReserva();
+            ResultSet rs1 = visualizarCliente();
+            DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
+            model.setRowCount(0);
+
         try {
-            while(rs.next()){
+            while(rs.next() && rs1.next()) {
+                // Make sure to adjust the column indices according to your result sets
                 model.addRow(new String[]{
                     rs.getString(1), 
                     rs.getString(2), 
                     rs.getString(3),
-                    rs.getString(4)});
+                    rs.getString(4),
+                    rs1.getString(2), 
+                    rs1.getString(3),
+                    rs1.getString(4)
+                });
             }
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -417,7 +422,6 @@ public class Reserva extends javax.swing.JFrame {
 
     private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed
          // TODO add your handling code here:
-
         java.util.Date dataCheckin = checkin.getDate();;
         java.util.Date dataCheckout = checkout.getDate();
         String numeroQuarto = opcaonumero.getSelectedItem().toString();
@@ -440,6 +444,9 @@ public class Reserva extends javax.swing.JFrame {
             model.setValueAt(dataCheckout, linhaSelecionada, 1);
             model.setValueAt(tipoQuarto, linhaSelecionada, 2);
             model.setValueAt(numeroQuarto, linhaSelecionada, 3);
+            model.setValueAt(nome, linhaSelecionada, 4);
+            model.setValueAt(cpf, linhaSelecionada, 5);
+            model.setValueAt(telefone, linhaSelecionada, 6);
         }else{
             JOptionPane.showMessageDialog(null, "Error");
         }
@@ -507,9 +514,12 @@ public class Reserva extends javax.swing.JFrame {
             Date date2 = sdf.parse(dateString2);
             checkin.setDate(date);
             checkout.setDate(date2);
-            
             opcaotipoquarto.setSelectedItem(model.getValueAt(linhaSelecionada, 2).toString());
             opcaonumero.setSelectedItem(model.getValueAt(linhaSelecionada, 3).toString());
+            camponomecliente.setText(model.getValueAt(linhaSelecionada, 4).toString());
+            campocpf.setText(model.getValueAt(linhaSelecionada, 5).toString());
+            telefonecliente.setText(model.getValueAt(linhaSelecionada, 6).toString());
+            
         } catch (ParseException ex) {
             Logger.getLogger(Reserva.class.getName()).log(Level.SEVERE, null, ex);
         }
