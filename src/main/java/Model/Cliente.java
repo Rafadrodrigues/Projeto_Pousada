@@ -5,28 +5,40 @@
 package Model;
 
 /**
- *
+ * Classe responsável por representar os clientes do sistema.Cliente 
+ * é uma herança da classe abstrata Pessoa
  * @author rafar
  */
 public class Cliente extends Pessoa {
     
-    private int idCliente;
     /**
-     * Características dos clientes
-     * @param idCliente - Atributo que vai ser muito importante no Banco de Dados.
-     * @param nome
-     * @param cpf
-     * @param endereco
-     * @param email
-     * @param telefone 
-     */
+    * Atributo que representa a classe cliente
+    * int idCliente;
+    */
+    private int idCliente;
+
+    /**
+     * Construtor parametrizado para inicializar a classse
+    * @param idCliente - Atributo que vai ser muito importante no Banco de Dados.
+    * @param nome     nome da pessoa.
+    * @param cpf       CPF da pessoa.
+    * @param email     e-mail da pessoa.
+    * @param telefone  telefone da pessoa.
+    */
     
-    public Cliente(int idCliente,String nome, String cpf, String endereco, 
+    public Cliente(int idCliente,String nome, String cpf,
         String email, String telefone) {
-        super(nome, cpf, endereco, email, telefone);
+        super(nome, cpf, email, telefone);
         this.idCliente = idCliente;
     }
 
+    /**
+     * Construtor padrão para inicialização da classe sem parâmetro, caso necessário.
+     */
+    public Cliente() {
+    }
+
+    
     public int getIdCliente() {
         return idCliente;
     }
@@ -35,9 +47,13 @@ public class Cliente extends Pessoa {
         this.idCliente = idCliente;
     }
 
+    /**
+     * Representação da classe em formato de String
+     * @return String
+     */
     @Override
     public String toString() {
         return "Cliente{" + "idCliente=" + idCliente + '}';
     }
-    
+   
 }

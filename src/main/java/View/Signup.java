@@ -4,7 +4,10 @@ package View;
 import static Controller.Sistema.signup;
 import javax.swing.JOptionPane;
 
-
+/**
+ * Classe responsável para gerenciar a tela de Signup do Sistema
+ * @author rafar
+ */
 public class Signup extends javax.swing.JFrame {
 
 
@@ -425,10 +428,13 @@ public class Signup extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         Login loginFrame = new Login();
         loginFrame.setVisible(true);
         loginFrame.pack();
         loginFrame.setLocationRelativeTo(null);
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -453,16 +459,19 @@ public class Signup extends javax.swing.JFrame {
     }//GEN-LAST:event_enderecocadastroActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         Login loginFrame = new Login();
         loginFrame.setVisible(true);
         loginFrame.pack();
         loginFrame.setLocationRelativeTo(null);
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void enviarcadastro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarcadastro1ActionPerformed
-        // TODO add your handling code here:
+        /*Atribuindo valores dos campos para variáveis*/
         String nome = nomecadastro2.getText();
         String usuario = campousuario.getText();
         String senha = senhacadastro1.getText();
@@ -475,19 +484,24 @@ public class Signup extends javax.swing.JFrame {
         String bairro = bairrocadastro1.getText();
         String cidade = cidadecadastro1.getText();
         
+        /*Condicional para não deixar que os campos fiquem vazio*/
         if(nome.equals("") || (senha.equals("") || 
                 (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
                 ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
-
+        
+        /*Realizando cadastro do usuário na base de dados.*/
         signup(usuario,senha,nome,cpf,email,telefone,rua,numero,bairro,cidade);
         JOptionPane.showMessageDialog(null,"Cadastro realizado com sucesso!");
         
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         Login loginFrame = new Login();
         loginFrame.setVisible(true);
         loginFrame.pack();
         loginFrame.setLocationRelativeTo(null);
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_enviarcadastro1ActionPerformed
 

@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import static Controller.Sistema.deletarReserva;
 import static Controller.Sistema.cadastrarReserva;
 import static Controller.Sistema.atualizarReserva;
+//import static Controller.Sistema.cadastrarFinanceiro;
 import static Controller.Sistema.visualizarCliente;
 import static Controller.Sistema.visualizarReserva;
 import java.sql.ResultSet;
@@ -21,13 +22,13 @@ import java.util.logging.Logger;
 import javax.swing.table.TableModel;
 
 /**
- *
+ * Classe que gerencia a tela de reserva do sistema
  * @author rafar
  */
 public class Reserva extends javax.swing.JFrame {
 
     /**
-     * Creates new form Reserva
+     * Construtor padrão da classe
      */
     public Reserva() {
         initComponents();
@@ -55,9 +56,11 @@ public class Reserva extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         camponomecliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        campocpf = new javax.swing.JFormattedTextField();
         telefonecliente = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
+        campoemail = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        campocpf = new javax.swing.JFormattedTextField();
         botaoatualizar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         opcaotipoquarto = new javax.swing.JComboBox<>();
@@ -70,6 +73,13 @@ public class Reserva extends javax.swing.JFrame {
         checkin = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaReserva = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        formapagamento = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        parcela = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        valorTotal = new javax.swing.JFormattedTextField();
 
         jPanel3.setBackground(new java.awt.Color(86, 0, 140));
 
@@ -181,12 +191,6 @@ public class Reserva extends javax.swing.JFrame {
         jLabel3.setText("CPF");
 
         try {
-            campocpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
             telefonecliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
@@ -195,37 +199,55 @@ public class Reserva extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel13.setText("Telefone");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel4.setText("E-mail");
+
+        try {
+            campocpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
                     .addComponent(camponomecliente, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
                     .addComponent(telefonecliente, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(campoemail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
+                    .addComponent(jLabel4)
+                    .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(camponomecliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(camponomecliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addGap(12, 12, 12)
-                .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(telefonecliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(telefonecliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoemail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         botaoatualizar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -269,26 +291,19 @@ public class Reserva extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(opcaotipoquarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(104, 104, 104)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(opcaonumero, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(138, 138, 138))))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(opcaotipoquarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(opcaonumero, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel5))
+                .addGap(94, 94, 94))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,7 +324,7 @@ public class Reserva extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         tabelaReserva.setModel(new javax.swing.table.DefaultTableModel(
@@ -317,11 +332,11 @@ public class Reserva extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Check-In", "Check-Out", "Tipo do Quarto", "Número", "Nome", "CPF", "Telefone"
+                "Check-In", "Check-Out", "Tipo do Quarto", "Número", "Nome", "CPF", "Telefone", "E-mail"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -334,6 +349,63 @@ public class Reserva extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tabelaReserva);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados da Cobrança", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 12))); // NOI18N
+
+        formapagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Crédito", "Débito", "PIX" }));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel7.setText("Parcelas");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel8.setText("Valor Total");
+
+        parcela.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+        parcela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                parcelaActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel15.setText("Forma de Pagamento");
+
+        valorTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel8)
+                    .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(121, 121, 121))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -354,9 +426,10 @@ public class Reserva extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 707, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -371,15 +444,17 @@ public class Reserva extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoverificar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoatualizar)
                             .addComponent(botaodeletar)
                             .addComponent(botaosalvar)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -387,58 +462,79 @@ public class Reserva extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
-        // TODO add your handling code here:
-            ResultSet rs = visualizarReserva();
-            ResultSet rs1 = visualizarCliente();
+        
+        /*Variáveis criadas no intuito de coletar os retornos da função. Todas essas funções
+        irão retorna uma consulta SELECT * FROM no banco de dados de sua respectiva tabela*/
+        ResultSet rs = visualizarReserva();
+        ResultSet rs1 = visualizarCliente();
+            
+            /*Criação da tabela que vai ser apresentada os valores*/
             DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
+            /*Inicializando a tabela na primeira linha*/
             model.setRowCount(0);
-
+        
+        /*Tratando possíveis execessões durante a iteração na base de dados*/
         try {
+            /*Enquanto existir dados na base dados o loop vai continuar e preenchendo
+            a tabela do sistema*/
             while(rs.next() && rs1.next()) {
-                // Make sure to adjust the column indices according to your result sets
                 model.addRow(new String[]{
+                    // Coletando dados da tabela 'reserva'. rs reponsável por iterar nessa tabela
                     rs.getString(1), 
                     rs.getString(2), 
                     rs.getString(3),
                     rs.getString(4),
+                    // Coletando dados da tabela 'cliente'. rs reponsável por iterar nessa tabela
                     rs1.getString(2), 
                     rs1.getString(3),
-                    rs1.getString(4)
+                    rs1.getString(4),
+                    rs1.getString(5)
                 });
             }
+            /*Cláusula para caso ocorra erro durante a consulta.*/
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoverificarActionPerformed
 
     private void botaovoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaovoltarActionPerformed
-        // TODO add your handling code here:
+        
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         Home home = new Home();
         home.setVisible(true);
         home.setLocationRelativeTo(null);
         home.pack();
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_botaovoltarActionPerformed
 
     private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed
-         // TODO add your handling code here:
-        java.util.Date dataCheckin = checkin.getDate();;
+        
+        /*Coletando os dados dos campos e atribuindo para variáveis */
+        java.util.Date dataCheckin = checkin.getDate();
         java.util.Date dataCheckout = checkout.getDate();
         String numeroQuarto = opcaonumero.getSelectedItem().toString();
         String tipoQuarto = opcaotipoquarto.getSelectedItem().toString();
         String cpf = campocpf.getText();
         String nome = camponomecliente.getText();
         String telefone = telefonecliente.getText();
+        String email = campoemail.getText();
         
-        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
+        /*Condicional para que nenhum campo seja deixado em branco*/
+        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("") || email.equals("")){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
-        atualizarReserva(dataCheckin,dataCheckout,nome,cpf,telefone,numeroQuarto,tipoQuarto);
+        /*Após o preenchimento a função do Sistema atualiza a reserva*/
+        atualizarReserva(dataCheckin,dataCheckout,nome,cpf,telefone,numeroQuarto,tipoQuarto, email);
         JOptionPane.showMessageDialog(null,"Reserva atualizada com sucesso!");
         
+        
         int linhaSelecionada = tabelaReserva.getSelectedRow();
+        /*Criação da tabela que vai ser apresentada os valores*/
         DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
         
+        /*Caso nossa tabela não esteja vazia os dados anitgos são substituidos pelos novos*/
         if(linhaSelecionada >= 0){
             model.setValueAt(dataCheckin, linhaSelecionada, 0);
             model.setValueAt(dataCheckout, linhaSelecionada, 1);
@@ -447,7 +543,9 @@ public class Reserva extends javax.swing.JFrame {
             model.setValueAt(nome, linhaSelecionada, 4);
             model.setValueAt(cpf, linhaSelecionada, 5);
             model.setValueAt(telefone, linhaSelecionada, 6);
+            model.setValueAt(email, linhaSelecionada, 7);
         }else{
+            /*Caso essa mensagem apareça algum dado foi inserido de forma errada*/
             JOptionPane.showMessageDialog(null, "Error");
         }
     }//GEN-LAST:event_botaoatualizarActionPerformed
@@ -457,7 +555,8 @@ public class Reserva extends javax.swing.JFrame {
     }//GEN-LAST:event_opcaonumeroActionPerformed
 
     private void botaosalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaosalvarActionPerformed
-        // TODO add your handling code here:
+        
+        /*Coletando os dados dos campos e atribuindo para variáveis */
         java.util.Date dataCheckin = checkin.getDate();
         java.util.Date dataCheckout = checkout.getDate();
         String numeroQuarto = opcaonumero.getSelectedItem().toString();
@@ -465,26 +564,49 @@ public class Reserva extends javax.swing.JFrame {
         String cpf = campocpf.getText();
         String nome = camponomecliente.getText();
         String telefone = telefonecliente.getText();
-        
-        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
+        String email = campoemail.getText();
+        String parcelas = parcela.getSelectedItem().toString();
+        String formaPagamento = formapagamento.getSelectedItem().toString();
+        String valorTotalStr = valorTotal.getText().trim(); 
+        float valortotal = 0; 
+       
+        if (!valorTotalStr.isEmpty()) {
+            try {
+                valortotal = Float.parseFloat(valorTotalStr);
+            } catch (NumberFormatException ex) {
+                // Handle the case where the input is not a valid number
+                JOptionPane.showMessageDialog(null, "O valor total inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+                // Optionally, log the error or perform additional error handling
+            }
+        }
+        /*Condicional para que nenhum campo seja deixado em branco*/
+        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("") || email.equals("")){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
-        cadastrarReserva(dataCheckin, dataCheckout, nome, cpf, telefone, numeroQuarto, tipoQuarto);
+        
+        /*Após o preenchimento a função do Sistema cadastra a reserva*/
+        cadastrarReserva(dataCheckin, dataCheckout, nome, cpf, telefone, numeroQuarto, tipoQuarto, email,formaPagamento,parcelas,valortotal);
+//        cadastrarFinanceiro(formaPagamento,parcelas,valortotal);
         JOptionPane.showMessageDialog(null,"Reserva adicionada com sucesso!");
+        
+        /*Criação da tabela que vai ser apresentada os valores*/
         DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
+        /*Os novos dados cadastrados são apresentados na tabela*/
         model.addRow(new Object[]{
                 dataCheckin,
                 dataCheckout,
-                numeroQuarto,
                 tipoQuarto,
-                cpf,
+                numeroQuarto,
                 nome,
+                cpf,
                 telefone,
+                email
         });
     }//GEN-LAST:event_botaosalvarActionPerformed
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
         // TODO add your handling code here:
+        /*Coletando os dados dos campos e atribuindo para variáveis */
         java.util.Date dataCheckin = checkin.getDate();
         java.util.Date dataCheckout = checkout.getDate();
         String numeroQuarto = opcaonumero.toString();
@@ -492,26 +614,35 @@ public class Reserva extends javax.swing.JFrame {
         String cpf = campocpf.getText();
         String nome = camponomecliente.getText();
         
-        if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
+        /*Condicional para que nenhum campo seja deixado em branco*/
+        if((nome.equals(""))||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
-            deletarReserva(dataCheckin,dataCheckout,numeroQuarto,tipoQuarto,cpf);
-            JOptionPane.showMessageDialog(null,"Reserva deletada com sucesso!");
+        
+        /*Após o preenchimento a função do Sistema deleta a reserva*/
+        deletarReserva(dataCheckin,dataCheckout,numeroQuarto,tipoQuarto,cpf);
+        JOptionPane.showMessageDialog(null,"Reserva deletada com sucesso!");
         
     }//GEN-LAST:event_botaodeletarActionPerformed
 
     private void tabelaReservaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaReservaMouseClicked
+        /*Considerando possíveis erros durante o processo como conexão ou tipo incorretos de dados*/
         try {
-            // TODO add your handling code here:
+            /*A linha seleciona é tratada como um indice, esse indice é atribuido a uma variável*/
             int linhaSelecionada = tabelaReserva.getSelectedRow();
+            /*Criação da tabela que vai ser apresentada os valores*/
             TableModel model = tabelaReserva.getModel();
             
+            /*Coletando as datas para padronizar*/
             String dateString = (String) model.getValueAt(linhaSelecionada, 0);
             String dateString2 = (String) model.getValueAt(linhaSelecionada, 1);
             
+            /*Padronizando as datas, muito importante para que não ocorra erro no MySQL*/
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = sdf.parse(dateString);
             Date date2 = sdf.parse(dateString2);
+            
+            /*Atualizando a tabela os campos com os dados da tabela*/
             checkin.setDate(date);
             checkout.setDate(date2);
             opcaotipoquarto.setSelectedItem(model.getValueAt(linhaSelecionada, 2).toString());
@@ -519,12 +650,21 @@ public class Reserva extends javax.swing.JFrame {
             camponomecliente.setText(model.getValueAt(linhaSelecionada, 4).toString());
             campocpf.setText(model.getValueAt(linhaSelecionada, 5).toString());
             telefonecliente.setText(model.getValueAt(linhaSelecionada, 6).toString());
+            campoemail.setText(model.getValueAt(linhaSelecionada, 7).toString());
             
+            /*Cláusula para caso ocorra erro durante a consulta.*/
         } catch (ParseException ex) {
             Logger.getLogger(Reserva.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_tabelaReservaMouseClicked
+
+    private void parcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parcelaActionPerformed
+        /*Condicional para que não ocorra parcelas se a o pagamento no for Credito*/
+        if(!formapagamento.equals("Crédito")){
+            JOptionPane.showMessageDialog(null,"Você só pode escolher quando a forma de pagamento for Crédito");
+        }
+    }//GEN-LAST:event_parcelaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -568,27 +708,36 @@ public class Reserva extends javax.swing.JFrame {
     private javax.swing.JButton botaoverificar;
     private javax.swing.JButton botaovoltar;
     private javax.swing.JFormattedTextField campocpf;
+    private javax.swing.JTextField campoemail;
     private javax.swing.JTextField camponomecliente;
     private com.toedter.calendar.JDateChooser checkin;
     private com.toedter.calendar.JDateChooser checkout;
+    private javax.swing.JComboBox<String> formapagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> opcaonumero;
     private javax.swing.JComboBox<String> opcaotipoquarto;
+    private javax.swing.JComboBox<String> parcela;
     private javax.swing.JTable tabelaReserva;
     private javax.swing.JFormattedTextField telefonecliente;
+    private javax.swing.JFormattedTextField valorTotal;
     // End of variables declaration//GEN-END:variables
 }

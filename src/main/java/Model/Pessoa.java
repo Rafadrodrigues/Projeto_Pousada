@@ -4,30 +4,49 @@
  */
 package Model;
 
-
+/**
+ * Classe abstrata que vai servir como base para classes posteriores como funcionario e cliente.
+ * @author rafar
+ */
 public abstract class Pessoa {
     
+    /**
+    * Atributos que serão em comum para todas as classes que vão herdar suas características
+    * String nome;
+    * String cpf;
+    * String email;
+    * String telefone;
+    */
     private String nome;
     private String cpf;
-    private String endereco;
     private String email;
     private String telefone;
+    
     /**
-     * Caracterísicas em comum de toda pessoa
-     * @param nome
-     * @param cpf
-     * @param endereco
-     * @param email
-     * @param telefone 
-     */
-    public Pessoa(String nome, String cpf, String endereco, String email, String telefone) {
+    * Construtor parametrizado para inicializar a classse
+    * @param nome      nome da pessoa.
+    * @param cpf       CPF da pessoa.
+    * @param email     e-mail da pessoa.
+    * @param telefone  telefone da pessoa.
+    */
+    public Pessoa(String nome, String cpf, String email, String telefone) {
         this.nome = nome;
         this.cpf = cpf;
-        this.endereco = endereco;
         this.email = email;
         this.telefone = telefone;
     }
-
+    
+    /**
+     * Construtor padrão da classe em alguma necessidade de instânciação sem parâmetros.
+     */
+    public Pessoa(){
+        
+    }
+    
+    /**;
+     * Getter para visualizar o atributo e Setter para alterar os atributos.
+     * @return 
+     */
     public String getNome() {
         return nome;
     }
@@ -42,14 +61,6 @@ public abstract class Pessoa {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
 
     public String getEmail() {
@@ -68,12 +79,12 @@ public abstract class Pessoa {
         this.telefone = telefone;
     }
     /**
-     * Representação em forma de string da classe
-     * @return 
+     * ToString para representar a classe em formato de string da classe
+     * @return String
      */
     @Override
     public String toString() {
-        return "Pessoa{" + "nome=" + nome + ", cpf=" + cpf + ", endereco=" + endereco + ", email=" + email + ", telefone=" + telefone + '}';
+        return "Pessoa{" + "nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", telefone=" + telefone + '}';
     }
     
 }   

@@ -107,15 +107,22 @@ public class Cliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Telefone", "CPF"
+                "Nome", "Telefone", "CPF", "E-mail"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         tabelaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -170,10 +177,13 @@ public class Cliente extends javax.swing.JFrame {
 
     private void botaovoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaovoltarActionPerformed
         // TODO add your handling code here:
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         Home home = new Home();
         home.setVisible(true);
         home.setLocationRelativeTo(null);
         home.pack();
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_botaovoltarActionPerformed
 
@@ -183,12 +193,24 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaClienteMouseClicked
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
+        /*A função retorna o Id do cliente, para isso, atribuimos ele a uma variável*/
         ResultSet rs = visualizarCliente();
+        /*Atribui a uma variável a criação da tabela*/
         DefaultTableModel model = (DefaultTableModel) tabelaCliente.getModel();
+        /*Inicializando a contagem a partir da primeira linha*/
         model.setRowCount(0);
+        //Tratando possíveiis erros durante a coleta na base de dados
         try {
+            /*Enquanto todas os dados não forem coletados, ou seja, tiver um "next"
+            o loop não vai parar*/
             while(rs.next()){
-                model.addRow(new String[]{rs.getString(2), rs.getString(3), rs.getString(4)});
+                /*Uma linha é adicionada a cada nova informação*/
+                model.addRow(new String[]{
+                    /*Corresponde as colunas da base de dados "cliente"*/
+                    rs.getString(2), 
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5)});
             }
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,6 +246,7 @@ public class Cliente extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Cliente().setVisible(true);
             }

@@ -241,7 +241,7 @@ public class Home extends javax.swing.JFrame {
 
     private void botaofuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaofuncionarioActionPerformed
         // TODO add your handling code here:
-        Funcionario func = new Funcionario();
+        FuncionarioTela func = new FuncionarioTela();
         func.setVisible(true);
         func.setLocationRelativeTo(null);
         func.pack();
@@ -268,7 +268,7 @@ public class Home extends javax.swing.JFrame {
 
     private void botaoclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoclienteActionPerformed
         // TODO add your handling code here:
-        Financeiro financeiro = new Financeiro();
+        FinanceiroTela financeiro = new FinanceiroTela();
         financeiro.setVisible(true);
         financeiro.setLocationRelativeTo(null);
         financeiro.pack();

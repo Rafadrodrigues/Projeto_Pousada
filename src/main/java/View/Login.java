@@ -7,13 +7,13 @@ package View;
 import static Controller.Sistema.login;
 import javax.swing.JOptionPane;
 /**
- *
+ * Classe responsável por gerenciar a tela de login do sistema
  * @author rafar
  */
 public class Login extends javax.swing.JFrame {
 
     /**
-     * Creates new form Login
+     * Coonstrutor padrão da classe
      */
     public Login() {
         initComponents();
@@ -193,32 +193,39 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void enviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarActionPerformed
-        // TODO add your handling code here:
-        if(campousuario.getText().equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha o campo de usuário");
-        }else if(camposenha.getPassword().equals("")) {
-            JOptionPane.showMessageDialog(null, "Por favor, preencha o campo de senha");
-        } else {
-            String user = campousuario.getText();
-            String password = camposenha.getText();
+        
+        /*Atribuindo os valores para variáveis*/
+        String user = campousuario.getText();
+        String password = camposenha.getText();
+        
+        /*Condicional para não deixar que os campos fiquem vazio*/
+        if(user.equals("") || password.equals("")){
+            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos;");
+        }else{
+            /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+            a voltar a uma tela anterior*/
             if(login(user,password)){
                 Home home = new Home();
                 home.setVisible(true);
                 home.setLocationRelativeTo(null);
                 home.pack();
+                /*Fecha a tela que estavamos*/
                 this.dispose();
             }else{
+                /*Mensagem caso as credenciais inseridas estejam incorretas*/
                 JOptionPane.showMessageDialog(null, "Credenciais incorretas, tente novamente!");
             }
         }
     }//GEN-LAST:event_enviarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         Signup signup = new Signup();
         signup.setVisible(true);
         signup.setLocationRelativeTo(null);
         signup.pack();
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
