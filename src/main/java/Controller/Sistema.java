@@ -25,7 +25,7 @@ public class Sistema {
     /*Atributo criado para gerenciar as manusear do funcionario na classe sistema*/
     private static Funcionario idFuncioanarioAtual = new Funcionario();
     private static Reserva idReserva = new Reserva();
-    
+    private static Cliente cliente = new Cliente(); 
     /**
      * Construtor padrão da classe como 'private' para que não possa ser instanciada
      * @return Funcionario - Retorna informações sobre o funcionario
@@ -130,7 +130,7 @@ public class Sistema {
             /*Tratando possíveis erros que podem ocorrer*/
         } catch (SQLException e) {
             System.out.println("Error " + e.getMessage());
-            return 0;
+            return null;
             }
     }
     /**
@@ -138,15 +138,14 @@ public class Sistema {
      * @param cpf - CPF do cliente desejado
      * @return Integer - Valor do ID do cliente
      */
-   public static Integer obtendoIdCliente(String cpf) {
-       /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
+    public static Integer obtendoIdCliente(String cpf) {
+        /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
         e comparações com a base de dados.*/
         try {
             /*Estabelecendo a conexão com a base de dados*/
             Connection conexao = estabelecerConexao();
             /*Query que vai ser executada na no MySQL*/
             String query = "SELECT IdCliente FROM cliente WHERE CPF = ?";
-            
             /*Preparação da Query*/
             PreparedStatement pstmt = conexao.prepareStatement(query);
             /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
@@ -154,18 +153,17 @@ public class Sistema {
             pstmt.setString(1, cpf);
             /*Execução da Query*/
             ResultSet resultSet = pstmt.executeQuery();
+            Integer generatedKey = null; // Use null to indicate that the client does not exist
             /*Condicional que move o cursor para a primeira linha da tabela*/
-            Integer generatedKey = 0; // Use Integer para permitir o valor nulo
             if (resultSet.next()) {
                 /*Atribuindo a variavel o valor encontrado de acordo com o CPF.*/
                 generatedKey = resultSet.getInt("IdCliente");
             }
-            
             return generatedKey;
             /*Tratando possíveis erros que podem ocorrer*/
         } catch (SQLException e) {
             System.out.println("Error " + e.getMessage());
-            return 0; 
+            return null; 
         }
     }
     /**
@@ -202,7 +200,7 @@ public class Sistema {
             /*Tratando possíveis erros que podem ocorrer*/
         } catch (SQLException e) {
             System.out.println("Error " + e.getMessage());
-            return 0; 
+            return null; 
         }
     }
     /**
@@ -404,42 +402,6 @@ public class Sistema {
         }
     }
 
-//    /**
-//     * Método criado para verificar o usuário quando for atualizar ou deletar na 
-//     * base de dados
-//     * @param cpf - CPF utilizado para auxiliar na identificação de determinado usuario
-//     * @return booelean - Verifica os usuarios presentes na base de dados
-//     */
-//    public static boolean verificarUsuario(String cpf) {
-//        /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
-//        e comparações com a base de dados.*/
-//        /*Estabelecendo a conexão com a base de dados*/
-//        try (Connection conexao = estabelecerConexao()) {
-//            
-//            /*Query que vai ser executada na no MySQL.*/
-//            String query = "SELECT Nome,Usuario,CPF FROM funcionario WHERE IdFuncionario=?";
-//            /*Obtendo id do funcionario*/
-//            int idFunc = obtendoIdFuncionario(cpf);
-//            /*Preparação da Query */
-//            PreparedStatement pstmt = conexao.prepareStatement(query);
-//            /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
-//            interrograções*/
-//            pstmt.setInt(1, idFunc);
-//            
-//            /*Execução da Query*/
-//            ResultSet resultSet = pstmt.executeQuery();
-//            
-//            /*Fechando conexões*/
-//            resultSet.close();
-//            pstmt.close();
-//            
-//            return resultSet.next();
-//            /*Tratando possíveis erros que podem ocorrer*/
-//        } catch (SQLException e) {
-//            System.out.println("Error " + e.getMessage());
-//            return false;
-//        }
-//    }
    /**
     * Método responsável por cadastrar uma no sistema.Nesse método está utilizando 
     * a tabela reserva, cliente e financeiro
@@ -455,126 +417,94 @@ public class Sistema {
     * @param parcela - Parcelas se for a crédito
     * @param valorTotal - Valor total da da reserva
     */
-    public static void cadastrarReserva(Date checkin, Date checkout, String nome, 
-            String cpf, String telefone, String numeroQuarto, String tipoQuarto, 
-            String email, String formaPagamento,String parcela, float valorTotal) throws SQLException {
-        /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
+public static void cadastrarReserva(Date checkin, Date checkout, String nome, 
+        String cpf, String telefone, String numeroQuarto, String tipoQuarto, 
+        String email, String formaPagamento, String parcela, float valorTotal) {
+     /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
         e comparações com a base de dados.*/
-        try {
-            /*Estabelecendo a conexão com a base de dados*/
-            Connection conexao = estabelecerConexao();
+    try {
+         /*Estabelecendo a conexão com a base de dados*/
+        Connection conexao = estabelecerConexao();
 
-            /*Pegando id do cliente desejado de acordo o CPF*/
-            Integer idCliente = obtendoIdCliente(cpf);
-            /*Utilizando o atributo preenchido no login para coletar o ID do usuario
-            que estar realizando reservas*/
-            int idFuncionario = idFuncioanarioAtual.getIdFuncionario();
-            /*Condicional que verifica se ID do cliente é existente, caso não seja
-            o código não vai executar. É preciso realizar a inserção primeiro na tabela
-            de cliente para que não tenha erros de relacionamentos.*/
-            if (idCliente == null) {
-                /*Query que vai ser executada na no MySQL.*/
-                String queryCliente = "INSERT INTO cliente(Nome, CPF, Telefone,Email) VALUES (?, ?, ?, ?)";
-                /*Preparação da Query */
-                PreparedStatement pstmtCliente = conexao.prepareStatement(queryCliente, Statement.RETURN_GENERATED_KEYS);
-                /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
-                interrograções*/
-                pstmtCliente.setString(1, nome);
-                pstmtCliente.setString(2, cpf);
-                pstmtCliente.setString(3, telefone);
-                pstmtCliente.setString(4, email);
-                /*Execução da Query*/
-                pstmtCliente.executeUpdate();
+        /*Pegando id do cliente desejado de acordo o CPF*/
+        Integer idCliente = obtendoIdCliente(cpf);
+        
+        /*Condicional que verifica se ID do cliente é existente, caso não seja
+        o código não vai executar. É preciso realizar a inserção primeiro na tabela
+        de cliente para que não tenha erros de relacionamentos.*/
+        if (idCliente == null) {
+            /*Query que vai ser executada na no MySQL.*/
+            String queryCliente = "INSERT INTO cliente(Nome, CPF, Telefone, Email) VALUES (?, ?, ?, ?)";
+            /*Preparação da Query */
+            PreparedStatement pstmtCliente = conexao.prepareStatement(queryCliente, Statement.RETURN_GENERATED_KEYS);
+            /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
+            interrograções*/
+            pstmtCliente.setString(1, nome);
+            pstmtCliente.setString(2, cpf);
+            pstmtCliente.setString(3, telefone);
+            pstmtCliente.setString(4, email);
+            /*Execução da Query*/
+            pstmtCliente.executeUpdate();
 
-                /* Obtendo o ID do cliente recém-inserido que vai ser inserido na tabela de reserva*/
-                ResultSet generatedKeys = pstmtCliente.getGeneratedKeys();
-                /*Condicional que move o cursor para a primeira linha da tabela*/
-                if (generatedKeys.next()) {
-                    /*Atribuindo a variavel o valor encontrado de acordo com o CPF.*/
-                    idCliente = generatedKeys.getInt(1);
-                } else {
-                    // Tratando o caso em que o ID do cliente não pôde ser obtido
-                    throw new SQLException("Não foi possível obter o ID do cliente recém-inserido.");
-                }
-                /*Fechando as conexôes*/
-                pstmtCliente.close();
-            }
-//            // Inserindo a reserva na tabela
-//            String queryReserva = "INSERT INTO reserva(Checkin, Checkout, Quarto, TipoQuarto, FK_IdCliente,fk_id_funcionario) VALUES (?, ?, ?, ?, ?, ?)";
-//            
-//            /*Preparação da Query */
-//            PreparedStatement pstmtReserva = conexao.prepareStatement(queryReserva,Statement.RETURN_GENERATED_KEYS);
-//            /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
-//            interrograções*/
-//            pstmtReserva.setDate(1, new java.sql.Date(checkin.getTime()));
-//            pstmtReserva.setDate(2, new java.sql.Date(checkout.getTime()));
-//            pstmtReserva.setString(3, numeroQuarto);
-//            pstmtReserva.setString(4, tipoQuarto);
-//            pstmtReserva.setInt(5, idCliente);
-//            pstmtReserva.setInt(6, idFuncionario);
-//            /*Execução da Query*/
-//            pstmtReserva.executeUpdate();
-//            
-//            // Inserindo a reserva na tabela
-//            String queryFinanceiro = "INSERT INTO financeiro(forma_pagamento, parcelas, valor_total, fk_id_reserva) VALUES (?, ?, ?, ?)";
-//            
-//            /*Preparação da Query */
-//            PreparedStatement pstmtFinanceiro = conexao.prepareStatement(queryFinanceiro, Statement.RETURN_GENERATED_KEYS);
-//
-//            /*Pegando id da reserva desejado*/
-//            ResultSet generatedKeys = pstmtFinanceiro.getGeneratedKeys();
-//            if (generatedKeys.next()) {
-//                int idReserva1 = generatedKeys.getInt(1); // Assuming the generated key is in the first column
-//                idReserva.setIdReserva(idReserva1);
-//            }
-//            
-//            /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
-//            interrograções*/
-//            pstmtFinanceiro.setString(1, formaPagamento);
-//            pstmtFinanceiro.setString(2, parcela);
-//            pstmtFinanceiro.setFloat(3, valorTotal);
-//            pstmtFinanceiro.setInt(4, idReserva.getIdReserva());
-//            /*Execução da Query*/
-//            pstmtFinanceiro.executeUpdate();
-//            
-//            /*Tratando possíveis erros que podem ocorrer*/
-//        } catch (SQLException e) {
-//            System.out.println("Error " + e.getMessage());
-//        }
-// Inserindo a reserva na tabela
-            String queryReserva = "INSERT INTO reserva(Checkin, Checkout, Quarto, TipoQuarto, FK_IdCliente,fk_id_funcionario) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmtReserva = conexao.prepareStatement(queryReserva, Statement.RETURN_GENERATED_KEYS);
-            // Execução da Query
-            pstmtReserva.executeUpdate();
-
-            // Obtendo o ID da reserva recém-inserida
-            ResultSet generatedKeys = pstmtReserva.getGeneratedKeys();
-            int idReserva1;
+            ResultSet generatedKeys = pstmtCliente.getGeneratedKeys();
+            /*Condicional que move o cursor para a primeira linha da tabela*/
             if (generatedKeys.next()) {
-                idReserva1 = generatedKeys.getInt(1);
+                /*Atribuindo a variavel o valor encontrado do ID encontrado.*/
+                idCliente = generatedKeys.getInt(1);
             } else {
-                throw new SQLException("Não foi possível obter o ID da reserva recém-inserida.");
+                /*Exceção caso tenha erro para encontrar o usuário*/
+                throw new SQLException("Não foi possível obter o ID do cliente recém-inserido.");
             }
-            // Fechando o PreparedStatement
-            pstmtReserva.close();
-
-            // Inserindo a reserva na tabela financeiro
-            String queryFinanceiro = "INSERT INTO financeiro(forma_pagamento, parcelas, valor_total, fk_id_reserva) VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmtFinanceiro = conexao.prepareStatement(queryFinanceiro);
-            pstmtFinanceiro.setString(1, formaPagamento);
-            pstmtFinanceiro.setString(2, parcela);
-            pstmtFinanceiro.setFloat(3, valorTotal);
-            // Usando o ID da reserva obtido anteriormente
-            pstmtFinanceiro.setInt(4, idReserva1);
-            // Execução da Query
-            pstmtFinanceiro.executeUpdate();
-            // Fechando o PreparedStatement
-            pstmtFinanceiro.close();
-
-        }catch(SQLException e){
-            System.out.println("Error " + e.getMessage());
         }
+
+        /*Pegando id do funcionario logado no sistema*/
+        int idFuncionario = idFuncioanarioAtual.getIdFuncionario();
+        /*Query que vai ser executada na no MySQL.*/
+        String queryReserva = "INSERT INTO reserva(Checkin, Checkout, quarto, TipoQuarto, FK_IdCliente, fk_id_funcionario) VALUES (?, ?, ?, ?, ?, ?)";
+        /*Preparação da Query */
+        PreparedStatement pstmtReserva = conexao.prepareStatement(queryReserva, Statement.RETURN_GENERATED_KEYS);
+        /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
+        interrograções*/
+        pstmtReserva.setDate(1, new java.sql.Date(checkin.getTime()));
+        pstmtReserva.setDate(2, new java.sql.Date(checkout.getTime()));
+        pstmtReserva.setString(3, numeroQuarto);
+        pstmtReserva.setString(4, tipoQuarto);
+        pstmtReserva.setInt(5, idCliente);
+        pstmtReserva.setInt(6, idFuncionario);
+        /*Execução da Query*/
+        pstmtReserva.executeUpdate();
+
+        // Obtain the ID of the newly inserted reservation
+        ResultSet generatedKeys = pstmtReserva.getGeneratedKeys();
+        int idReserva;
+        /*Condicional que move o cursor para a primeira linha da tabela*/
+        if (generatedKeys.next()) {
+            /*Atribuindo a variavel o valor encontrado do ID encontrado.*/
+            idReserva = generatedKeys.getInt(1);
+        } else {
+            /*Exceção caso tenha erro para encontrar o usuário*/
+            throw new SQLException("Não foi possível obter o ID da reserva recém-inserida.");
+        }
+
+        /*Query que vai ser executada na no MySQL.*/
+        String queryFinanceiro = "INSERT INTO financeiro(forma_pagamento, parcelas, valor_total, fk_id_reserva) VALUES (?, ?, ?, ?)";
+        /*Preparação da Query */
+        PreparedStatement pstmtFinanceiro = conexao.prepareStatement(queryFinanceiro);
+        /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
+        interrograções*/
+        pstmtFinanceiro.setString(1, formaPagamento);
+        pstmtFinanceiro.setString(2, parcela);
+        pstmtFinanceiro.setFloat(3, valorTotal);
+        pstmtFinanceiro.setInt(4, idReserva);
+        /*Execução da Query*/
+        pstmtFinanceiro.executeUpdate();
+        
+        /*Caso ocorra algum erro no SQL que não foi esperado*/
+    } catch (SQLException e) {
+        System.out.println("Error " + e.getMessage());
     }
+}
+
     /**
     * Método responsável por atualizar as reservas. Nesse método são atualizado as tabelas
     * reserva, cliente e financeiro.
@@ -587,20 +517,9 @@ public class Sistema {
     * @param tipoQuarto - Tipo do quarto da reserva(luxo,comum)
     * @param email - Email do cliente da reserva
      */
-    /**
-    * Método responsável por atualizar as reservas. Nesse método são atualizado as tabelas
-    * reserva, cliente e financeiro.
-    * @param checkin - Data de entrada da reserva
-    * @param checkout - Data de saida da reserva
-    * @param nome - Nome do cliente da reserva
-    * @param cpf - CPF do cliente da reserva
-    * @param telefone - Telefone do cliente da reserva
-    * @param numeroQuarto - Numero do quarto da reserva
-    * @param tipoQuarto - Tipo do quarto da reserva(luxo,comum)
-    * @param email - Email do cliente da reserva
-     */
-    public static void atualizarReserva(Date checkin, Date checkout, String nome,
-            String cpf, String telefone, String numeroQuarto, String tipoQuarto, String email) {
+    public static void atualizarReserva(Date checkin, Date checkout, String nome, 
+        String cpf, String telefone, String numeroQuarto, String tipoQuarto, 
+        String email, String formaPagamento, String parcela, float valorTotal) {
         /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
         e comparações com a base de dados.*/
         try {
@@ -608,19 +527,6 @@ public class Sistema {
         Connection conexao = estabelecerConexao();
         /*Pegando id do cliente desejado de acordo o CPF*/
         Integer idCliente = obtendoIdCliente(cpf);
-
-        /*Query que vai ser executada na no MySQL.*/
-        String query1 = "UPDATE reserva SET Checkin=?, Checkout=?, Quarto=?, TipoQuarto=?, Email=? WHERE FK_IdCliente = ?";
-        /*Preparação da Query */
-        PreparedStatement pstmt1 = conexao.prepareStatement(query1);
-        /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
-        interrograções*/
-        pstmt1.setDate(1, new java.sql.Date(checkin.getTime()));
-        pstmt1.setDate(2, new java.sql.Date(checkout.getTime()));
-        pstmt1.setString(3, numeroQuarto);
-        pstmt1.setString(4, tipoQuarto);   
-        pstmt1.setInt(5, idCliente);
-        pstmt1.executeUpdate();
 
         /* Atualiza o cliente na tabela (exceto CPF)*/
         String query2 = "UPDATE cliente SET Nome=?, Telefone=?, Email=? WHERE CPF=?";
@@ -635,6 +541,30 @@ public class Sistema {
         /*Execução da Query*/
         pstmt2.executeUpdate();
         
+        /*Query que vai ser executada na no MySQL.*/
+        String query1 = "UPDATE reserva SET Checkin=?, Checkout=?, Quarto=?, TipoQuarto=?, Email=? WHERE FK_IdCliente = ?";
+        /*Preparação da Query */
+        PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+        /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
+        interrograções*/
+        pstmt1.setDate(1, new java.sql.Date(checkin.getTime()));
+        pstmt1.setDate(2, new java.sql.Date(checkout.getTime()));
+        pstmt1.setString(3, numeroQuarto);
+        pstmt1.setString(4, tipoQuarto);   
+        pstmt1.setInt(5, idCliente);
+        pstmt1.executeUpdate();
+        
+        /*Query que vai ser executada na no MySQL.*/
+        String query3 = "UPDATE financeiro SET forma_pagamento=?, parcelas=?, valor_total=? WHERE FK_IdCliente = ?";
+        /*Preparação da Query */
+        PreparedStatement pstmt3 = conexao.prepareStatement(query1);
+        /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
+        interrograções*/
+        pstmt3.setString(1, formaPagamento);
+        pstmt3.setString(2, parcela);   
+        pstmt3.setFloat(3, valorTotal);
+        pstmt3.setInt(4, idCliente);
+        pstmt3.executeUpdate();
         /*Tratando possíveis erros que podem ocorrer*/
       } catch (SQLException e) {
           System.out.println("Error: " + e.getMessage());
@@ -837,34 +767,4 @@ public class Sistema {
               System.out.println("Error: " + e.getMessage());
           }
       }
-     
-//     public static void cadastrarFinanceiro(String formaPagamento,String parcelas,float valorTotal){
-//         
-//        try {
-//           Connection conexao = estabelecerConexao();
-//
-//           // Inserindo o cliente na tabela se ainda não existir
-//           Integer idCliente = obtendoIdCliente(cpf);
-//           if (idCliente == null) {
-//               String queryCliente = "INSERT INTO financeiro(forma_pagamento, parcelas, valor_total,fk_id_reserva) VALUES (?, ?, ?, ?)";
-//               PreparedStatement pstmt = conexao.prepareStatement(queryCliente, Statement.RETURN_GENERATED_KEYS);
-//               pstmt.setString(1, formaPagamento);
-//               pstmt.setString(2, parcelas);
-//               pstmt.setFloat(3, valorTotal);
-////               pstmt.setString(4, email);
-//               pstmt.executeUpdate();
-//
-//               // Obtendo o ID do cliente recém-inserido
-//               ResultSet generatedKeys = pstmt.getGeneratedKeys();
-//               if (generatedKeys.next()) {
-//                   idCliente = generatedKeys.getInt(1);
-//               } else {
-//                   // Trate o caso em que o ID do cliente não pôde ser obtido
-//                   throw new SQLException("Não foi possível obter o ID do cliente recém-inserido.");
-//               }
-//                }
-//        } catch (SQLException e){
-//
-//        }
-//     }
 }

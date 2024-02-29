@@ -520,13 +520,16 @@ public class Reserva extends javax.swing.JFrame {
         String nome = camponomecliente.getText();
         String telefone = telefonecliente.getText();
         String email = campoemail.getText();
-        
+        String parcelas = parcela.getSelectedItem().toString();
+        String formaPagamento = formapagamento.getSelectedItem().toString();
+        String valorTotalStr = valorTotal.getText().trim(); 
+        float valortotal = 0; 
         /*Condicional para que nenhum campo seja deixado em branco*/
         if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("") || email.equals("")){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
         /*Após o preenchimento a função do Sistema atualiza a reserva*/
-        atualizarReserva(dataCheckin,dataCheckout,nome,cpf,telefone,numeroQuarto,tipoQuarto, email);
+        atualizarReserva(dataCheckin, dataCheckout, nome, cpf, telefone, numeroQuarto, tipoQuarto, email,formaPagamento,parcelas,valortotal);
         JOptionPane.showMessageDialog(null,"Reserva atualizada com sucesso!");
         
         
@@ -586,7 +589,6 @@ public class Reserva extends javax.swing.JFrame {
         
         /*Após o preenchimento a função do Sistema cadastra a reserva*/
         cadastrarReserva(dataCheckin, dataCheckout, nome, cpf, telefone, numeroQuarto, tipoQuarto, email,formaPagamento,parcelas,valortotal);
-//        cadastrarFinanceiro(formaPagamento,parcelas,valortotal);
         JOptionPane.showMessageDialog(null,"Reserva adicionada com sucesso!");
         
         /*Criação da tabela que vai ser apresentada os valores*/

@@ -9,14 +9,15 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+
 /**
- *
+ * Classe responsável por gerenciar funcionalidades da tela de cliente do programa
  * @author rafar
  */
 public class Cliente extends javax.swing.JFrame {
 
     /**
-     * Creates new form Cliente
+     * Construtor padrão da classe
      */
     public Cliente() {
         initComponents();
