@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static Controller.Sistema.visualizarReserva;
 import static Controller.Sistema.visualizarFinanceiro;
-//import static Controller.Sistema.atualizarFinanceiro;
 import java.sql.ResultSet;;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -23,13 +22,13 @@ import Model.Financeiro;
 import Model.Reserva;
 
 /**
- *
+ * Classe responsável por gerenciar funcionalidades da tela do financeiro. 
  * @author rafar
  */
 public class FinanceiroTela extends javax.swing.JFrame {
 
     /**
-     * Creates new form Financeiro
+     * Construtor padrão
      */
     public FinanceiroTela() {
         initComponents();
@@ -72,7 +71,7 @@ public class FinanceiroTela extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         formapagamento = new javax.swing.JFormattedTextField();
         parcela = new javax.swing.JFormattedTextField();
-        valorTotal1 = new javax.swing.JFormattedTextField();
+        valorTotal = new javax.swing.JFormattedTextField();
 
         botaoverificar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         botaoverificar.setForeground(new java.awt.Color(0, 102, 51));
@@ -306,7 +305,7 @@ public class FinanceiroTela extends javax.swing.JFrame {
 
         parcela.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
 
-        valorTotal1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
+        valorTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -324,7 +323,7 @@ public class FinanceiroTela extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(valorTotal1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -341,7 +340,7 @@ public class FinanceiroTela extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(valorTotal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
@@ -414,7 +413,6 @@ public class FinanceiroTela extends javax.swing.JFrame {
             TableModel model = tabelaFinanceiro.getModel();
 
             /*Coletando as datas para realizar padronização das datas*/
-            Financeiro financeiro = new Financeiro();
             String dateString = (String) model.getValueAt(linhaSelecionada, 0);
             String dateString2 = (String) model.getValueAt(linhaSelecionada, 1);
             
@@ -433,11 +431,11 @@ public class FinanceiroTela extends javax.swing.JFrame {
             /*Essas variáveis que correspondem a tabela "financeiro"*/
             formapagamento.setText(model.getValueAt(linhaSelecionada, 5).toString());
             parcela.setText(model.getValueAt(linhaSelecionada, 6).toString());
-            formapagamento.setText(model.getValueAt(linhaSelecionada, 7).toString());
+            valorTotal.setText(model.getValueAt(linhaSelecionada, 7).toString());
             
-        } catch (ParseException ex) {
             /*Claúsula caso algum erro ocorra durante a execução, como tipo de dados errados
             ou falhas na conexão*/
+        } catch (ParseException ex) {        
             Logger.getLogger(Reserva.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tabelaFinanceiroMouseClicked
@@ -515,8 +513,7 @@ public class FinanceiroTela extends javax.swing.JFrame {
         String cpf = campocpf.getText();
         String parcelas = parcela.getText();
         String pagamento = formapagamento.getText();
-        int valortotal = Integer.parseInt(formapagamento.getText());
-
+        int valortotal = Integer.parseInt(pagamento);
         /*Condicional para que os campos necessários sejam preenchidos*/
         if((parcelas.equals(""))||pagamento.equals("")||"".equals(valortotal)){
             JOptionPane.showMessageDialog(null,"Por favor preencha os campos de cobranças.");
@@ -612,6 +609,6 @@ public class FinanceiroTela extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> opcaotipoquarto;
     private javax.swing.JFormattedTextField parcela;
     private javax.swing.JTable tabelaFinanceiro;
-    private javax.swing.JFormattedTextField valorTotal1;
+    private javax.swing.JFormattedTextField valorTotal;
     // End of variables declaration//GEN-END:variables
 }

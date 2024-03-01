@@ -189,7 +189,6 @@ public class Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaovoltarActionPerformed
 
     private void tabelaClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaClienteMouseClicked
-        // TODO add your handling code here:
 
     }//GEN-LAST:event_tabelaClienteMouseClicked
 

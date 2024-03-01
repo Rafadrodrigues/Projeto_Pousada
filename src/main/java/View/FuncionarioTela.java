@@ -7,7 +7,6 @@ package View;
 import static Controller.Sistema.cadastrarUsuario;
 import static Controller.Sistema.atualizarUsuario;
 import static Controller.Sistema.deletarUsuario;
-import static Controller.Sistema.visualizarEndereco;
 import static Controller.Sistema.visualizarFuncionario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -476,7 +475,7 @@ public class FuncionarioTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaosalvarActionPerformed
 
     private void botaoatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizarActionPerformed
-        // TODO add your handling code here:
+        /*Declaração das variáveis que vão receber os valores dos campos*/
         String nome = camponome.getText();
         String usuario = campousuario.getText();
         String senha = camposenha.getText();
@@ -489,17 +488,21 @@ public class FuncionarioTela extends javax.swing.JFrame {
         String bairro = campobairro.getText();
         String cidade = campocidade.getText();
         
+        /*Condicional para que os campos necessários sejam preenchidos*/
         if(nome.equals("") || (senha.equals("") || 
                 (email.equals("")) || (telefone.equals("")) || ((rua.equals("")||
                 ((cidade.equals(""))|| bairro.equals(""))) || "".equals(numero)||(cpf.equals(""))))){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
         }
+        /*Atualizando a tabela de financeiro*/
         atualizarUsuario(usuario, senha, nome, cpf, email, telefone, rua, numero, bairro, cidade);
         JOptionPane.showMessageDialog(null, "Funcionário atualizado com sucesso!");
         
         int linhaSelecionada = tabelafunc.getSelectedRow();
+        /*Criando a tabela que vai receber os dados */
         DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
         
+        /*Atualizando a tabela com os dados novos*/
         if(linhaSelecionada >= 0){
             model.setValueAt(nome, linhaSelecionada, 0);
             model.setValueAt(usuario, linhaSelecionada, 1);
@@ -518,16 +521,18 @@ public class FuncionarioTela extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoatualizarActionPerformed
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
-        // TODO add your handling code here:
+        /*Variável para receber o campo de CPF*/
         String cpf = campocpf.getText();
 
+        /*Condicional que verifica se o campo de CPF esta vazio*/
         if(cpf.equals("")){
             JOptionPane.showMessageDialog(null,"Por favor preencha o campo de CPF.");
         }
-        //Condicional para certificar que deseja deletar funcionario
+        
         int opcao = JOptionPane.showConfirmDialog(FuncionarioTela.this, "Tem certeza que deseja deletar esse funcionário?", "Confirmação",JOptionPane.YES_NO_OPTION);
-            // Se o usuário clicar em "Sim" usuário é deletado
+            /*Condicional para certificar que deseja deletar funcionario.Se o usuário clicar em "Sim" usuário é deletado*/
             if (opcao == JOptionPane.YES_OPTION) {
+                /*Caso usuário escolha "Sim" é deletado*/
                 deletarUsuario(cpf);
                 JOptionPane.showMessageDialog(null,"Funcionário deletado com sucesso!");
             }
@@ -543,10 +548,12 @@ public class FuncionarioTela extends javax.swing.JFrame {
     }//GEN-LAST:event_campotelefoneActionPerformed
 
     private void tabelafuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelafuncMouseClicked
-        // TODO add your handling code here:
+        /*Variável que vai percorrer as colunas da tabela de acordo a linha*/
         int linhaSelecionada = tabelafunc.getSelectedRow();
+        /*Criação da tabela que vai ser apresentada os valores*/
         TableModel model = tabelafunc.getModel();
         
+        /*Alterando os campos com os valores correspondidos na tabela*/
         camponome.setText(model.getValueAt(linhaSelecionada, 0).toString());
         campousuario.setText(model.getValueAt(linhaSelecionada, 1).toString());
         camposenha.setText(model.getValueAt(linhaSelecionada, 2).toString());
@@ -568,28 +575,37 @@ public class FuncionarioTela extends javax.swing.JFrame {
     }//GEN-LAST:event_camponomeActionPerformed
 
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
-        // TODO add your handling code here:
+        /*Variáveis criadas no intuito de coletar os retornos da função. Todas essas funções
+        irão retorna uma consulta SELECT * FROM no banco de dados de sua respectiva tabela*/
         ResultSet rs = visualizarFuncionario();
-        ResultSet rs1 = visualizarEndereco();
+//        ResultSet rs1 = visualizarEndereco();
+        /*Criação da tabela que vai ser apresentada os valores*/
         DefaultTableModel model = (DefaultTableModel) tabelafunc.getModel();
         model.setRowCount(0);
 
+        /*Tratando possíveis execessões durante a iteração na base de dados*/
         try {
-            while(rs.next()&& rs1.next()){
+            /*Enquanto existir dados na base dados o loop vai continuar e preenchendo
+            a tabela do sistema*/
+            while(rs.next()){
                 model.addRow(new String[]{
-                    //A contagem começa a partir do 2 para que o ID não seja mostrado na tabela
+                    /*Coletando os dados da base de dados e inserindo na tabela.
+                    A contagem começa a partir do 2 para que o ID não seja mostrado na tabela.
+                    rs corresponde aos dados da tabela funcionario*/
                     rs.getString(3), 
                     rs.getString(6), 
                     rs.getString(2),
                     rs.getString(5),
                     rs.getString(4), 
                     rs.getString(7),
-                    rs1.getString(2), 
-                    rs1.getString(3), 
-                    rs1.getString(4),
-                    rs1.getString(5),
+                    //rs1 corresponde aos dados da tabela endereco
+                    rs.getString(9), 
+                    rs.getString(10), 
+                    rs.getString(11),
+                    rs.getString(12),
                 });
             }
+            /*Cláusula para caso ocorra erro durante a consulta.*/
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -624,6 +640,7 @@ public class FuncionarioTela extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new FuncionarioTela().setVisible(true);
             }

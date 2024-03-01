@@ -7,13 +7,13 @@ package View;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Classe que gerencia a tela inicia do sistema, logo após a tela de login
  * @author rafar
  */
 public class Home extends javax.swing.JFrame {
 
     /**
-     * Creates new form Home
+     * Construtor padrão da classe
      */
     public Home() {
         initComponents();
@@ -240,20 +240,24 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaofuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaofuncionarioActionPerformed
-        // TODO add your handling code here:
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         FuncionarioTela func = new FuncionarioTela();
         func.setVisible(true);
         func.setLocationRelativeTo(null);
         func.pack();
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_botaofuncionarioActionPerformed
 
     private void botaoreservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoreservaActionPerformed
-        // TODO add your handling code here:
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         Reserva reserva = new Reserva();
         reserva.setVisible(true);
         reserva.setLocationRelativeTo(null);
         reserva.pack();
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_botaoreservaActionPerformed
 
@@ -267,20 +271,24 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_botaosairActionPerformed
 
     private void botaoclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoclienteActionPerformed
-        // TODO add your handling code here:
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         FinanceiroTela financeiro = new FinanceiroTela();
         financeiro.setVisible(true);
         financeiro.setLocationRelativeTo(null);
         financeiro.pack();
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_botaoclienteActionPerformed
 
     private void botaocliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaocliente1ActionPerformed
-        // TODO add your handling code here:
+        /*Esse trecho de código corresponde ao botão voltar, quando acionado tende 
+        a voltar a uma tela anterior*/
         Cliente cliente = new Cliente();
         cliente.setVisible(true);
         cliente.setLocationRelativeTo(null);
         cliente.pack();
+        /*Fecha a tela que estavamos*/
         this.dispose();
     }//GEN-LAST:event_botaocliente1ActionPerformed
 

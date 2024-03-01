@@ -9,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import static Controller.Sistema.deletarReserva;
 import static Controller.Sistema.cadastrarReserva;
 import static Controller.Sistema.atualizarReserva;
-//import static Controller.Sistema.cadastrarFinanceiro;
 import static Controller.Sistema.visualizarCliente;
 import static Controller.Sistema.visualizarReserva;
 import java.sql.ResultSet;
@@ -22,7 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.table.TableModel;
 
 /**
- * Classe que gerencia a tela de reserva do sistema
+ * Classe que gerencia as funcionalidades da tela de reserva 
  * @author rafar
  */
 public class Reserva extends javax.swing.JFrame {
@@ -522,8 +521,7 @@ public class Reserva extends javax.swing.JFrame {
         String email = campoemail.getText();
         String parcelas = parcela.getSelectedItem().toString();
         String formaPagamento = formapagamento.getSelectedItem().toString();
-        String valorTotalStr = valorTotal.getText().trim(); 
-        float valortotal = 0; 
+        int  valortotal = 0; 
         /*Condicional para que nenhum campo seja deixado em branco*/
         if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("") || email.equals("")){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
@@ -570,12 +568,14 @@ public class Reserva extends javax.swing.JFrame {
         String email = campoemail.getText();
         String parcelas = parcela.getSelectedItem().toString();
         String formaPagamento = formapagamento.getSelectedItem().toString();
-        String valorTotalStr = valorTotal.getText().trim(); 
-        float valortotal = 0; 
+        String valorTotalStr = valorTotal.getText(); 
+        int valortotal = 0; 
        
+        /*Condicional que converte String para float*/
         if (!valorTotalStr.isEmpty()) {
             try {
-                valortotal = Float.parseFloat(valorTotalStr);
+                /*Aribuindo o valor para a variável*/
+                valortotal = Integer.parseInt(valorTotalStr);
             } catch (NumberFormatException ex) {
                 // Handle the case where the input is not a valid number
                 JOptionPane.showMessageDialog(null, "O valor total inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
