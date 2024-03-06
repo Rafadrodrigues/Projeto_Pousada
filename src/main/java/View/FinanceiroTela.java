@@ -4,23 +4,17 @@
  */
 package View;
 
-import static Controller.Sistema.atualizarFinanceiro;
-import static Controller.Sistema.visualizarCliente;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import static Controller.Sistema.visualizarReserva;
+import static Controller.Sistema.balancofinanceiro;
 import static Controller.Sistema.visualizarFinanceiro;
-import java.sql.ResultSet;;
+import static Controller.Sistema.visualizarReserva;
+import Model.Financeiro;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import Model.Financeiro;
-import Model.Reserva;
-
 /**
  * Classe responsável por gerenciar funcionalidades da tela do financeiro. 
  * @author rafar
@@ -50,28 +44,16 @@ public class FinanceiroTela extends javax.swing.JFrame {
         botaovoltar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaFinanceiro = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
-        opcaotipoquarto = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        opcaonumero = new javax.swing.JComboBox<>();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        checkout = new com.toedter.calendar.JDateChooser();
-        checkin = new com.toedter.calendar.JDateChooser();
-        campocpf = new javax.swing.JFormattedTextField();
-        jLabel10 = new javax.swing.JLabel();
-        botaoverificar1 = new javax.swing.JButton();
-        botaoatualizar1 = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        quantidadereserva = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        formapagamento = new javax.swing.JFormattedTextField();
-        parcela = new javax.swing.JFormattedTextField();
-        valorTotal = new javax.swing.JFormattedTextField();
+        lucromensal = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        funcmaisreservou = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        botaoverificar1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelafinc = new javax.swing.JTable();
 
         botaoverificar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         botaoverificar.setForeground(new java.awt.Color(0, 102, 51));
@@ -113,11 +95,11 @@ public class FinanceiroTela extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(377, 377, 377)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(420, 420, 420)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 419, Short.MAX_VALUE)
                 .addComponent(botaovoltar)
-                .addGap(18, 18, 18))
+                .addGap(25, 25, 25))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,81 +122,28 @@ public class FinanceiroTela extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(417, 417, 417)
+                .addGap(250, 250, 250)
                 .addComponent(jLabel9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addComponent(jLabel9)
-                .addGap(18, 18, 18))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        tabelaFinanceiro.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do do balanço", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 12))); // NOI18N
 
-            },
-            new String [] {
-                "Check-In", "Check-Out", "Tipo do Quarto", "Nº", "CPF", "Forma Pagamento", "Parcelas", "Total"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
+        jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel15.setText("Quantidade de Reservas");
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabelaFinanceiro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelaFinanceiroMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tabelaFinanceiro);
+        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel8.setText("Lucro ");
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados da Reserva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 12))); // NOI18N
-
-        opcaotipoquarto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quarto Comum", "Quarto Luxo" }));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel5.setText("Quarto");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel6.setText("Check-in");
-
-        opcaonumero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
-        opcaonumero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcaonumeroActionPerformed(evt);
-            }
-        });
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel14.setText("Tipo do Quarto");
-
-        jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel16.setText("Check-out");
-
-        checkout.setDateFormatString("yyyy-MM-dd");
-
-        checkin.setDateFormatString("yyyy-MM-dd");
-
-        try {
-            campocpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campocpf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campocpfActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel10.setText("CPF do Cliente");
+        jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jLabel12.setText("Funcionário que mais realizou reserva");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -225,165 +154,109 @@ public class FinanceiroTela extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(opcaotipoquarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(104, 104, 104)
+                            .addComponent(jLabel15)
+                            .addComponent(quantidadereserva, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(102, 102, 102)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(opcaonumero, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(92, 92, 92)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addContainerGap(166, Short.MAX_VALUE))
+                            .addComponent(jLabel8)
+                            .addComponent(lucromensal, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel12)
+                    .addComponent(funcmaisreservou, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opcaotipoquarto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(opcaonumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(checkout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(lucromensal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(quantidadereserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(funcmaisreservou, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         botaoverificar1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
         botaoverificar1.setForeground(new java.awt.Color(0, 102, 51));
         botaoverificar1.setText("Verificar");
+        botaoverificar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoverificar1MouseClicked(evt);
+            }
+        });
         botaoverificar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoverificar1ActionPerformed(evt);
             }
         });
 
-        botaoatualizar1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        botaoatualizar1.setForeground(new java.awt.Color(0, 102, 51));
-        botaoatualizar1.setText("Atualizar");
-        botaoatualizar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoatualizar1ActionPerformed(evt);
+        tabelafinc.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Quantidade Reserva", "Lucro", "Funcionário mais reservou"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados da Cobrança", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Semibold", 0, 12))); // NOI18N
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel7.setText("Parcelas");
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel8.setText("Valor Total");
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        jLabel15.setText("Forma de Pagamento");
-
-        formapagamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
-
-        parcela.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
-
-        valorTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel7))
-                .addGap(14, 14, 14)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
-        );
+        tabelafinc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelafincMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelafinc);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoverificar1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoatualizar1))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 612, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoverificar1))
+                .addGap(41, 41, 41)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(578, 578, 578)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 563, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(26, Short.MAX_VALUE))
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoverificar1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoatualizar1))
-                .addGap(70, 70, 70))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(161, 161, 161)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoverificar1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(116, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 369, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -402,48 +275,6 @@ public class FinanceiroTela extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botaovoltarActionPerformed
 
-    private void tabelaFinanceiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFinanceiroMouseClicked
-        
-        /*Tratando possíveis erros durante o preenchimento dos campos, como exemplo, 
-        tipos incompatíveis*/
-        try {
-            /*Variável que vai percorrer as colunas da tabela de acordo a linha*/
-            int linhaSelecionada = tabelaFinanceiro.getSelectedRow();
-            /*Criação da tabela que vai ser apresentada os valores*/
-            TableModel model = tabelaFinanceiro.getModel();
-
-            /*Coletando as datas para realizar padronização das datas*/
-            String dateString = (String) model.getValueAt(linhaSelecionada, 0);
-            String dateString2 = (String) model.getValueAt(linhaSelecionada, 1);
-            
-            /*Muito importante padronizar o formato da data, evita erros no MySQL*/
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = sdf.parse(dateString);
-            Date date2 = sdf.parse(dateString2);
-            
-            /*Variáveis que correspondente a tabela "reserva" e "cliente"*/
-            checkin.setDate(date);
-            checkout.setDate(date2);
-            opcaotipoquarto.setSelectedItem(model.getValueAt(linhaSelecionada, 2).toString());
-            opcaonumero.setSelectedItem(model.getValueAt(linhaSelecionada, 3).toString());
-            campocpf.setText(model.getValueAt(linhaSelecionada, 4).toString());
-            
-            /*Essas variáveis que correspondem a tabela "financeiro"*/
-            formapagamento.setText(model.getValueAt(linhaSelecionada, 5).toString());
-            parcela.setText(model.getValueAt(linhaSelecionada, 6).toString());
-            valorTotal.setText(model.getValueAt(linhaSelecionada, 7).toString());
-            
-            /*Claúsula caso algum erro ocorra durante a execução, como tipo de dados errados
-            ou falhas na conexão*/
-        } catch (ParseException ex) {        
-            Logger.getLogger(Reserva.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_tabelaFinanceiroMouseClicked
-
-    private void opcaonumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcaonumeroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_opcaonumeroActionPerformed
-
     private void botaoverificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoverificarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoverificarActionPerformed
@@ -456,94 +287,51 @@ public class FinanceiroTela extends javax.swing.JFrame {
 
         /*Variáveis criadas no intuito de coletar os retornos da função. Todas essas funções
         irão retorna uma consulta SELECT * FROM no banco de dados de sua respectiva tabela*/
-        ResultSet rs = visualizarReserva();
-        ResultSet rs1 = visualizarCliente();
+        ResultSet rs1 = visualizarReserva();
         ResultSet rs2 = visualizarFinanceiro();
 
-        /*Criação da tabela que vai ser apresentada os valores*/
-        DefaultTableModel model = (DefaultTableModel) tabelaFinanceiro.getModel();
-        /*Inicializando a tabela na primeira linha*/
+        /*Atribui a uma variável a criação da tabela*/
+        DefaultTableModel model = (DefaultTableModel) tabelafinc.getModel();
+        /*Inicializando a contagem a partir da primeira linha*/
         model.setRowCount(0);
-
-        /*Tratando possíveis execessões durante a iteração na base de dados*/
         try {
-            /*Enquanto existir dados na base dados o loop vai continuar e preenchendo
-            a tabela do sistema*/
-            while (rs.next() && rs1.next() && rs2.next()) {
-                // Coletando dados da tabela 'reserva'. rs reponsável por iterar nessa tabela
-                String checkin = rs.getString(1);
-                String checkout = rs.getString(2);
-                String tipoQuarto = rs.getString(3);
-                String numeroQuarto = rs.getString(4);
-
-                // Coletando CPF na tabela 'cliente'. rs1 reponsável por iterar nessa tabela
-                String cpfCliente = rs1.getString(3);
-
-                // Coletando dados da tabela 'financeiro'. rs2 reponsável por iterar nessa tabela
-                String formaPagamento = rs2.getString(2);
-                String parcelas = rs2.getString(3);
-                String valorTotal = rs2.getString(5);
-
-                /*Adicionando a tabela do sistema as informações coletadas na base 
-                de dados. As informações são adicionadas de acordo a ordem estabelecida*/
-                model.addRow(new String[]{
-                    checkin,
-                    checkout,
-                    tipoQuarto,
-                    numeroQuarto,
-                    cpfCliente,
-                    formaPagamento,
-                    parcelas,
-                    valorTotal
-                });
-            }
-            /*Cláusula para caso ocorra erro durante a consulta.*/
+            String sumValorTotal = rs2.getString("SUM(valor_total)");
         } catch (SQLException ex) {
-            Logger.getLogger(Financeiro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FinanceiroTela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+        try{
+            /*Enquanto todas os dados não forem coletados, ou seja, tiver um "next"
+            o loop não vai parar*/
+            while(rs1.next() && rs2.next()){
+                model.addRow(new String[]{
+                   rs1.getString(5), 
+                   rs2.getString(5),
+                   rs2.getString(4)});
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FinanceiroTela.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_botaoverificar1ActionPerformed
 
-    private void botaoatualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoatualizar1ActionPerformed
-        /*Declaração das variáveis que vão receber os valores dos campos*/
-        java.util.Date dataCheckin = checkin.getDate();
-        java.util.Date dataCheckout = checkout.getDate();
-        String numeroQuarto = opcaonumero.getSelectedItem().toString();
-        String tipoQuarto = opcaotipoquarto.getSelectedItem().toString();
-        String cpf = campocpf.getText();
-        String parcelas = parcela.getText();
-        String pagamento = formapagamento.getText();
-        int valortotal = Integer.parseInt(pagamento);
-        /*Condicional para que os campos necessários sejam preenchidos*/
-        if((parcelas.equals(""))||pagamento.equals("")||"".equals(valortotal)){
-            JOptionPane.showMessageDialog(null,"Por favor preencha os campos de cobranças.");
-        }
-        /*Atualizando a tabela de financeiro*/
-        atualizarFinanceiro(cpf,parcelas,pagamento,valortotal);
-        JOptionPane.showMessageDialog(null,"Finanças atualizada com sucesso!");
-
-        int linhaSelecionada = tabelaFinanceiro.getSelectedRow();
-        /*Criando a tabela que vai receber os dados */
-        DefaultTableModel model = (DefaultTableModel) tabelaFinanceiro.getModel();
-        
-        /*Atualizando a tabela com os dados novos*/
-        if(linhaSelecionada >= 0){
-            model.setValueAt(dataCheckin, linhaSelecionada, 0);
-            model.setValueAt(dataCheckout, linhaSelecionada, 1);
-            model.setValueAt(tipoQuarto, linhaSelecionada, 2);
-            model.setValueAt(numeroQuarto, linhaSelecionada, 3);
-            model.setValueAt(cpf, linhaSelecionada, 4);
-            model.setValueAt(pagamento, linhaSelecionada, 5);
-            model.setValueAt(parcelas, linhaSelecionada, 6);
-            model.setValueAt(valortotal, linhaSelecionada, 7);
-        }else{
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-    }//GEN-LAST:event_botaoatualizar1ActionPerformed
-
-    private void campocpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campocpfActionPerformed
+    private void botaoverificar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoverificar1MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_campocpfActionPerformed
+
+    }//GEN-LAST:event_botaoverificar1MouseClicked
+
+    private void tabelafincMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelafincMouseClicked
+        int linhaSelecionada = tabelafinc.getSelectedRow();
+        /*Criação da tabela que vai ser apresentada os valores*/
+        TableModel model = tabelafinc.getModel();
+        
+        /*Alterando os campos com os valores correspondidos na tabela*/
+        quantidadereserva.setText(model.getValueAt(linhaSelecionada, 0).toString());
+        lucromensal.setText(model.getValueAt(linhaSelecionada, 1).toString());
+        funcmaisreservou.setText(model.getValueAt(linhaSelecionada, 2).toString());
+    }//GEN-LAST:event_tabelafincMouseClicked
 
     /**
      * @param args the command line arguments
@@ -582,33 +370,21 @@ public class FinanceiroTela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoatualizar;
-    private javax.swing.JButton botaoatualizar1;
     private javax.swing.JButton botaoverificar;
     private javax.swing.JButton botaoverificar1;
     private javax.swing.JButton botaovoltar;
-    private javax.swing.JFormattedTextField campocpf;
-    private com.toedter.calendar.JDateChooser checkin;
-    private com.toedter.calendar.JDateChooser checkout;
-    private javax.swing.JFormattedTextField formapagamento;
+    private javax.swing.JTextField funcmaisreservou;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> opcaonumero;
-    private javax.swing.JComboBox<String> opcaotipoquarto;
-    private javax.swing.JFormattedTextField parcela;
-    private javax.swing.JTable tabelaFinanceiro;
-    private javax.swing.JFormattedTextField valorTotal;
+    private javax.swing.JTextField lucromensal;
+    private javax.swing.JTextField quantidadereserva;
+    private javax.swing.JTable tabelafinc;
     // End of variables declaration//GEN-END:variables
 }

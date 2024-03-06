@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.util.Date;
 import Model.Funcionario;
 import Model.Reserva;
-import Model.Cliente;
 
 /**
  * Classe que representa o corpo do nosso sistema, nela está contida todas as 
@@ -25,7 +24,6 @@ public class Sistema {
     /*Atributo criado para gerenciar as manusear do funcionario na classe sistema*/
     private static Funcionario idFuncioanarioAtual = new Funcionario();
     private static Reserva idReserva = new Reserva();
-    private static Cliente cliente = new Cliente(); 
     /**
      * Construtor padrão da classe como 'private' para que não possa ser instanciada
      * @return Funcionario - Retorna informações sobre o funcionario
@@ -46,8 +44,6 @@ public class Sistema {
     public static void setIdReserva(Reserva idReserva) {
         Sistema.idReserva = idReserva;
     }
-    
-
 
     /**
      * Método que realiza uma coleta na base de dados e compara se os dados passados como
@@ -557,7 +553,7 @@ public class Sistema {
         pstmt2.executeUpdate();
         
         /*Query que vai ser executada na no MySQL.*/
-        String query1 = "UPDATE reserva SET Checkin=?, Checkout=?, Quarto=?, TipoQuarto=?, Email=? WHERE FK_IdCliente = ?";
+        String query1 = "UPDATE reserva SET Checkin=?, Checkout=?, Quarto=?, TipoQuarto=? WHERE FK_IdCliente = ?";
         /*Preparação da Query */
         PreparedStatement pstmt1 = conexao.prepareStatement(query1);
         /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
@@ -569,8 +565,9 @@ public class Sistema {
         pstmt1.setInt(5, idCliente);
         pstmt1.executeUpdate();
         
+        Integer idReserva = obtendoIdReserva(cpf);
         /*Query que vai ser executada na no MySQL.*/
-        String query3 = "UPDATE financeiro SET forma_pagamento=?, parcelas=?, valor_total=? WHERE FK_IdCliente = ?";
+        String query3 = "UPDATE financeiro SET forma_pagamento=?, parcelas=?, valor_total=? WHERE fk_id_reserva = ?";
         /*Preparação da Query */
         PreparedStatement pstmt3 = conexao.prepareStatement(query3);
         /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
@@ -578,7 +575,7 @@ public class Sistema {
         pstmt3.setString(1, formaPagamento);
         pstmt3.setString(2, parcela);   
         pstmt3.setInt(3, valorTotal);
-        pstmt3.setInt(4, idCliente);
+        pstmt3.setInt(4, idReserva);
         pstmt3.executeUpdate();
         /*Tratando possíveis erros que podem ocorrer*/
       } catch (SQLException e) {
@@ -594,41 +591,51 @@ public class Sistema {
     * @param tipoQuarto - Tipo do quarto da reserva(luxo,comum)
     * @param cpf - CPF do cliente da reserva
     */
-    public static void deletarReserva(Date checkin, Date checkout,String numeroQuarto,String tipoQuarto,String cpf){
-        /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
-        e comparações com a base de dados.*/
-        /*Estabelecendo a conexão com a base de dados*/
-        try(Connection conexao = estabelecerConexao()){
-            /*Query que vai ser executada na no MySQL.*/
-            String query1 = "DELETE FROM reserva WHERE FK_IdCliente=? AND TipoQuarto=? AND Quarto=?";
-            /*Query que vai ser executada na no MySQL.*/
-            String query2 = "DELETE FROM cliente WHERE IdCliente=?";
-            
-            /*Pegando id do cliente desejado de acordo o CPF*/
-            int idCliente = obtendoIdCliente(cpf);
-            /*Preparação da Query */
-            PreparedStatement pstmt1 = conexao.prepareStatement(query1);
-            /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
-            interrograções*/
-            pstmt1.setInt(1, idCliente);
-            pstmt1.setString(2, tipoQuarto);
-            pstmt1.setString(3, numeroQuarto);
-            /*Execução da Query*/
-            pstmt1.executeUpdate();
-            
-            /*Preparação da Query */
-            PreparedStatement pstmt2 = conexao.prepareStatement(query2);
-            /*Na Query foram passado "?" e esses comandos abaixo substituem essas 
-            interrograções*/
-            pstmt2.setInt(1, idCliente);
-            /*Execução da Query*/
-            pstmt2.executeUpdate();
+public static void deletarReserva(String cpf) {
+    /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
+    e comparações com a base de dados.*/
+    /*Estabelecendo a conexão com a base de dados*/
+    try (Connection conexao = estabelecerConexao()) {
+        /*Query que vai ser executada na no MySQL.*/
+        String query1 = "DELETE FROM reserva WHERE FK_IdCliente = ?";
+        /*Query que vai ser executada na no MySQL.*/
+        String query2 = "DELETE FROM cliente WHERE IdCliente = ?";
+        
+        /*Pegando id do cliente desejado de acordo com o CPF*/
+        Integer idCliente = obtendoIdCliente(cpf);
+        
+        /*Preparação da Query */
+        if (idCliente != null) {
+            try (PreparedStatement pstmt1 = conexao.prepareStatement(query1)) {
+                /*Na Query foram passados "?" e esses comandos abaixo substituem essas 
+                interrogações*/
+                pstmt1.setInt(1, idCliente);
 
-            /*Tratando possíveis erros que podem ocorrer*/
-        } catch (SQLException e) {
-            System.out.println("Error " + e.getMessage());
+                /*Execução da Query*/
+                pstmt1.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Error while deleting from reserva: " + e.getMessage());
+            }
+
+            try (PreparedStatement pstmt2 = conexao.prepareStatement(query2)) {
+                /*Na Query foram passados "?" e esses comandos abaixo substituem essas 
+                interrogações*/
+                pstmt2.setInt(1, idCliente);
+                /*Execução da Query*/
+                pstmt2.executeUpdate();
+
+            } catch (SQLException e) {
+                System.out.println("Error while deleting from cliente: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Error: idCliente is null");
         }
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
     }
+}
+
+
     /**
      * Método utilizado na tela de reserva, e visualiza todos as reservas presentes na
      * base de dados. 
@@ -642,7 +649,7 @@ public class Sistema {
             /*Estabelecendo a conexão com a base de dados*/
             Connection conexao = estabelecerConexao();
             /*Query que vai ser executada na no MySQL.*/
-            String query = "SELECT Checkin, Checkout, TipoQuarto, Quarto FROM reserva;";
+            String query = "SELECT Checkin, Checkout, TipoQuarto, Quarto, idReserva FROM reserva;";
             /*Preparação da Query */
             PreparedStatement  pstmt = conexao.prepareStatement(query);
             /*Execução da Query*/
@@ -682,7 +689,6 @@ public class Sistema {
 
         return null;
     }
-
      /**
      * Método utilizado na tela do funcionario, e visualiza todos os funcionários presentes na
      * base de dados. 
@@ -736,9 +742,18 @@ public class Sistema {
         }
         return null;
     }
-    //Para esse código vai ser preciso criar mais consultas SQL
+    /**
+     * Método responsável por fazer atualizações na tabela "financeiro"
+     * @param cpf - CPF do cliente
+     * @param parcelas - Quantidade de parcelas da reserva
+     * @param pagamento - Forma de pagamento da reserva
+     * @param valortotal  - Valor total da reserva
+     */
     public static void atualizarFinanceiro(String cpf, String parcelas, String pagamento,int valortotal) {
+        /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
+        e comparações com a base de dados.*/
           try {
+            /*Estabelecendo a conexão com a base de dados*/
             Connection conexao = estabelecerConexao();
             Integer idReservaFinanceiro = obtendoIdReserva(cpf);
               
@@ -748,7 +763,7 @@ public class Sistema {
             PreparedStatement pstmt1 = conexao.prepareStatement(query1);
             pstmt1.setString(1, pagamento);
             pstmt1.setString(2, parcelas);
-            pstmt1.setFloat(3, valortotal);
+            pstmt1.setInt(3, valortotal);
             pstmt1.setInt(4, idReservaFinanceiro);
             /*Execução da Query*/      
             pstmt1.executeUpdate();
@@ -757,5 +772,42 @@ public class Sistema {
           } catch (SQLException e) {
               System.out.println("Error: " + e.getMessage());
           }
+    }
+    /**
+     * Método responsável por apresentar algumas informações de ganho da Pousada.
+     * @param mes - Mês do balanco(talvez vou tirar)
+     * @return 
+     */
+    public static ResultSet balancofinanceiro() {
+        /*Tratando possíveis excessões que podem ocorrer durante a execução, consultas
+        e comparações com a base de dados.*/
+        try {
+              
+            ResultSet resultSet;
+            /*Estabelecendo a conexão com a base de dados*/
+            Connection conexao = estabelecerConexao();
+              
+            /*Query que vai ser executada na no MySQL.*/
+            String query = "SELECT COUNT(idReserva),COUNT(idReserva),";
+
+            /*Preparação da Query */
+            PreparedStatement pstmt = conexao.prepareStatement(query);
+            /*Execução da Query*/
+            resultSet = pstmt.executeQuery(); 
+            
+//            /*Query que vai ser executada na no MySQL.*/
+//            String query1 = "SELECT SUM(valor_total) FROM financeiro;";
+//            /*Preparação da Query */
+//            PreparedStatement pstmt1 = conexao.prepareStatement(query1);
+//            /*Execução da Query*/
+//            resultSet1 = pstmt1.executeQuery(); 
+//            
+            return resultSet;
+
+            /*Tratando possíveis erros que podem ocorrer*/
+          } catch (SQLException e) {
+              System.out.println("Error: " + e.getMessage());
+          }
+        return null;
     }
 }

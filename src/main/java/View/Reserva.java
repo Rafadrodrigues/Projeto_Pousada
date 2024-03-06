@@ -10,6 +10,7 @@ import static Controller.Sistema.deletarReserva;
 import static Controller.Sistema.cadastrarReserva;
 import static Controller.Sistema.atualizarReserva;
 import static Controller.Sistema.visualizarCliente;
+import static Controller.Sistema.visualizarFinanceiro;
 import static Controller.Sistema.visualizarReserva;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,7 +79,7 @@ public class Reserva extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         parcela = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        valorTotal = new javax.swing.JFormattedTextField();
+        campovalortotal = new javax.swing.JTextField();
 
         jPanel3.setBackground(new java.awt.Color(86, 0, 140));
 
@@ -117,7 +118,7 @@ public class Reserva extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(472, 472, 472)
+                .addGap(643, 643, 643)
                 .addComponent(botaovoltar)
                 .addGap(18, 18, 18))
         );
@@ -141,17 +142,17 @@ public class Reserva extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(417, 417, 417)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(622, 622, 622))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(jLabel9)
-                .addGap(18, 18, 18))
+                .addGap(22, 22, 22))
         );
 
         botaoverificar.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -212,20 +213,23 @@ public class Reserva extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(camponomecliente, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(telefonecliente, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(camponomecliente, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(campoemail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
-                    .addComponent(jLabel4)
-                    .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(campoemail, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(campocpf, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,11 +335,11 @@ public class Reserva extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Check-In", "Check-Out", "Tipo do Quarto", "Número", "Nome", "CPF", "Telefone", "E-mail"
+                "Check-In", "Check-Out", "Tipo do Quarto", "Número", "Nome", "CPF", "Telefone", "E-mail", "Pagamento", "Parcelas", "Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -369,8 +373,6 @@ public class Reserva extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         jLabel15.setText("Forma de Pagamento");
 
-        valorTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("¤#,##0.00"))));
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -378,20 +380,26 @@ public class Reserva extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel8)
-                    .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(121, 121, 121))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(campovalortotal, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(121, 121, 121))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(jLabel7))
@@ -399,11 +407,11 @@ public class Reserva extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(formapagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(parcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(valorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addComponent(campovalortotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -424,11 +432,13 @@ public class Reserva extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
                 .addGap(17, 17, 17))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -445,15 +455,16 @@ public class Reserva extends javax.swing.JFrame {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(21, 21, 21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoverificar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botaoatualizar)
                             .addComponent(botaodeletar)
-                            .addComponent(botaosalvar)))
+                            .addComponent(botaosalvar))
+                        .addGap(9, 9, 9))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)))
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -466,6 +477,7 @@ public class Reserva extends javax.swing.JFrame {
         irão retorna uma consulta SELECT * FROM no banco de dados de sua respectiva tabela*/
         ResultSet rs = visualizarReserva();
         ResultSet rs1 = visualizarCliente();
+        ResultSet rs2 = visualizarFinanceiro();
             
             /*Criação da tabela que vai ser apresentada os valores*/
             DefaultTableModel model = (DefaultTableModel) tabelaReserva.getModel();
@@ -476,7 +488,7 @@ public class Reserva extends javax.swing.JFrame {
         try {
             /*Enquanto existir dados na base dados o loop vai continuar e preenchendo
             a tabela do sistema*/
-            while(rs.next() && rs1.next()) {
+            while(rs.next() && rs1.next() && rs2.next()) {
                 model.addRow(new String[]{
                     // Coletando dados da tabela 'reserva'. rs reponsável por iterar nessa tabela
                     rs.getString(1), 
@@ -487,7 +499,11 @@ public class Reserva extends javax.swing.JFrame {
                     rs1.getString(2), 
                     rs1.getString(3),
                     rs1.getString(4),
-                    rs1.getString(5)
+                    rs1.getString(5),
+                    // Coletando dados da tabela 'financeiro'. rs reponsável por iterar nessa tabela
+                    rs2.getString(2), 
+                    rs2.getString(3),
+                    rs2.getString(5)
                 });
             }
             /*Cláusula para caso ocorra erro durante a consulta.*/
@@ -521,7 +537,9 @@ public class Reserva extends javax.swing.JFrame {
         String email = campoemail.getText();
         String parcelas = parcela.getSelectedItem().toString();
         String formaPagamento = formapagamento.getSelectedItem().toString();
-        int  valortotal = 0; 
+        String valorTotal = campovalortotal.getText(); 
+        int  valortotal = Integer.parseInt(valorTotal);
+        
         /*Condicional para que nenhum campo seja deixado em branco*/
         if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("") || email.equals("")){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
@@ -545,6 +563,9 @@ public class Reserva extends javax.swing.JFrame {
             model.setValueAt(cpf, linhaSelecionada, 5);
             model.setValueAt(telefone, linhaSelecionada, 6);
             model.setValueAt(email, linhaSelecionada, 7);
+            model.setValueAt(formaPagamento, linhaSelecionada, 8);
+            model.setValueAt(parcelas, linhaSelecionada, 9);
+            model.setValueAt(valortotal, linhaSelecionada, 10);
         }else{
             /*Caso essa mensagem apareça algum dado foi inserido de forma errada*/
             JOptionPane.showMessageDialog(null, "Error");
@@ -568,20 +589,9 @@ public class Reserva extends javax.swing.JFrame {
         String email = campoemail.getText();
         String parcelas = parcela.getSelectedItem().toString();
         String formaPagamento = formapagamento.getSelectedItem().toString();
-        String valorTotalStr = valorTotal.getText(); 
-        int valortotal = 0; 
+        String valorTotal = campovalortotal.getText(); 
+        int valortotal = Integer.parseInt(valorTotal);
        
-        /*Condicional que converte String para float*/
-        if (!valorTotalStr.isEmpty()) {
-            try {
-                /*Aribuindo o valor para a variável*/
-                valortotal = Integer.parseInt(valorTotalStr);
-            } catch (NumberFormatException ex) {
-                // Handle the case where the input is not a valid number
-                JOptionPane.showMessageDialog(null, "O valor total inserido não é válido.", "Erro", JOptionPane.ERROR_MESSAGE);
-                // Optionally, log the error or perform additional error handling
-            }
-        }
         /*Condicional para que nenhum campo seja deixado em branco*/
         if(nome.equals("")||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("") || email.equals("")){
             JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
@@ -602,27 +612,24 @@ public class Reserva extends javax.swing.JFrame {
                 nome,
                 cpf,
                 telefone,
-                email
+                email,
+                formaPagamento,
+                parcelas,
+                valortotal
         });
+
     }//GEN-LAST:event_botaosalvarActionPerformed
 
     private void botaodeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaodeletarActionPerformed
         // TODO add your handling code here:
         /*Coletando os dados dos campos e atribuindo para variáveis */
-        java.util.Date dataCheckin = checkin.getDate();
-        java.util.Date dataCheckout = checkout.getDate();
-        String numeroQuarto = opcaonumero.toString();
-        String tipoQuarto = opcaotipoquarto.toString();
+
         String cpf = campocpf.getText();
-        String nome = camponomecliente.getText();
         
-        /*Condicional para que nenhum campo seja deixado em branco*/
-        if((nome.equals(""))||(tipoQuarto.equals(""))||cpf.equals("")||numeroQuarto.equals("")||dataCheckin.equals("")||dataCheckout.equals("")){
-            JOptionPane.showMessageDialog(null,"Por favor preencha todos os campos.");
-        }
+        /*Condicional para que nenhum campo seja deixado em branco*
         
         /*Após o preenchimento a função do Sistema deleta a reserva*/
-        deletarReserva(dataCheckin,dataCheckout,numeroQuarto,tipoQuarto,cpf);
+        deletarReserva(cpf);
         JOptionPane.showMessageDialog(null,"Reserva deletada com sucesso!");
         
     }//GEN-LAST:event_botaodeletarActionPerformed
@@ -653,7 +660,9 @@ public class Reserva extends javax.swing.JFrame {
             campocpf.setText(model.getValueAt(linhaSelecionada, 5).toString());
             telefonecliente.setText(model.getValueAt(linhaSelecionada, 6).toString());
             campoemail.setText(model.getValueAt(linhaSelecionada, 7).toString());
-            
+            formapagamento.setSelectedItem(model.getValueAt(linhaSelecionada, 8).toString());
+            parcela.setSelectedItem(model.getValueAt(linhaSelecionada, 9).toString());
+            campovalortotal.setText(model.getValueAt(linhaSelecionada, 10).toString());
             /*Cláusula para caso ocorra erro durante a consulta.*/
         } catch (ParseException ex) {
             Logger.getLogger(Reserva.class.getName()).log(Level.SEVERE, null, ex);
@@ -663,9 +672,6 @@ public class Reserva extends javax.swing.JFrame {
 
     private void parcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_parcelaActionPerformed
         /*Condicional para que não ocorra parcelas se a o pagamento no for Credito*/
-        if(!formapagamento.equals("Crédito")){
-            JOptionPane.showMessageDialog(null,"Você só pode escolher quando a forma de pagamento for Crédito");
-        }
     }//GEN-LAST:event_parcelaActionPerformed
 
     /**
@@ -712,6 +718,7 @@ public class Reserva extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField campocpf;
     private javax.swing.JTextField campoemail;
     private javax.swing.JTextField camponomecliente;
+    private javax.swing.JTextField campovalortotal;
     private com.toedter.calendar.JDateChooser checkin;
     private com.toedter.calendar.JDateChooser checkout;
     private javax.swing.JComboBox<String> formapagamento;
@@ -740,6 +747,5 @@ public class Reserva extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> parcela;
     private javax.swing.JTable tabelaReserva;
     private javax.swing.JFormattedTextField telefonecliente;
-    private javax.swing.JFormattedTextField valorTotal;
     // End of variables declaration//GEN-END:variables
 }
